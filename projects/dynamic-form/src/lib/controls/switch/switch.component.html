@@ -1,0 +1,13 @@
+<div class="form-check form-switch">
+  <input
+    class="form-check-input"
+    type="checkbox"
+    role="switch"
+    [id]="formName + '_' + input.key"
+    [name]="input.key"
+    [ngModel]="val"
+    (ngModelChange)="onChange($event)"
+    [disabled]="disabled"
+    (blur)="onTouched()"/>
+  <label class="form-check-label" [for]="formName + '_' + input.key">{{ input.label }}</label>
+</div>

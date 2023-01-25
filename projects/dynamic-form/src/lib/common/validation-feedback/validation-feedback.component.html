@@ -1,0 +1,7 @@
+<div class="invalid-feedback">
+  <ng-container *ngFor="let validatorMessage of input.validatorsMessage">
+    <div *ngIf="control?.errors?.[validatorMessage.key]">
+      {{ validatorMessage.message }}
+    </div>
+  </ng-container>
+</div>

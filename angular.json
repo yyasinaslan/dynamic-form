@@ -7,7 +7,7 @@
       "projectType": "library",
       "root": "projects/dynamic-form",
       "sourceRoot": "projects/dynamic-form/src",
-      "prefix": "lib",
+      "prefix": "ngy",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

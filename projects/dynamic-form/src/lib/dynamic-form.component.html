@@ -1,0 +1,32 @@
+<ng-container *ngIf="form">
+  <form
+    [formGroup]="form"
+    class="form-container needs-validation"
+    (ngSubmit)="submitForm()"
+    [ngClass]="{ 'ng-submitted': submitted }">
+    <div class="dynamic-form-header mb-5" *ngIf="formTitle">
+      <h6 class="text-primary">{{ formTitle }}</h6>
+    </div>
+
+    <!-- AUTO LAYOUT -->
+    <ng-container *ngIf="!dynamicControls || dynamicControls.length == 0">
+      <!--      <div class="dynamic-form-toolbar"></div>-->
+      <div class="row">
+        <div class="dynamic-form-input mb-3" *ngFor="let input of inputs" [ngClass]="getColumnClass(input)">
+          <ngy-form-control [path]="input.key" [input]="input" [fGroup]="form" [formName]="formName"></ngy-form-control>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- CUSTOM LAYOUT -->
+    <ng-container *ngIf="dynamicControls">
+      <ng-content></ng-content>
+    </ng-container>
+
+    <div class="dynamic-form-footer" [ngClass]="!showSubmitButton ? 'd-none' : ''">
+      <button type="submit" class="btn btn-success" [disabled]="formDisabled">
+        {{ formSubmitLabel }}
+      </button>
+    </div>
+  </form>
+</ng-container>

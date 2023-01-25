@@ -1,0 +1,85 @@
+<ng-container *ngIf="path && fGroup && input" [formGroup]="fGroup">
+  <!-- ENTRY POINT -->
+  <!-- Get template according to Control Type -->
+  <ng-container [ngSwitch]="input.controlType">
+    <ng-container *ngSwitchCase="'textbox'" [ngTemplateOutlet]="textBoxTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+    <ng-container *ngSwitchCase="'textarea'" [ngTemplateOutlet]="textAreaTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+    <ng-container *ngSwitchCase="'dropdown'" [ngTemplateOutlet]="dropDownTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+    <ng-container *ngSwitchCase="'switch'" [ngTemplateOutlet]="switchTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+    <ng-container *ngSwitchCase="'checkbox'" [ngTemplateOutlet]="checkboxTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+    <ng-container *ngSwitchCase="'checkboxgroup'" [ngTemplateOutlet]="checkboxGroupTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+    <ng-container *ngSwitchCase="'radiogroup'" [ngTemplateOutlet]="radioGroupTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+  </ng-container>
+
+  <!-- TEXTBOX TEMPLATE -->
+  <ng-template #textBoxTemplate let-inputData let-pathData="pathData">
+    <ngy-textbox
+      [input]="inputData"
+      [formControlName]="inputData.key"
+      [formName]="formName"
+      [floating]="inputData.floating"></ngy-textbox>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <!-- DROPDOWN TEMPLATE -->
+  <ng-template #dropDownTemplate let-inputData let-pathData="pathData">
+    <ngy-select [input]="inputData" [formControlName]="inputData.key"></ngy-select>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <!-- TEXTAREA TEMPLATE -->
+  <ng-template #textAreaTemplate let-inputData let-pathData="pathData">
+    <ngy-textbox
+      [input]="inputData"
+      [formControlName]="inputData.key"
+      [formName]="formName"
+      [floating]="inputData.floating"></ngy-textbox>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <!-- SWITCH TEMPLATE -->
+  <ng-template #switchTemplate let-inputData let-pathData="pathData">
+    <ngy-switch [input]="inputData" [formControlName]="inputData.key"></ngy-switch>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <!-- CHECKBOX TEMPLATE -->
+  <ng-template #checkboxTemplate let-inputData let-pathData="pathData">
+    <ngy-checkbox [input]="inputData" [formControlName]="inputData.key"></ngy-checkbox>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <!-- CHECKBOXGROUP TEMPLATE -->
+  <ng-template #checkboxGroupTemplate let-inputData let-pathData="pathData">
+    <ngy-multi-checkbox [input]="inputData" [formControlName]="inputData.key"></ngy-multi-checkbox>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <!-- RADIOGROUP TEMPLATE -->
+  <ng-template #radioGroupTemplate let-inputData let-pathData="pathData">
+    <ngy-multi-checkbox [input]="inputData" [formControlName]="inputData.key"></ngy-multi-checkbox>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <ng-template #validationTextTemplate let-inputData let-pathData="pathData">
+    <ngy-helper-text *ngIf="inputData.helperText" [input]="inputData"></ngy-helper-text>
+    <ngy-validation-feedback
+      *ngIf="inputData.validatorsMessage"
+      [input]="inputData"
+      [control]="fGroup.get(pathData)"></ngy-validation-feedback>
+  </ng-template>
+</ng-container>

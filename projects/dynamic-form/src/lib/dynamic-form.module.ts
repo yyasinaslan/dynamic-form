@@ -1,16 +1,48 @@
-import { NgModule } from '@angular/core';
-import { DynamicFormComponent } from './dynamic-form.component';
-
+import {NgModule} from '@angular/core';
+import {DynamicFormComponent} from './dynamic-form.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
+import {MultiCheckboxComponent} from "./controls/multi-checkbox/multi-checkbox.component";
+import {SelectComponent} from "./controls/select/select.component";
+import {TextboxComponent} from "./controls/textbox/textbox.component";
+import {SwitchComponent} from "./controls/switch/switch.component";
+import {CheckboxComponent} from "./controls/checkbox/checkbox.component";
+import {HelperTextComponent} from "./common/helper-text/helper-text.component";
+import {ValidationFeedbackComponent} from "./common/validation-feedback/validation-feedback.component";
+import {DynamicControlComponent} from "./common/dynamic-control/dynamic-control.component";
+import {FormControlComponent} from "./common/form-control/form-control.component";
 
 
 @NgModule({
   declarations: [
-    DynamicFormComponent
+    DynamicFormComponent,
+    MultiCheckboxComponent,
+    SelectComponent,
+    TextboxComponent,
+    SwitchComponent,
+    CheckboxComponent,
+    HelperTextComponent,
+    ValidationFeedbackComponent,
+    DynamicControlComponent,
+    FormControlComponent,
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   exports: [
-    DynamicFormComponent
+    DynamicFormComponent,
+    MultiCheckboxComponent,
+    SelectComponent,
+    TextboxComponent,
+    SwitchComponent,
+    CheckboxComponent,
+    HelperTextComponent,
+    ValidationFeedbackComponent,
+    DynamicControlComponent,
+    FormControlComponent,
   ]
 })
-export class DynamicFormModule { }
+export class DynamicFormModule {
+}
