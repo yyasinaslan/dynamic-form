@@ -13,6 +13,11 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   @Input() input!: CheckboxInput<any>;
   @Input() disabled: boolean = false;
 
+  @Input() localizations = {
+    "select_all": "Select All",
+    "deselect_all": "Deselect All"
+  }
+
   val: any;
 
   constructor(public control: NgControl) {

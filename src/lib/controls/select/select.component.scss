@@ -1,6 +1,14 @@
 
 .select-list-item {
   &:hover {
-    background-color: var(--bs-primary, #09f);
+    background-color: rgba(var(--bs-primary-rgb, #09f), 0.4);
+  }
+}
+
+.dropdown-container {
+  position: relative;
+
+  .dropdown-menu {
+    position: absolute;
   }
 }

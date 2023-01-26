@@ -1,43 +1,44 @@
-<!--  <label [for]="formName + '_' + input.key" class="form-label" (click)="dropDown.toggle()">{{ input.label }}</label>-->
-<!-- multiSelect -->
-<!--  <div ngbDropdown #dropDown="ngbDropdown">-->
-<!--    <button-->
-<!--      [disabled]="disabled"-->
-<!--      type="button"-->
-<!--      (blur)="onTouched()"-->
-<!--      class="form-select d-flex w-100 justify-content-between align-items-center"-->
-<!--      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"-->
-<!--      ngbDropdownToggle>-->
-<!--      <span *ngIf="val || val.length > 0" class="text-truncate">{{ labels }}</span>-->
-<!--      <div>&nbsp;</div>-->
-<!--    </button>-->
-<!--    <div ngbDropdownMenu [id]="formName + '_' + input.key" role="menu" class="w-100">-->
-<!--      <div class="d-flex flex-column align-items-stretch">-->
-<!--        <ng-container *ngIf="input.multiple">-->
-<!--          <label-->
-<!--            *ngFor="let option of input.options"-->
-<!--            class="select-list-item hstack align-items-center gap-2 flex-fill py-2 ps-3 pe-2">-->
-<!--            <input-->
-<!--              class="form-check-input m-0"-->
-<!--              type="checkbox"-->
-<!--              [checked]="val && val.includes(option.value)"-->
-<!--              (change)="changeCheckControl($event, option.value)"-->
-<!--              [disabled]="disabled"-->
-<!--              [value]="option.value"/>-->
-<!--            <span>{{ option.label }}</span>-->
-<!--          </label>-->
-<!--        </ng-container>-->
+<label [for]="formName + '_' + input.key" class="form-label" (click)="toggleDropdown()">{{ input.label }}</label>
+<div class="dropdown-container">
+  <div class="dropdown">
+    <button
+      [disabled]="disabled"
+      type="button"
+      (blur)="onTouched()"
+      (click)="toggleDropdown()"
+      class="form-select d-flex w-100 justify-content-between align-items-center"
+      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid, 'show': showDropdown }">
+      <span *ngIf="val || val.length > 0" class="text-truncate">{{ labels }}</span>
+      <div>&nbsp;</div>
+    </button>
+    <div [id]="formName + '_' + input.key" role="menu" class="w-100 dropdown-menu shadow-sm" [ngClass]="{'show': showDropdown}">
+      <div class="d-flex flex-column align-items-stretch">
+        <ng-container *ngIf="input.multiple">
+          <label
+            *ngFor="let option of input.options"
+            class="select-list-item hstack align-items-center gap-2 flex-fill py-2 ps-3 pe-2">
+            <input
+              class="form-check-input m-0"
+              type="checkbox"
+              [checked]="val && val.includes(option.value)"
+              (change)="changeCheckControl($event, option.value)"
+              [disabled]="disabled"
+              [value]="option.value"/>
+            <span>{{ option.label }}</span>
+          </label>
+        </ng-container>
 
-<!--        <ng-container *ngIf="!input.multiple">-->
-<!--          <button-->
-<!--            type="button"-->
-<!--            ngbDropdownItem-->
-<!--            *ngFor="let option of input.options"-->
-<!--            (click)="clickedControl(option.value, option.label)">-->
-<!--            {{ option.label }}-->
-<!--          </button>-->
-<!--        </ng-container>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!-- multiSelectEnd -->
+        <ng-container *ngIf="!input.multiple">
+          <button
+            type="button"
+            class="dropdown-item"
+            *ngFor="let option of input.options"
+            (click)="clickedControl(option.value, option.label)">
+            {{ option.label }}
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+</div>

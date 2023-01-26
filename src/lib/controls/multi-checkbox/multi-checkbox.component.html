@@ -1,58 +1,59 @@
-<!--<div-->
-<!--  class="hstack align-items-center gap-2 mb-2"-->
-<!--  *ngIf="input.controlType == 'checkboxgroup'; else radioGroupLabelTemplate">-->
-<!--  <div class="">{{ input.label }}</div>-->
-<!--  <div class="btn-group btn-group-sm">-->
-<!--    <button type="button" class="btn btn-outline-secondary" [disabled]="disabled" (click)="selectAll()">-->
-<!--      <i class="bi bi-check-lg me-1"></i>-->
-<!--      <span>{{ t("Select All") }}</span>-->
-<!--    </button>-->
-<!--    <button-->
-<!--      type="button"-->
-<!--      class="btn btn-outline-secondary"-->
-<!--      [disabled]="disabled"-->
-<!--      (click)="deselectAll()"-->
-<!--      [ngbTooltip]="t('Deselect All')"-->
-<!--      container="body">-->
-<!--      <i class="bi bi-x-lg"></i>-->
-<!--    </button>-->
-<!--  </div>-->
-<!--</div>-->
-<!--<div-->
-<!--  class="d-flex gap-1 flex-wrap"-->
-<!--  [ngClass]="input.orientation == 'horizontal' ? 'flex-row gap-3' : 'flex-column gap-2'">-->
-<!--  <ng-container *ngIf="input.controlType == 'checkboxgroup'; else radioGroupTemplate">-->
-<!--    <div class="form-check" *ngFor="let option of input.options; let index = index">-->
-<!--      <input-->
-<!--        class="form-check-input"-->
-<!--        type="checkbox"-->
-<!--        [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"-->
-<!--        [value]="option.value"-->
-<!--        [disabled]="disabled"-->
-<!--        [checked]="val.includes(option.value)"-->
-<!--        (blur)="onTouched()"-->
-<!--        (change)="checkboxChanged($event, option.value)"/>-->
-<!--      <label class="form-check-label" (click)="labelClick(option)">{{ option.label }}</label>-->
-<!--    </div>-->
-<!--  </ng-container>-->
-<!--</div>-->
+<label class="form-label">{{ input.label }}</label>
+<div
+  class="d-flex gap-1 flex-wrap"
+  [ngClass]="input.orientation == 'horizontal' ? 'flex-row gap-3 align-items-center' : 'flex-column gap-2'">
+  <ng-container *ngIf="input.controlType == 'checkboxgroup'; else radioGroupTemplate">
+    <div class="form-check" *ngFor="let option of input.options; let index = index">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+        [value]="option.value"
+        [disabled]="disabled"
+        [checked]="val.includes(option.value)"
+        (blur)="onTouched()"
+        (change)="checkboxChanged($event, option.value)"/>
+      <label class="form-check-label" (click)="labelClick(option)">{{ option.label }}</label>
+    </div>
+  </ng-container>
+  <div *ngIf="input.controlType == 'checkboxgroup'" [ngClass]="{'align-self-start': input.orientation == 'vertical'}"
+       class="btn-group btn-group-sm">
+    <button type="button" class="btn btn-outline-secondary" [disabled]="disabled"
+            (click)="selectAll()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="icon-svg me-1" fill="currentColor"
+           viewBox="0 0 16 16">
+        <path
+          d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+      </svg>
+      <span>{{ localizations.select_all }}</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      [disabled]="disabled"
+      (click)="deselectAll()"
+      [title]="localizations.deselect_all">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="icon-svg" fill="currentColor"
+           viewBox="0 0 16 16">
+        <path
+          d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+      </svg>
+    </button>
+  </div>
+</div>
 
-<!--<ng-template #radioGroupLabelTemplate>-->
-<!--  <label class="form-label">{{ input.label }}</label>-->
-<!--</ng-template>-->
-
-<!--<ng-template #radioGroupTemplate>-->
-<!--  <div class="form-check" *ngFor="let option of input.options">-->
-<!--    <input-->
-<!--      class="form-check-input"-->
-<!--      type="radio"-->
-<!--      [value]="option.value"-->
-<!--      [name]="input.key"-->
-<!--      [checked]="val == option.value"-->
-<!--      [disabled]="disabled"-->
-<!--      (blur)="onTouched()"-->
-<!--      (change)="radioChanged(option.value)"-->
-<!--      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"/>-->
-<!--    <label class="form-check-label" (click)="labelClick(option)">{{ option.label }}</label>-->
-<!--  </div>-->
-<!--</ng-template>-->
+<ng-template #radioGroupTemplate>
+  <div class="form-check" *ngFor="let option of input.options">
+    <input
+      class="form-check-input"
+      type="radio"
+      [value]="option.value"
+      [name]="input.key"
+      [checked]="val == option.value"
+      [disabled]="disabled"
+      (blur)="onTouched()"
+      (change)="radioChanged(option.value)"
+      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"/>
+    <label class="form-check-label" (click)="labelClick(option)">{{ option.label }}</label>
+  </div>
+</ng-template>

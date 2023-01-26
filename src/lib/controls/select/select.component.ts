@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, ElementRef, HostListener, Input, OnInit} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms"
 import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
 import {DropdownInput} from "../../helpers/dynamic-form.interface";
@@ -15,13 +15,23 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
   @Input() floating: boolean = false;
 
+  @HostListener('document:click', ['$event'])
+  documentClick(event: MouseEvent) {
+    const nativeEl = this.elRef.nativeElement as HTMLElement;
+    if (!nativeEl.contains(event.target as HTMLElement)) {
+      this.showDropdown = false;
+    }
+  }
+
+  showDropdown: boolean = false;
+
   val: string[] | string = []; //seçili olan değer (checked)
   onChange: (value: any) => void = () => {
   };
   onTouched: () => void = () => {
   };
 
-  constructor(public control: NgControl) {
+  constructor(public control: NgControl, private elRef: ElementRef) {
     control.valueAccessor = this;
   }
 
@@ -58,6 +68,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
   clickedControl(value: any, label: any) {
     this.val = value;
     this.onChange(this.val);
+    this.showDropdown = false;
   }
 
   changeCheckControl(event: any, option: any) {
@@ -89,5 +100,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
   writeValue(obj: any): void {
     this.val = obj;
+  }
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
   }
 }
