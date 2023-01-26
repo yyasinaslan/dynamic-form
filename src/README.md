@@ -67,7 +67,7 @@ export class AppComponent {
 
 In app.component.html you can use dynamic form like this
 
-```angular2html
+```html
 
 <ngy-dynamic-form
   [inputs]="inputs"

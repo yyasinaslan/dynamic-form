@@ -16,9 +16,9 @@ export function randomString(len: number = 6) {
   return str;
 }
 
-export interface DropdownOption {
+export interface DropdownOption<T = any> {
   label: string;
-  value: string;
+  value: T;
 }
 
 export type ControlType =
@@ -73,7 +73,7 @@ export interface BaseInputOptions<T> {
    * Dropdown, checkboxgroup and radiogroup options
    * Must be an array of {label:string, value:any}
    */
-  options?: DropdownOption[];
+  options?: DropdownOption<T>[];
 
   /**
    * Reactive form validators
@@ -130,6 +130,11 @@ export interface BaseInputOptions<T> {
    * Input placeholder
    */
   placeholder?: string;
+
+  /**
+   * Disable initially
+   */
+  disabled?: boolean;
 }
 
 export interface ArrayInputOptions<T> extends BaseInputOptions<T[]> {
@@ -163,6 +168,8 @@ export class BaseInput<T> implements BaseInputOptions<T> {
   input?: AnyInput;
   inputs?: AnyInput[];
 
+  disabled?: boolean;
+
   constructor(options: BaseInputOptions<T>) {
     this.value = options.value;
     this.key = options.key ?? "";
@@ -188,7 +195,11 @@ export class BaseInput<T> implements BaseInputOptions<T> {
    * Create form control with validators
    */
   createFormControl(): AbstractControl {
-    return new FormControl<T>(this.value as any, this.validators);
+    const control = new FormControl<T>(this.value as any, this.validators);
+    if (this.disabled) {
+      control.disable();
+    }
+    return control;
   }
 }
 
