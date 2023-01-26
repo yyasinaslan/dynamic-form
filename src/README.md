@@ -1,24 +1,82 @@
-# DynamicForm
+# Dynamic Form for Angular 15 + Bootstrap 5
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
+This component library helps you to generate form template with configuration objects.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project dynamic-form` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project dynamic-form`.
-> Note: Don't forget to add `--project dynamic-form` or else it will be added to the default project in your `angular.json` file. 
+Install package with npm or yarn
 
-## Build
+```shell
+yarn add @yyasinaslan/dynamic-form
+#or
+npm install @yyasinaslan/dynamic-form
+```
 
-Run `ng build dynamic-form` to build the project. The build artifacts will be stored in the `dist/` directory.
+Import DynamicFormModule to your module or standalone component
 
-## Publishing
+```typescript
+import {DynamicFormModule} from "@yyasinaslan/dynamic-form";
 
-After building your library with `ng build dynamic-form`, go to the dist folder `cd dist/dynamic-form` and run `npm publish`.
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    DynamicFormModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+```
 
-## Running unit tests
+That's it.
 
-Run `ng test dynamic-form` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Be careful this package is still under development.
 
-## Further help
+## Basic usage
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Define your inputs in app component, or anywhere you want like below.
+
+```typescript
+
+export class AppComponent {
+
+  inputs = [
+    new TextBoxInput({
+      key: 'firstName',
+      value: '',
+      label: 'Firstname',
+      validators: [Validators.required],
+      validatorsMessage: [{key: 'required', message: 'Firstname required'}]
+    }),
+    new TextBoxInput({
+      key: 'lastName',
+      value: '',
+      label: 'Lastname',
+      validators: [Validators.required],
+      validatorsMessage: [{key: 'required', message: 'Lastname required'}]
+    }),
+  ]
+
+  formSubmitHandler(event: FormGroup) {
+    // You can get form value with event object
+  }
+}
+```
+
+In app.component.html you can use dynamic form like this
+
+```angular2html
+
+<ngy-dynamic-form
+  [inputs]="inputs"
+  (post)="formSubmitHandler($event)"
+  formName="userForm"></ngy-dynamic-form>
+```
+
+This will generate form with automatic layout (Bootstrap grid used)
+
+![](./docs/images/example-form-view.png)
+
+## Options and Advanced usage coming soon
