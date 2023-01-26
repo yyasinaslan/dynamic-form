@@ -28,6 +28,7 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/@yyasinaslan/dynamic-form
       - run: npm ci
+      - run: cd dist/dynamic-form
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
