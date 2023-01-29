@@ -8,7 +8,7 @@
       (click)="toggleDropdown()"
       class="form-select d-flex w-100 justify-content-between align-items-center"
       [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid, 'show': showDropdown }">
-      <span *ngIf="val || val.length > 0" class="text-truncate">{{ labels }}</span>
+      <span class="text-truncate">{{ labels }}</span>
       <div>&nbsp;</div>
     </button>
     <div [id]="formName + '_' + input.key" role="menu" class="w-100 dropdown-menu shadow-sm" [ngClass]="{'show': showDropdown}">
@@ -20,8 +20,8 @@
             <input
               class="form-check-input m-0"
               type="checkbox"
-              [checked]="val && val.includes(option.value)"
-              (change)="changeCheckControl($event, option.value)"
+              [checked]="valIncludes(option.value)"
+              (change)="changeCheckControl($event, option)"
               [disabled]="disabled"
               [value]="option.value"/>
             <span>{{ option.label }}</span>

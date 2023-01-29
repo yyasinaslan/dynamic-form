@@ -1,7 +1,7 @@
-import {Component, ElementRef, HostListener, Input, OnInit} from "@angular/core";
+import {Component, ElementRef, HostListener, Input, OnInit, Optional} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms"
 import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
-import {DropdownInput} from "../../helpers/dynamic-form.interface";
+import {DropdownInput, DropdownOption} from "../../helpers/dynamic-form.interface";
 
 @Component({
   selector: "ngy-select",
@@ -14,6 +14,10 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
   @Input() disabled: boolean = false;
 
   @Input() floating: boolean = false;
+
+  @Optional() @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
+    return a === b;
+  };
 
   @HostListener('document:click', ['$event'])
   documentClick(event: MouseEvent) {
@@ -31,6 +35,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
   onTouched: () => void = () => {
   };
 
+
   constructor(public control: NgControl, private elRef: ElementRef) {
     control.valueAccessor = this;
   }
@@ -40,22 +45,22 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
   }
 
   get labels(): string | any {
-    if (typeof this.val == "string") {
+    if (!Array.isArray(this.val)) {
       if (!this.input.options) return this.val;
 
-      const opt = this.input.options.find((o) => o.value == this.val);
+      const opt = this.input.options.find((o) => this.compareWith(o.value, this.val));
 
       if (!opt) return this.val;
 
       return opt.label;
     }
 
-    if (!this.val) return "";
+    if (this.val === undefined) return "";
 
     const labels = this.val.map((v) => {
       if (!this.input.options) return v;
 
-      const opt = this.input.options.find((o) => o.value == v);
+      const opt = this.input.options.find((o) => this.compareWith(o.value, v));
 
       if (!opt) return v;
 
@@ -71,15 +76,17 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
     this.showDropdown = false;
   }
 
-  changeCheckControl(event: any, option: any) {
+  changeCheckControl(event: any, option: DropdownOption) {
     if (!this.input.multiple) return;
 
-    const checked = event.target.checked;
-    const checkValue = event.target.value;
+    if (!Array.isArray(this.val)) this.val = [this.val];
 
-    if (this.val.includes(checkValue) && !checked) {
+    const checked = event.target.checked;
+    const checkValue = option.value;
+
+    if (this.valIncludes(checkValue) && !checked) {
       (this.val as Array<any>).splice(this.val.indexOf(checkValue), 1);
-    } else if (!this.val.includes(checkValue) && checked) {
+    } else if (!this.valIncludes(checkValue) && checked) {
       this.val = [...this.val, checkValue];
     }
 
@@ -104,5 +111,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
+  }
+
+  /**
+   * Returns true if selected array has value in it
+   * @param value
+   */
+  valIncludes(value: any) {
+    if (!Array.isArray(this.val)) return false;
+    return (this.val as Array<any>).findIndex(v => this.compareWith(v, value)) > -1;
   }
 }

@@ -18,6 +18,10 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
     "deselect_all": "Deselect All"
   }
 
+  @Optional() @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
+    return a === b;
+  };
+
   val: any;
 
   constructor(public control: NgControl) {
@@ -28,10 +32,6 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   };
 
   onTouched: () => void = () => {
-  };
-
-  compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
-    return a == b;
   };
 
   public registerOnChange(fn: (value: any | null) => void) {
