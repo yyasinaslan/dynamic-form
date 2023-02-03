@@ -86,10 +86,10 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
 
     this.loadDynamicControls();
 
-    console.log(this.dynamicControls);
+    // console.log(this.dynamicControls);
     if (this.dynamicControls) {
       this.dynamicControlsSub = this.dynamicControls.changes.pipe(delay(0)).subscribe((dn) => {
-        console.log("Dynamic changed", dn);
+        // console.log("Dynamic changed", dn);
         this.loadDynamicControls();
       });
     }
@@ -123,7 +123,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
 
     // If inputs changed recreate form
     if (changes["inputs"]) {
-      console.log("inputs changed");
+      // console.log("inputs changed");
       this.form = createFormGroup(changes["inputs"].currentValue);
     }
   }

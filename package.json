@@ -4,7 +4,7 @@
   "author": "yyasinaslan https://github.com/yyasinaslan",
   "homepage": "https://github.com/yyasinaslan/dynamic-form",
   "license": "MIT",
-  "packageManager": "yarn",
+  "packageManager": "yarn@3.0.0",
   "scripts": {
     "ng": "ng",
     "start": "yarn demo:start",

@@ -11,6 +11,7 @@ import {HelperTextComponent} from "./common/helper-text/helper-text.component";
 import {ValidationFeedbackComponent} from "./common/validation-feedback/validation-feedback.component";
 import {DynamicControlComponent} from "./common/dynamic-control/dynamic-control.component";
 import {FormControlComponent} from "./common/form-control/form-control.component";
+import {FileInputComponent} from './controls/file-input/file-input.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {FormControlComponent} from "./common/form-control/form-control.component
     ValidationFeedbackComponent,
     DynamicControlComponent,
     FormControlComponent,
+    FileInputComponent,
   ],
   imports: [
     FormsModule,
@@ -42,6 +44,7 @@ import {FormControlComponent} from "./common/form-control/form-control.component
     ValidationFeedbackComponent,
     DynamicControlComponent,
     FormControlComponent,
+    FileInputComponent
   ]
 })
 export class DynamicFormModule {

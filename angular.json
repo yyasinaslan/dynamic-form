@@ -8,6 +8,11 @@
       "root": "src",
       "sourceRoot": "src",
       "prefix": "ngy",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

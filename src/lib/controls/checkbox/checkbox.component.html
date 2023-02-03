@@ -3,6 +3,7 @@
     class="form-check-input"
     type="checkbox"
     [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+    [disabled]="disabled"
     [name]="input.key"
     [checked]="val == true"
     (change)="valChanged($event)"

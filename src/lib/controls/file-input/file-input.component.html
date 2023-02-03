@@ -1,0 +1,11 @@
+<label [for]="formName + '_' + input.key" class="form-label">{{ input.label }}</label>
+<input
+  type="file"
+  class="form-control"
+  [id]="formName + '_' + input.key"
+  [name]="input.key"
+  [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+  (input)="valueChange($event)"
+  [disabled]="disabled"
+  (blur)="onTouched()"
+  [placeholder]="input.placeholder"/>

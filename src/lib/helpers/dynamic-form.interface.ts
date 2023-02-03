@@ -23,6 +23,7 @@ export interface DropdownOption<T = any> {
 
 export type ControlType =
   | "textbox"
+  | "file"
   | "dropdown"
   | "textarea"
   | "switch"
@@ -207,6 +208,10 @@ export class TextBoxInput<T> extends BaseInput<T> {
   override controlType: ControlType = "textbox";
 }
 
+export class FileInput extends BaseInput<any> {
+  override controlType: ControlType = "file";
+}
+
 export class DropdownInput<T> extends BaseInput<T> {
   override controlType: ControlType = "dropdown";
 }
@@ -224,8 +229,15 @@ export class CheckboxInput<T> extends BaseInput<T> {
   override controlType: ControlType = "checkbox";
 }
 
-export class CheckboxGroupInput<T> extends BaseInput<T> {
+export class CheckboxGroupInput<T> extends BaseInput<T[]> {
   override controlType: ControlType = "checkboxgroup";
+
+  constructor(props: BaseInputOptions<T[]>) {
+    super(props);
+
+    this.value = props.value ?? [];
+  }
+
 }
 
 export class RadioGroupInput<T> extends BaseInput<T> {
@@ -300,6 +312,7 @@ export class GroupInput<T> extends BaseInput<T> {
 export type AnyInput =
   | BaseInput<any>
   | TextBoxInput<any>
+  | FileInput
   | DropdownInput<any>
   | TextAreaInput<any>
   | SwitchInput<any>

@@ -1,7 +1,12 @@
 import {Component} from '@angular/core';
 import {FormGroup, Validators} from "@angular/forms";
 import {DropdownInput, TextBoxInput} from "dynamic-form";
-import {DropdownOption} from "../../../src/lib/helpers/dynamic-form.interface";
+import {
+  CheckboxGroupInput, CheckboxInput,
+  DropdownOption, FileInput,
+  RadioGroupInput, SwitchInput,
+  TextAreaInput
+} from "../../../src/lib/helpers/dynamic-form.interface";
 
 @Component({
   selector: 'app-root',
@@ -19,22 +24,60 @@ export class AppComponent {
 
   inputs = [
     new TextBoxInput({
-      key: 'user_first_name',
+      key: 'textboxexample',
       value: '',
-      label: 'Firstname',
+      label: 'TextBox',
+      size: '6',
       validators: [Validators.required],
       validatorsMessage: [{key: 'required', message: 'Username required'}]
     }),
     new TextBoxInput({
-      key: 'user_last_name',
+      key: 'textbox2example',
+      type: 'password',
       value: '',
-      label: 'Lastname',
+      label: 'Password',
+      size: '6',
       validators: [Validators.required],
       validatorsMessage: [{key: 'required', message: 'Username required'}]
     }),
+    new FileInput({
+      key: 'fileinputexample',
+      label: 'File input',
+      validators: [Validators.required],
+      validatorsMessage: [{key: 'required', message: 'Username required'}]
+    }),
+    new TextBoxInput({
+      key: 'floatingtextexample',
+      value: '',
+      label: 'Floating label textBox',
+      size: '12',
+      floating: true,
+      validators: [Validators.required],
+      validatorsMessage: [{key: 'required', message: 'Username required'}]
+    }),
+    new TextAreaInput({
+      key: 'textareaexample',
+      value: '',
+      label: 'Textarea',
+      size: '12',
+      validators: [Validators.required],
+      validatorsMessage: [{key: 'required', message: 'Username required'}]
+    }),
+    new SwitchInput({
+      key: 'switchexample',
+      value: false,
+      label: 'Switch example',
+      size: '12'
+    }),
+    new CheckboxInput({
+      key: 'checkboxexample',
+      value: false,
+      label: 'Checkbox example',
+      size: '12'
+    }),
     new DropdownInput({
       key: "time",
-      label: "Time",
+      label: "Select",
       value: 1,
       validators: [Validators.required],
       validatorsMessage: [{key: "required", message: "Please enter your Time"}],
@@ -43,47 +86,34 @@ export class AppComponent {
     }),
     new DropdownInput({
       key: "time2",
-      label: "Time Multiple",
+      label: "Select Multiple",
       value: [0],
       validators: [Validators.required],
       validatorsMessage: [{key: "required", message: "Please enter your Time2"}],
       multiple: true,
       options: this.testOptions,
     }),
-    // new DropdownInput({
-    //   key: "time2",
-    //   label: "Time2",
-    //   placeholder: "Choose...",
-    //   size: "6",
-    //   value: [],
-    //   validators: [Validators.required],
-    //   validatorsMessage: [{ key: "required", message: "Please enter your Time2" }],
-    //   multiple: true,
-    //   options: this.testOptions,
-    // }),
-    // new CheckboxGroupInput({
-    //   key: "time3",
-    //   label: "Time3",
-    //   placeholder: "Choose...",
-    //   size: "6",
-    //   value: [],
-    //   validators: [Validators.required],
-    //   validatorsMessage: [{ key: "required", message: "Please enter your Time3" }],
-    //   orientation: 'vertical',
-    //   options: this.testOptions,
-    // }),
-    // new RadioGroupInput({
-    //   key: "time4",
-    //   label: "Time4",
-    //   placeholder: "Choose...",
-    //   size: "6",
-    //   value: [],
-    //   validators: [Validators.required],
-    //   validatorsMessage: [{ key: "required", message: "Please enter your Time3" }],
-    //   orientation: 'vertical',
-    //   options: this.testOptions,
-    // }),
+    new CheckboxGroupInput({
+      key: "time3",
+      label: "Checkbox group",
+      size: "6",
+      value: [],
+      validators: [Validators.required],
+      validatorsMessage: [{key: "required", message: "Please enter your Time3"}],
+      orientation: 'vertical',
+      options: this.testOptions,
+    }),
+    new RadioGroupInput({
+      key: "time4",
+      label: "Radio group",
+      size: "6",
+      validators: [Validators.required],
+      validatorsMessage: [{key: "required", message: "Please enter your Time3"}],
+      orientation: 'vertical',
+      options: this.testOptions,
+    }),
   ]
+  formDisabled: boolean = false;
 
   formPosted($event: FormGroup) {
     console.log('Form POSTED', $event.value)

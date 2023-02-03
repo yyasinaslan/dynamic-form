@@ -1,22 +1,22 @@
-import {Component, Input} from "@angular/core";
-import {NgControl} from "@angular/forms";
+import {Component, Input} from '@angular/core';
+import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
-import {CheckboxInput} from "../../helpers/dynamic-form.interface";
+import {TextAreaInput, TextBoxInput} from "../../helpers/dynamic-form.interface";
 
 @Component({
-  selector: "ngy-checkbox",
-  templateUrl: "./checkbox.component.html",
-  styleUrls: ["./checkbox.component.scss"],
+  selector: 'ngy-file-input',
+  templateUrl: './file-input.component.html',
+  styleUrls: ['./file-input.component.css']
 })
-export class CheckboxComponent implements DynamicControlInterface {
+export class FileInputComponent implements ControlValueAccessor, DynamicControlInterface {
   @Input() formName: string = "";
-  @Input() input!: CheckboxInput<any>;
+  @Input() input!: TextBoxInput<string> | TextAreaInput<any>;
   @Input() disabled: boolean = false;
 
-  val: boolean = false;
+  val: any;
 
   constructor(public control: NgControl) {
-    control.valueAccessor = this;
+    this.control.valueAccessor = this;
   }
 
   onChange: (value: any) => void = () => {
@@ -44,17 +44,10 @@ export class CheckboxComponent implements DynamicControlInterface {
     this.val = obj;
   }
 
-  valChanged($event: Event) {
+  valueChange($event: Event) {
     const target = $event.target as HTMLInputElement;
     if (!target) return;
-
-    this.val = target.checked;
-    this.onChange(this.val);
-  }
-
-  labelClick() {
-    if (this.disabled) return;
-    this.val = !this.val;
+    this.val = target.files;
     this.onChange(this.val);
   }
 }

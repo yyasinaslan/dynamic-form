@@ -16,4 +16,5 @@ export * from './lib/controls/select/select.component';
 export * from './lib/controls/switch/switch.component';
 export * from './lib/controls/checkbox/checkbox.component';
 export * from './lib/controls/textbox/textbox.component';
+export * from './lib/controls/file-input/file-input.component';
 export * from './lib/controls/multi-checkbox/multi-checkbox.component';

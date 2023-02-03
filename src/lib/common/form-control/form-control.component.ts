@@ -70,14 +70,14 @@ export class FormControlComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.groupTemplateContainer) {
       this.loadTemplateControls();
     }
-    this.templateChildrenSub = this.templateChildren.changes.pipe(delay(0)).subscribe((changes) => {
-      console.log("templateChildren Changes", this.templateChildren);
-    });
+    // this.templateChildrenSub = this.templateChildren.changes.pipe(delay(0)).subscribe((changes) => {
+    //   // console.log("templateChildren Changes", this.templateChildren);
+    // });
   }
 
   private loadTemplateControls() {
-    console.log("groupTemplateContainer", this.groupTemplateContainer);
-    console.log("templateChildren", this.templateChildren);
+    // console.log("groupTemplateContainer", this.groupTemplateContainer);
+    // console.log("templateChildren", this.templateChildren);
   }
 
   ngOnDestroy(): void {

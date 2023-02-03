@@ -4,6 +4,8 @@
   <ng-container [ngSwitch]="input.controlType">
     <ng-container *ngSwitchCase="'textbox'" [ngTemplateOutlet]="textBoxTemplate"
                   [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
+    <ng-container *ngSwitchCase="'file'" [ngTemplateOutlet]="fileInputTemplate"
+                  [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
     <ng-container *ngSwitchCase="'textarea'" [ngTemplateOutlet]="textAreaTemplate"
                   [ngTemplateOutletContext]="{$implicit: input, pathData: path}"></ng-container>
     <ng-container *ngSwitchCase="'dropdown'" [ngTemplateOutlet]="dropDownTemplate"
@@ -25,6 +27,16 @@
       [formControlName]="inputData.key"
       [formName]="formName"
       [floating]="inputData.floating"></ngy-textbox>
+    <ng-container [ngTemplateOutlet]="validationTextTemplate"
+                  [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
+  </ng-template>
+
+  <!-- FILEINPUT TEMPLATE -->
+  <ng-template #fileInputTemplate let-inputData let-pathData="pathData">
+    <ngy-file-input
+      [input]="inputData"
+      [formControlName]="inputData.key"
+      [formName]="formName"></ngy-file-input>
     <ng-container [ngTemplateOutlet]="validationTextTemplate"
                   [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
   </ng-template>

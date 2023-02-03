@@ -66,6 +66,8 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   }
 
   labelClick(option: DropdownOption) {
+    if (this.control.disabled) return;
+
     this.makeArray();
 
     if (this.input.controlType == "radiogroup") {
