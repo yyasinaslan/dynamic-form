@@ -4,6 +4,7 @@
     *ngIf="input.controlType == 'textbox'"
     [type]="input.type"
     class="form-control"
+    [readOnly]="input.readonly"
     [id]="formName + '_' + input.key"
     [name]="input.key"
     [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
@@ -15,6 +16,7 @@
   <textarea
     *ngIf="input.controlType == 'textarea'"
     class="form-control"
+    [readOnly]="input.readonly"
     [id]="formName + '_' + input.key"
     [name]="input.key"
     [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
@@ -31,6 +33,7 @@
       *ngIf="input.controlType == 'textbox'"
       [type]="input.type"
       class="form-control"
+      [readOnly]="input.readonly"
       [id]="formName + '_' + input.key"
       [name]="input.key"
       [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
@@ -42,6 +45,7 @@
     <textarea
       *ngIf="input.controlType == 'textarea'"
       class="form-control"
+      [readOnly]="input.readonly"
       [id]="formName + '_' + input.key"
       [name]="input.key"
       [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"

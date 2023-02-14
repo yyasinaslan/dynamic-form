@@ -136,6 +136,11 @@ export interface BaseInputOptions<T> {
    * Disable initially
    */
   disabled?: boolean;
+
+  /**
+   * Readonly
+   */
+  readonly?: boolean;
 }
 
 export interface ArrayInputOptions<T> extends BaseInputOptions<T[]> {
@@ -170,6 +175,7 @@ export class BaseInput<T> implements BaseInputOptions<T> {
   inputs?: AnyInput[];
 
   disabled?: boolean;
+  readonly ?: boolean;
 
   constructor(options: BaseInputOptions<T>) {
     this.value = options.value;
@@ -190,6 +196,9 @@ export class BaseInput<T> implements BaseInputOptions<T> {
     this.floating = options.floating ?? false;
     this.id = options.id ?? options.key + "_" + randomString(10);
     this.placeholder = this.floating ? this.label : options.placeholder ?? "";
+
+    this.disabled = options.disabled ?? false;
+    this.readonly = options.readonly ?? false;
   }
 
   /**

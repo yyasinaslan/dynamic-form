@@ -110,6 +110,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
   }
 
   toggleDropdown() {
+    if (this.control.disabled) {
+      return;
+    }
     this.showDropdown = !this.showDropdown;
   }
 

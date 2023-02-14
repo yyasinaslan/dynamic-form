@@ -11,6 +11,7 @@
         [value]="option.value"
         [disabled]="disabled"
         [checked]="val.includes(option.value)"
+        [readOnly]="input.readonly"
         (blur)="onTouched()"
         (change)="checkboxChanged($event, option.value)"/>
       <label class="form-check-label" (click)="labelClick(option)">{{ option.label }}</label>
