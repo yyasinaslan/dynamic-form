@@ -28,6 +28,7 @@ export class AppComponent {
       value: '',
       label: 'TextBox',
       size: '6',
+      readonly: true,
       validators: [Validators.required],
       validatorsMessage: [{key: 'required', message: 'Username required'}]
     }),
