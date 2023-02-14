@@ -34,6 +34,8 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
   @Input("formDisabled") formDisabled: boolean = false;
   @Input("showSubmitButton") showSubmitButton: boolean = true;
 
+  @Input("valueToPatch") valueToPatch?: any;
+
   /**
    * Dynamic controls for custom layout
    * if this is empty auto layout will take place
@@ -84,6 +86,10 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
     // Creating form group from inputs type
     this.form = createFormGroup(this.inputs);
 
+    if (this.valueToPatch) {
+      this.patchValue(this.valueToPatch);
+    }
+
     this.loadDynamicControls();
 
     // console.log(this.dynamicControls);
@@ -93,6 +99,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
         this.loadDynamicControls();
       });
     }
+
   }
 
   loadDynamicControls() {
@@ -184,6 +191,10 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
     this.submitEmitter.emit(this.form);
 
     return false;
+  }
+
+  patchValue(val: any) {
+    this.form.patchValue(val);
   }
 
   removeItemFromArray(controlKey: string, i: number) {
