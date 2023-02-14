@@ -9,7 +9,7 @@
       (click)="toggleDropdown()"
       class="form-select d-flex w-100 justify-content-between align-items-center"
       [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid, 'show': showDropdown }">
-      <span class="text-truncate">{{ labels }}</span>
+      <span class="text-truncate">{{ labels$ | observableString }}</span>
       <div>&nbsp;</div>
     </button>
     <div [id]="formName + '_' + input.key" role="menu" class="w-100 dropdown-menu shadow-sm"
@@ -26,7 +26,7 @@
               (change)="changeCheckControl($event, option)"
               [disabled]="disabled"
               [value]="option.value"/>
-            <span>{{ option.label }}</span>
+            <span>{{ option.label | observableString }}</span>
           </label>
         </ng-container>
 
@@ -36,7 +36,7 @@
             class="dropdown-item"
             *ngFor="let option of input.options"
             (click)="clickedControl(option.value, option.label)">
-            {{ option.label }}
+            {{ option.label | observableString }}
           </button>
         </ng-container>
       </div>

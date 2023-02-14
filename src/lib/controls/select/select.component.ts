@@ -2,6 +2,7 @@ import {Component, ElementRef, HostListener, Input, OnInit, Optional} from "@ang
 import {ControlValueAccessor, NgControl} from "@angular/forms"
 import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
 import {DropdownInput, DropdownOption} from "../../helpers/dynamic-form.interface";
+import {BehaviorSubject, combineLatest, map, Observable, of, Subscription} from "rxjs";
 
 @Component({
   selector: "ngy-select",
@@ -30,8 +31,14 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
   showDropdown: boolean = false;
 
   val: string[] | string = []; //seçili olan değer (checked)
+
+  labels$: string | Observable<string> = new BehaviorSubject<string>('');
+
+  optionLabelsSub?: Subscription;
+
   onChange: (value: any) => void = () => {
   };
+
   onTouched: () => void = () => {
   };
 
@@ -41,10 +48,16 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
   }
 
   ngOnInit(): void {
-    this.labels;
+    this.calcLabels();
   }
 
-  get labels(): string | any {
+  async calcLabels() {
+    const labels = await this.labels();
+
+    this.labels$ = labels;
+  }
+
+  labels() {
     if (!Array.isArray(this.val)) {
       if (!this.input.options) return this.val;
 
@@ -57,7 +70,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
     if (this.val === undefined) return "";
 
-    const labels = this.val.map((v) => {
+    const labels: Array<string | Observable<string>> = this.val.map((v) => {
       if (!this.input.options) return v;
 
       const opt = this.input.options.find((o) => this.compareWith(o.value, v));
@@ -67,6 +80,10 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
       return opt.label;
     });
 
+    if (labels.some(l => typeof l !== 'string')) {
+      return combineLatest(labels.map(l => typeof l === 'string' ? of(l) : l)).pipe(map(labelsString => labelsString.join(', ')));
+    }
+
     return labels.join(", ");
   }
 
@@ -74,6 +91,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
     this.val = value;
     this.onChange(this.val);
     this.showDropdown = false;
+    this.calcLabels();
   }
 
   changeCheckControl(event: any, option: DropdownOption) {
@@ -91,6 +109,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
     }
 
     this.onChange(this.val);
+    this.calcLabels();
   }
 
   public registerOnChange(fn: (value: any | null) => void): void {

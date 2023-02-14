@@ -22,10 +22,13 @@ export class AppComponent implements OnInit {
 
   testObsString = new BehaviorSubject('Test label observable');
 
+  testOptionLabelObs1 = new BehaviorSubject('Option label changeable 1')
+  testOptionLabelObs2 = new BehaviorSubject('Option label changeable 2')
+
   testOptions: DropdownOption[] = [
     {label: 'Test1', value: 0},
-    {label: 'Test2', value: 1},
-    {label: 'Test3', value: 2},
+    {label: this.testOptionLabelObs1, value: 1},
+    {label: this.testOptionLabelObs2, value: 2},
   ]
 
   inputs = [
@@ -132,6 +135,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     timer(0, 1000).subscribe((value) => {
       this.testObsString.next('Test obseerver' + value)
+      this.testOptionLabelObs1.next('1Test option label ' + value)
+    })
+
+    timer(0, 500).subscribe((value) => {
+      this.testOptionLabelObs2.next('2Test option label ' + value)
     })
   }
 }

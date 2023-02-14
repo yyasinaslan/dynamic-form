@@ -14,7 +14,7 @@
         [readOnly]="input.readonly"
         (blur)="onTouched()"
         (change)="checkboxChanged($event, option.value)"/>
-      <label class="form-check-label" (click)="labelClick(option)">{{ option.label }}</label>
+      <label class="form-check-label" (click)="labelClick(option)">{{ option.label | observableString}}</label>
     </div>
   </ng-container>
   <!--  <div *ngIf="input.controlType == 'checkboxgroup'" [ngClass]="{'align-self-start': input.orientation == 'vertical'}"-->
