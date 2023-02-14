@@ -9,5 +9,5 @@
     (change)="valChanged($event)"
     (blur)="onTouched()"
     #check/>
-  <label class="form-check-label" (click)="labelClick()">{{ input.label }}</label>
+  <label class="form-check-label" (click)="labelClick()">{{ input.label | observableString }}</label>
 </div>

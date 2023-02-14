@@ -1,4 +1,5 @@
 import {AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn} from "@angular/forms";
+import {Observable} from "rxjs";
 
 // Extended implementation from this tutorial
 // https://angular.io/guide/dynamic-form
@@ -17,7 +18,7 @@ export function randomString(len: number = 6) {
 }
 
 export interface DropdownOption<T = any> {
-  label: string;
+  label: string | Observable<string>;
   value: T;
 }
 
@@ -47,7 +48,7 @@ export interface BaseInputOptions<T> {
   /**
    * Form control label
    */
-  label?: string;
+  label?: string | Observable<string>;
 
   /**
    * Indicates if input required (For browser based validation)
@@ -87,7 +88,7 @@ export interface BaseInputOptions<T> {
    * key: Identifier of validator. Example: required, minlength
    * message: Validator message that will be shown
    */
-  validatorsMessage?: { key: string; message: string }[];
+  validatorsMessage?: { key: string; message: string | Observable<string> }[];
 
   /**
    * Orientation for checkbox and radio groups
@@ -114,7 +115,7 @@ export interface BaseInputOptions<T> {
    * Form control helper text
    * It will show under or top of input according to styles
    */
-  helperText?: string;
+  helperText?: string | Observable<string>;
 
   /**
    * Enable floating style input (Bootstrap)
@@ -130,7 +131,7 @@ export interface BaseInputOptions<T> {
   /**
    * Input placeholder
    */
-  placeholder?: string;
+  placeholder?: string | Observable<string>;
 
   /**
    * Disable initially
@@ -167,9 +168,9 @@ export class BaseInput<T> implements BaseInputOptions<T> {
   floating: boolean;
   size: string;
   inputSize: BaseInputOptions<T>["inputSize"];
-  helperText: string;
+  helperText: BaseInputOptions<T>["helperText"];
   id: string;
-  placeholder: string;
+  placeholder: BaseInputOptions<T>["placeholder"];
 
   input?: AnyInput;
   inputs?: AnyInput[];
@@ -259,9 +260,9 @@ export class ArrayInput<T> implements ArrayInputOptions<T> {
   value?: Array<T> | undefined;
   key: string;
   validators?: ValidatorFn[] | undefined;
-  validatorsMessage?: { key: string; message: string }[] | undefined;
+  validatorsMessage?: BaseInputOptions<T>["validatorsMessage"];
   size?: string | undefined;
-  helperText?: string | undefined;
+  helperText?: BaseInputOptions<T>["helperText"];
 
   input!: AnyInput;
 

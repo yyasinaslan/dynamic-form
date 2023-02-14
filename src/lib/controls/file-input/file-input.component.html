@@ -1,4 +1,4 @@
-<label [for]="formName + '_' + input.key" class="form-label">{{ input.label }}</label>
+<label [for]="formName + '_' + input.key" class="form-label">{{ input.label | observableString}}</label>
 <input
   type="file"
   class="form-control"

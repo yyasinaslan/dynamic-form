@@ -1,4 +1,5 @@
-<label [for]="formName + '_' + input.key" class="form-label" (click)="toggleDropdown()">{{ input.label }}</label>
+<label [for]="formName + '_' + input.key" class="form-label"
+       (click)="toggleDropdown()">{{ input.label | observableString }}</label>
 <div class="dropdown-container">
   <div class="dropdown">
     <button
@@ -11,7 +12,8 @@
       <span class="text-truncate">{{ labels }}</span>
       <div>&nbsp;</div>
     </button>
-    <div [id]="formName + '_' + input.key" role="menu" class="w-100 dropdown-menu shadow-sm" [ngClass]="{'show': showDropdown}">
+    <div [id]="formName + '_' + input.key" role="menu" class="w-100 dropdown-menu shadow-sm"
+         [ngClass]="{'show': showDropdown}">
       <div class="d-flex flex-column align-items-stretch">
         <ng-container *ngIf="input.multiple">
           <label

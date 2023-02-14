@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import {FormArray, FormGroup} from "@angular/forms";
-import {delay, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {AnyInput, ArrayInput, GroupInput} from "../../helpers/dynamic-form.interface";
 
 @Component({

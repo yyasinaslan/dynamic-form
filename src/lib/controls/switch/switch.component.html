@@ -9,5 +9,5 @@
     (ngModelChange)="onChange($event)"
     [disabled]="disabled"
     (blur)="onTouched()"/>
-  <label class="form-check-label" [for]="formName + '_' + input.key">{{ input.label }}</label>
+  <label class="form-check-label" [for]="formName + '_' + input.key">{{ input.label | observableString }}</label>
 </div>

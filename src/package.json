@@ -1,6 +1,6 @@
 {
   "name": "@yyasinaslan/dynamic-form",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "yyasinaslan https://github.com/yyasinaslan",
   "homepage": "https://github.com/yyasinaslan/dynamic-form",
   "license": "MIT",
@@ -13,7 +13,8 @@
   "peerDependencies": {
     "@angular/common": "^15.1.0",
     "@angular/core": "^15.1.0",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.2.3",
+    "rxjs": "^7.5.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

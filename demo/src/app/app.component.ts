@@ -1,20 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, Validators} from "@angular/forms";
 import {DropdownInput, TextBoxInput} from "dynamic-form";
 import {
-  CheckboxGroupInput, CheckboxInput,
-  DropdownOption, FileInput,
-  RadioGroupInput, SwitchInput,
+  CheckboxGroupInput,
+  CheckboxInput,
+  DropdownOption,
+  FileInput,
+  RadioGroupInput,
+  SwitchInput,
   TextAreaInput
 } from "../../../src/lib/helpers/dynamic-form.interface";
+import {BehaviorSubject, timer} from "rxjs";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'demo';
+export class AppComponent implements OnInit {
+  title = 'demo'
+
+  testObsString = new BehaviorSubject('Test label observable');
 
   testOptions: DropdownOption[] = [
     {label: 'Test1', value: 0},
@@ -36,7 +42,7 @@ export class AppComponent {
       key: 'textbox2example',
       type: 'password',
       value: '',
-      label: 'Password',
+      label: this.testObsString,
       size: '6',
       validators: [Validators.required],
       validatorsMessage: [{key: 'required', message: 'Username required'}]
@@ -116,7 +122,16 @@ export class AppComponent {
   ]
   formDisabled: boolean = false;
 
+  constructor() {
+  }
+
   formPosted($event: FormGroup) {
     console.log('Form POSTED', $event.value)
+  }
+
+  ngOnInit(): void {
+    timer(0, 1000).subscribe((value) => {
+      this.testObsString.next('Test obseerver' + value)
+    })
   }
 }

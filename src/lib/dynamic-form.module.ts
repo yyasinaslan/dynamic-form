@@ -12,6 +12,7 @@ import {ValidationFeedbackComponent} from "./common/validation-feedback/validati
 import {DynamicControlComponent} from "./common/dynamic-control/dynamic-control.component";
 import {FormControlComponent} from "./common/form-control/form-control.component";
 import {FileInputComponent} from './controls/file-input/file-input.component';
+import {ObservableStringPipe} from './helpers/observable-string.pipe';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {FileInputComponent} from './controls/file-input/file-input.component';
     DynamicControlComponent,
     FormControlComponent,
     FileInputComponent,
+    ObservableStringPipe,
   ],
   imports: [
     FormsModule,
