@@ -17,8 +17,10 @@ export class ObservableStringPipe implements PipeTransform, OnDestroy {
     this.asyncPipe = new AsyncPipe(this.cdr);
   }
 
-  transform(value: string | Observable<string> | undefined): string | null | undefined {
-    if (!value || typeof value === 'string') {
+  transform(value: string | Observable<string> | undefined): string | null {
+    if (!value) return '';
+
+    if (!(value instanceof Observable)) {
       return value;
     }
 

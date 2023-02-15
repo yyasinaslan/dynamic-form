@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
     new DropdownInput({
       key: "time",
       label: "Select",
-      value: 1,
+      value: 4,
       validators: [Validators.required],
       validatorsMessage: [{key: "required", message: "Please enter your Time"}],
       multiple: false,
