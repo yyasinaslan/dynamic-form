@@ -1,14 +1,15 @@
-import {Component, Input, Optional} from "@angular/core";
+import {Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {CheckboxInput, DropdownOption} from "../../helpers/dynamic-form.interface";
 import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: "ngy-multi-checkbox",
   templateUrl: "./multi-checkbox.component.html",
   styleUrls: ["./multi-checkbox.component.scss"],
 })
-export class MultiCheckboxComponent implements ControlValueAccessor, DynamicControlInterface {
+export class MultiCheckboxComponent implements ControlValueAccessor, DynamicControlInterface, OnDestroy, OnChanges, OnInit {
   @Optional() @Input() formName: string = "";
   @Input() input!: CheckboxInput<any>;
   @Input() disabled: boolean = false;
@@ -21,6 +22,9 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   @Optional() @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
     return a === b;
   };
+
+  _options: DropdownOption[] = [];
+  private optionSub?: Subscription;
 
   val: any;
 
@@ -40,6 +44,11 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
 
   public registerOnTouched(fn: () => void) {
     this.onTouched = fn;
+  }
+
+  valIncludes(arr: Array<any>, value: any) {
+    if (!Array.isArray(arr)) return false;
+    return arr.findIndex(v => this.compareWith(v, value)) > -1;
   }
 
   setDisabledState(isDisabled: boolean) {
@@ -108,7 +117,7 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
       return;
     }
 
-    this.val = options.map((opt) => {
+    this.val = this._options.map((opt) => {
       return opt.value;
     });
 
@@ -124,5 +133,38 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   radioChanged(value: any) {
     this.val = value;
     this.onChange(this.val);
+  }
+
+  ngOnDestroy(): void {
+    this.desubOptions();
+  }
+
+  ngOnInit(): void {
+    this.subOptions();
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['input']) {
+      this.desubOptions();
+      this.subOptions();
+    }
+  }
+
+  subOptions() {
+    if (this.input.options instanceof Observable) {
+      this.optionSub = this.input.options.subscribe((options) => {
+        this._options = options;
+      });
+      return;
+    }
+
+    this._options = this.input.options as DropdownOption[];
+  }
+
+  desubOptions() {
+    if (this.input.options instanceof Observable && this.optionSub) {
+      this.optionSub.unsubscribe();
+    }
   }
 }

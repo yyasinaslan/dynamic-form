@@ -75,7 +75,7 @@ export interface BaseInputOptions<T> {
    * Dropdown, checkboxgroup and radiogroup options
    * Must be an array of {label:string, value:any}
    */
-  options?: DropdownOption<T>[];
+  options?: DropdownOption<T>[] | Observable<DropdownOption<T>[]>;
 
   /**
    * Reactive form validators
@@ -224,6 +224,9 @@ export class FileInput extends BaseInput<any> {
 
 export class DropdownInput<T> extends BaseInput<T> {
   override controlType: ControlType = "dropdown";
+
+  showClearButton: boolean = true;
+  clearButtonText = 'Clear';
 }
 
 export class TextAreaInput<T> extends BaseInput<T> {

@@ -10,7 +10,7 @@ import {
   SwitchInput,
   TextAreaInput
 } from "../../../src/lib/helpers/dynamic-form.interface";
-import {BehaviorSubject, timer} from "rxjs";
+import {BehaviorSubject, take, timer} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -30,6 +30,8 @@ export class AppComponent implements OnInit {
     {label: this.testOptionLabelObs1, value: 1},
     {label: this.testOptionLabelObs2, value: 2},
   ]
+
+  testOptionsObs = new BehaviorSubject<DropdownOption[]>([]);
 
   inputs = [
     new TextBoxInput({
@@ -88,7 +90,7 @@ export class AppComponent implements OnInit {
     new DropdownInput({
       key: "time",
       label: "Select",
-      value: 4,
+      value: 5,
       validators: [Validators.required],
       validatorsMessage: [{key: "required", message: "Please enter your Time"}],
       multiple: false,
@@ -97,17 +99,17 @@ export class AppComponent implements OnInit {
     new DropdownInput({
       key: "time2",
       label: "Select Multiple",
-      value: [0],
+      value: [6, 0, 2],
       validators: [Validators.required],
       validatorsMessage: [{key: "required", message: "Please enter your Time2"}],
       multiple: true,
-      options: this.testOptions,
+      options: this.testOptionsObs,
     }),
     new CheckboxGroupInput({
       key: "time3",
       label: "Checkbox group",
       size: "6",
-      value: [],
+      value: [8],
       validators: [Validators.required],
       validatorsMessage: [{key: "required", message: "Please enter your Time3"}],
       orientation: 'vertical',
@@ -120,7 +122,8 @@ export class AppComponent implements OnInit {
       validators: [Validators.required],
       validatorsMessage: [{key: "required", message: "Please enter your Time3"}],
       orientation: 'vertical',
-      options: this.testOptions,
+      value: '',
+      options: this.testOptionsObs,
     }),
   ]
   formDisabled: boolean = false;
@@ -140,6 +143,14 @@ export class AppComponent implements OnInit {
 
     timer(0, 500).subscribe((value) => {
       this.testOptionLabelObs2.next('2Test option label ' + value)
+    })
+
+    timer(0, 10).pipe(take(10)).subscribe((value) => {
+      if (value == 2) {
+        this.testOptionsObs.next([...this.testOptionsObs.getValue(), this.testOptions[2]])
+      } else {
+        this.testOptionsObs.next([...this.testOptionsObs.getValue(), {label: 'Test ' + value, value: value}])
+      }
     })
   }
 }

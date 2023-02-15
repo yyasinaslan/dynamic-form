@@ -17,12 +17,12 @@
       <div class="d-flex flex-column align-items-stretch">
         <ng-container *ngIf="input.multiple">
           <label
-            *ngFor="let option of input.options"
+            *ngFor="let option of _options"
             class="select-list-item hstack align-items-center gap-2 flex-fill py-2 ps-3 pe-2">
             <input
               class="form-check-input m-0"
               type="checkbox"
-              [checked]="valIncludes(option.value)"
+              [checked]="valIncludes($any(val),option.value)"
               (change)="changeCheckControl($event, option)"
               [disabled]="disabled"
               [value]="option.value"/>
@@ -34,7 +34,7 @@
           <button
             type="button"
             class="dropdown-item"
-            *ngFor="let option of input.options"
+            *ngFor="let option of _options"
             (click)="clickedControl(option.value, option.label)">
             {{ option.label | observableString }}
           </button>

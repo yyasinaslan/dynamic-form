@@ -1,4 +1,14 @@
-import {Component, ElementRef, HostListener, Input, OnInit, Optional} from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SimpleChanges
+} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms"
 import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
 import {DropdownInput, DropdownOption} from "../../helpers/dynamic-form.interface";
@@ -9,7 +19,7 @@ import {BehaviorSubject, combineLatest, map, Observable, of, Subscription} from 
   templateUrl: "./select.component.html",
   styleUrls: ["./select.component.scss"],
 })
-export class SelectComponent implements OnInit, ControlValueAccessor, DynamicControlInterface {
+export class SelectComponent implements OnInit, OnDestroy, OnChanges, ControlValueAccessor, DynamicControlInterface {
   @Input() formName: string = "";
   @Input() input!: DropdownInput<any>;
   @Input() disabled: boolean = false;
@@ -27,6 +37,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
       this.showDropdown = false;
     }
   }
+
+  _options: DropdownOption[] = [];
+  private optionSub?: Subscription;
 
   showDropdown: boolean = false;
 
@@ -47,10 +60,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
     control.valueAccessor = this;
   }
 
-  ngOnInit(): void {
-    this.calcLabels();
-  }
-
   async calcLabels() {
     const labels = await this.labels();
 
@@ -59,9 +68,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
   labels() {
     if (!Array.isArray(this.val)) {
-      if (!this.input.options) return this.val;
+      if (!this._options) return this.val;
 
-      const opt = this.input.options.find((o) => this.compareWith(o.value, this.val));
+      const opt = this._options.find((o) => this.compareWith(o.value, this.val));
 
       if (!opt) return this.val;
 
@@ -70,18 +79,22 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
     if (this.val === undefined) return "";
 
-    const labels: Array<string | Observable<string>> = this.val.map((v) => {
-      if (!this.input.options) return v;
+    if (!this._options || this._options.length == 0) return this.val.join(', ')
 
-      const opt = this.input.options.find((o) => this.compareWith(o.value, v));
-
+    const labels: Array<string | Observable<string>> = this.val.filter(v => {
+      return this._options.find((o) => this.compareWith(o.value, v));
+    }).map((v) => {
+      const opt = this._options.find((o) => this.compareWith(o.value, v));
       if (!opt) return v;
 
       return opt.label;
     });
 
-    if (labels.some(l => typeof l !== 'string')) {
-      return combineLatest(labels.map(l => typeof l === 'string' ? of(l) : l)).pipe(map(labelsString => labelsString.join(', ')));
+    if (labels.some(l => l instanceof Observable)) {
+      return combineLatest(labels.map(l => l instanceof Observable ? l : of(l)))
+        .pipe(
+          map(labelsString => labelsString.join(', '))
+        );
     }
 
     return labels.join(", ");
@@ -102,10 +115,16 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
     const checked = event.target.checked;
     const checkValue = option.value;
 
-    if (this.valIncludes(checkValue) && !checked) {
-      (this.val as Array<any>).splice(this.val.indexOf(checkValue), 1);
-    } else if (!this.valIncludes(checkValue) && checked) {
-      this.val = [...this.val, checkValue];
+
+    if (this.valIncludes(this.val, checkValue) && !checked) {
+      const selected = this.val.filter(v => v != checkValue)
+      this.val = this._options
+        .filter(opt => this.valIncludes(selected, opt.value))
+        .map(opt => opt.value);
+    } else if (!this.valIncludes(this.val, checkValue) && checked) {
+      this.val = this._options
+        .filter(opt => this.valIncludes([...this.val, checkValue], opt.value))
+        .map(opt => opt.value);
     }
 
     this.onChange(this.val);
@@ -126,6 +145,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
   writeValue(obj: any): void {
     this.val = obj;
+    this.calcLabels();
   }
 
   toggleDropdown() {
@@ -137,10 +157,46 @@ export class SelectComponent implements OnInit, ControlValueAccessor, DynamicCon
 
   /**
    * Returns true if selected array has value in it
+   * @param arr
    * @param value
    */
-  valIncludes(value: any) {
-    if (!Array.isArray(this.val)) return false;
-    return (this.val as Array<any>).findIndex(v => this.compareWith(v, value)) > -1;
+  valIncludes(arr: Array<any>, value: any) {
+    if (!Array.isArray(arr)) return false;
+    return arr.findIndex(v => this.compareWith(v, value)) > -1;
+  }
+
+  ngOnDestroy(): void {
+    this.desubOptions();
+  }
+
+  ngOnInit(): void {
+    this.subOptions();
+    this.calcLabels();
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['input']) {
+      this.desubOptions();
+      this.subOptions();
+    }
+  }
+
+  subOptions() {
+    if (this.input.options instanceof Observable) {
+      this.optionSub = this.input.options.subscribe((options) => {
+        this._options = options;
+        this.calcLabels();
+      });
+      return;
+    }
+
+    this._options = this.input.options as DropdownOption[];
+  }
+
+  desubOptions() {
+    if (this.input.options instanceof Observable && this.optionSub) {
+      this.optionSub.unsubscribe();
+    }
   }
 }

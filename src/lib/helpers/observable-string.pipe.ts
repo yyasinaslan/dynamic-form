@@ -17,14 +17,14 @@ export class ObservableStringPipe implements PipeTransform, OnDestroy {
     this.asyncPipe = new AsyncPipe(this.cdr);
   }
 
-  transform(value: string | Observable<string> | undefined): string | null {
+  transform(value: string | number | Observable<string> | undefined): string | null {
     if (!value) return '';
 
-    if (!(value instanceof Observable)) {
-      return value;
+    if (value instanceof Observable) {
+      return this.asyncPipe.transform(value);
     }
 
-    return this.asyncPipe.transform(value);
+    return String(value);
   }
 
   ngOnDestroy(): void {
