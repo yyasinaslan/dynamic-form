@@ -43,4 +43,15 @@ export class SwitchComponent implements ControlValueAccessor, DynamicControlInte
   writeValue(obj: any) {
     this.val = obj;
   }
+
+  valChanged(val: boolean) {
+    this.val = val;
+    this.onChange(this.val);
+  }
+
+  labelClick() {
+    if (this.disabled) return;
+    this.val = !this.val;
+    this.onChange(this.val);
+  }
 }
