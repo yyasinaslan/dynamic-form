@@ -1,5 +1,7 @@
 # Dynamic Form for Angular 15 + Bootstrap 5
 
+[![Downloads](https://img.shields.io/npm/dm/@yyasinaslan/dynamic-form?style=flat-square)](https://www.npmjs.com/package/@yyasinaslan/dynamic-form)
+
 This component library helps you to generate form template with configuration objects.
 
 ## Installation
