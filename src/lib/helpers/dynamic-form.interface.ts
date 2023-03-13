@@ -9,7 +9,11 @@ import {Observable} from "rxjs";
  */
 const CHARS = "abcdefghijklmnopqrstuwxyz0123456789";
 
-export function randomString(len: number = 6) {
+/**
+ * Generate random string with given length
+ * @param len
+ */
+function randomString(len: number = 6) {
   let str = "";
   for (let i = 0; i < len; i++) {
     str += CHARS.charAt(Math.round(Math.random() * CHARS.length));
@@ -17,12 +21,19 @@ export function randomString(len: number = 6) {
   return str;
 }
 
+/**
+ * Dropdown option type
+ */
 export interface DropdownOption<T = any> {
   label: string | Observable<string>;
   value: T;
 }
 
+/**
+ * Control types
+ */
 export type ControlType =
+  | "hidden"
   | "textbox"
   | "file"
   | "dropdown"
@@ -70,6 +81,14 @@ export interface BaseInputOptions<T> {
    * Input html tag type attribute
    */
   type?: string;
+
+  /**
+   * Custom comparing function for options and values.
+   * Can be used in dropdown multicheckbox, radiogroup
+   * @param a
+   * @param b
+   */
+  compareWith?: (a: T, b: T) => boolean
 
   /**
    * Dropdown, checkboxgroup and radiogroup options
@@ -172,6 +191,8 @@ export class BaseInput<T> implements BaseInputOptions<T> {
   id: string;
   placeholder: BaseInputOptions<T>["placeholder"];
 
+  compareWith?: BaseInputOptions<T>["compareWith"];
+
   input?: AnyInput;
   inputs?: AnyInput[];
 
@@ -198,6 +219,9 @@ export class BaseInput<T> implements BaseInputOptions<T> {
     this.id = options.id ?? options.key + "_" + randomString(10);
     this.placeholder = this.floating ? this.label : options.placeholder ?? "";
 
+    // Set default comparing function if not provided
+    this.compareWith = options.compareWith ?? ((a: any, b: any) => a === b);
+
     this.disabled = options.disabled ?? false;
     this.readonly = options.readonly ?? false;
   }
@@ -214,14 +238,24 @@ export class BaseInput<T> implements BaseInputOptions<T> {
   }
 }
 
+/**
+ * Text box input (html basic input tag)
+ * Can be altered with type option
+ */
 export class TextBoxInput<T> extends BaseInput<T> {
   override controlType: ControlType = "textbox";
 }
 
+/**
+ * File input (don't recommended now)
+ */
 export class FileInput extends BaseInput<any> {
   override controlType: ControlType = "file";
 }
 
+/**
+ * Select box
+ */
 export class DropdownInput<T> extends BaseInput<T> {
   override controlType: ControlType = "dropdown";
 
@@ -229,19 +263,31 @@ export class DropdownInput<T> extends BaseInput<T> {
   clearButtonText = 'Clear';
 }
 
+/**
+ * Textarea
+ */
 export class TextAreaInput<T> extends BaseInput<T> {
   override controlType: ControlType = "textarea";
 }
 
+/**
+ * Bootstrap switch input
+ */
 export class SwitchInput<T> extends BaseInput<boolean> {
   override controlType: ControlType = "switch";
   color: string = "primary";
 }
 
+/**
+ * Single checkbox
+ */
 export class CheckboxInput<T> extends BaseInput<T> {
   override controlType: ControlType = "checkbox";
 }
 
+/**
+ * Multi checkbox
+ */
 export class CheckboxGroupInput<T> extends BaseInput<T[]> {
   override controlType: ControlType = "checkboxgroup";
 
@@ -253,10 +299,25 @@ export class CheckboxGroupInput<T> extends BaseInput<T[]> {
 
 }
 
+/**
+ * Radio group
+ */
 export class RadioGroupInput<T> extends BaseInput<T> {
   override controlType: ControlType = "radiogroup";
 }
 
+/**
+ * Hidden Input type
+ * can be used for external controlled form fields like file upload or just keep value
+ */
+export class HiddenInput<T> extends BaseInput<T> {
+  override controlType: ControlType = "hidden";
+}
+
+/**
+ * Array input
+ * !!! Not production ready
+ */
 export class ArrayInput<T> implements ArrayInputOptions<T> {
   controlType: ControlType = "array";
 
@@ -293,6 +354,10 @@ export class ArrayInput<T> implements ArrayInputOptions<T> {
   }
 }
 
+/**
+ * Form group
+ * !!! Not production ready
+ */
 export class GroupInput<T> extends BaseInput<T> {
   override controlType: ControlType = "group";
 
@@ -322,6 +387,9 @@ export class GroupInput<T> extends BaseInput<T> {
   }
 }
 
+/**
+ * Inputs type wrapper
+ */
 export type AnyInput =
   | BaseInput<any>
   | TextBoxInput<any>
@@ -335,6 +403,10 @@ export type AnyInput =
   | GroupInput<any>
   | ArrayInput<any>;
 
+/**
+ * Create each form control from each input
+ * @param inputs
+ */
 export function createFormGroup(inputs: AnyInput[]) {
   const group: any = {};
 

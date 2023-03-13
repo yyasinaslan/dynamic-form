@@ -43,7 +43,8 @@
 
   <!-- DROPDOWN TEMPLATE -->
   <ng-template #dropDownTemplate let-inputData let-pathData="pathData">
-    <ngy-select [input]="inputData" [formControlName]="inputData.key"></ngy-select>
+    <ngy-select [input]="inputData" [formControlName]="inputData.key"
+                [compareWith]="inputData.compareWith"></ngy-select>
     <ng-container [ngTemplateOutlet]="validationTextTemplate"
                   [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
   </ng-template>
@@ -75,14 +76,16 @@
 
   <!-- CHECKBOXGROUP TEMPLATE -->
   <ng-template #checkboxGroupTemplate let-inputData let-pathData="pathData">
-    <ngy-multi-checkbox [input]="inputData" [formControlName]="inputData.key"></ngy-multi-checkbox>
+    <ngy-multi-checkbox [input]="inputData" [formControlName]="inputData.key"
+                        [compareWith]="inputData.compareWith"></ngy-multi-checkbox>
     <ng-container [ngTemplateOutlet]="validationTextTemplate"
                   [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
   </ng-template>
 
   <!-- RADIOGROUP TEMPLATE -->
   <ng-template #radioGroupTemplate let-inputData let-pathData="pathData">
-    <ngy-multi-checkbox [input]="inputData" [formControlName]="inputData.key"></ngy-multi-checkbox>
+    <ngy-multi-checkbox [input]="inputData" [formControlName]="inputData.key"
+                        [compareWith]="inputData.compareWith"></ngy-multi-checkbox>
     <ng-container [ngTemplateOutlet]="validationTextTemplate"
                   [ngTemplateOutletContext]="{$implicit: inputData, pathData:pathData}"></ng-container>
   </ng-template>

@@ -6,6 +6,7 @@ import {
   CheckboxInput,
   DropdownOption,
   FileInput,
+  HiddenInput,
   RadioGroupInput,
   SwitchInput,
   TextAreaInput
@@ -34,6 +35,12 @@ export class AppComponent implements OnInit {
   testOptionsObs = new BehaviorSubject<DropdownOption[]>([]);
 
   inputs = [
+    new HiddenInput({
+      key: 'hiddenexample',
+      value: 'Hello',
+      validators: [Validators.required],
+      validatorsMessage: [{key: 'required', message: 'hiddenexample required'}]
+    }),
     new TextBoxInput({
       key: 'textboxexample',
       value: '',
