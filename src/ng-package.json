@@ -1,8 +1,10 @@
 {
   "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../dist/dynamic-form",
-
   "lib": {
+    "styleIncludePaths": [
+      "../"
+    ],
     "entryFile": "./public-api.ts"
   }
 }
