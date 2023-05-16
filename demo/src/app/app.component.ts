@@ -1,17 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, Validators} from "@angular/forms";
-import {DropdownInput, TextBoxInput} from "dynamic-form";
-import {
-  CheckboxGroupInput,
-  CheckboxInput,
-  DropdownOption,
-  FileInput,
-  HiddenInput,
-  RadioGroupInput,
-  SwitchInput,
-  TextAreaInput
-} from "../../../src/lib/helpers/dynamic-form.interface";
 import {BehaviorSubject, take, timer} from "rxjs";
+import {DropdownOption} from "dynamic-form/interfaces/dropdown-option.interface";
+import {HiddenInput} from "dynamic-form/common/hidden-input";
+import {TextBoxInput} from "dynamic-form/common/textbox-input";
+import {FileInput} from "dynamic-form/common/file-input";
+import {TextAreaInput} from "dynamic-form/common/textarea-input";
+import {SwitchInput} from "dynamic-form/common/switch-input";
+import {CheckboxInput} from "dynamic-form/common/checkbox-input";
+import {DropdownInput} from "dynamic-form/common/dropdown-input";
+import {CheckboxGroupInput} from "dynamic-form/common/checkbox-group-input";
+import {RadioGroupInput} from "dynamic-form/common/radio-group-input";
 
 @Component({
   selector: 'app-root',

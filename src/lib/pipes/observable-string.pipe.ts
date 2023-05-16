@@ -7,7 +7,8 @@ import {AsyncPipe} from "@angular/common";
  */
 @Pipe({
   name: 'observableString',
-  pure: false
+  pure: false,
+  standalone: true
 })
 export class ObservableStringPipe implements PipeTransform, OnDestroy {
 

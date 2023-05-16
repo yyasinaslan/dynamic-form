@@ -6,8 +6,8 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "dynamic-form": [
-        "dist/dynamic-form"
+      "dynamic-form/*": [
+        "src/lib/*"
       ]
     },
     "strict": true,

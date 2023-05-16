@@ -10,14 +10,24 @@ import {
   TemplateRef,
   ViewChild,
 } from "@angular/core";
-import {FormArray, FormGroup} from "@angular/forms";
+import {FormArray, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {AnyInput, ArrayInput, GroupInput} from "../../helpers/dynamic-form.interface";
+import {AnyInput} from "dynamic-form/interfaces/any-input.interface";
+import {ArrayInput} from "dynamic-form/common/array-input";
+import {GroupInput} from "dynamic-form/common/group-input";
+import {CommonModule} from "@angular/common";
+import {DynamicControlComponent} from "dynamic-form/components/dynamic-control/dynamic-control.component";
 
 @Component({
   selector: "ngy-form-control",
+  standalone: true,
   templateUrl: "./form-control.component.html",
   styleUrls: ["./form-control.component.scss"],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DynamicControlComponent,
+  ]
 })
 export class FormControlComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() path!: string;
@@ -75,14 +85,14 @@ export class FormControlComponent implements OnInit, AfterViewInit, OnDestroy {
     // });
   }
 
-  private loadTemplateControls() {
-    // console.log("groupTemplateContainer", this.groupTemplateContainer);
-    // console.log("templateChildren", this.templateChildren);
-  }
-
   ngOnDestroy(): void {
     if (this.templateChildrenSub) {
       this.templateChildrenSub.unsubscribe();
     }
+  }
+
+  private loadTemplateControls() {
+    // console.log("groupTemplateContainer", this.groupTemplateContainer);
+    // console.log("templateChildren", this.templateChildren);
   }
 }

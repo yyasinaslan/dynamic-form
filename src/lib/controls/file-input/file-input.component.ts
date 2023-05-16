@@ -1,11 +1,19 @@
 import {Component, Input} from '@angular/core';
 import {ControlValueAccessor, NgControl} from "@angular/forms";
-import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
-import {TextAreaInput, TextBoxInput} from "../../helpers/dynamic-form.interface";
+import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
+import {TextAreaInput} from "dynamic-form/common/textarea-input";
+import {TextBoxInput} from "dynamic-form/common/textbox-input";
+import {CommonModule} from "@angular/common";
+import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
 
 @Component({
   selector: 'ngy-file-input',
+  standalone: true,
   templateUrl: './file-input.component.html',
+  imports: [
+    CommonModule,
+    ObservableStringPipe
+  ],
   styleUrls: ['./file-input.component.css']
 })
 export class FileInputComponent implements ControlValueAccessor, DynamicControlInterface {

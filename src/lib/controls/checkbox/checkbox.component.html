@@ -1,13 +1,13 @@
 <div class="form-check">
   <input
-    class="form-check-input"
-    type="checkbox"
-    [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+    #check
+    (blur)="onTouched()"
+    (change)="valChanged($event)"
+    [checked]="val == true"
     [disabled]="disabled"
     [name]="input.key"
-    [checked]="val == true"
-    (change)="valChanged($event)"
-    (blur)="onTouched()"
-    #check/>
-  <label class="form-check-label" (click)="labelClick()">{{ input.label | observableString }}</label>
+    [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+    class="form-check-input"
+    type="checkbox"/>
+  <label (click)="labelClick()" class="form-check-label">{{ input.label | observableString }}</label>
 </div>

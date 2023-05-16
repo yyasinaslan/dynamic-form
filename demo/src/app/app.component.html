@@ -1,11 +1,11 @@
 <div class="container mt-5">
-  <ngy-dynamic-form #formComponent [inputs]="inputs" formName="userLoginForm" [formDisabled]="formDisabled"
-                    (post)="formPosted($event)" [valueToPatch]="{textboxexample: 'Hello'}"></ngy-dynamic-form>
+  <ngy-dynamic-form #formComponent (post)="formPosted($event)" [formDisabled]="formDisabled" [inputs]="inputs"
+                    [valueToPatch]="{textboxexample: 'Hello'}" formName="userLoginForm"></ngy-dynamic-form>
 
   <div class="mt-5">
     <div>Submit from outside</div>
-    <button class="btn btn-primary" (click)="formComponent.submitForm()">Submit form</button>
-    <button class="btn btn-primary ms-3" (click)="formDisabled = !formDisabled">Form state
+    <button (click)="formComponent.submitForm()" class="btn btn-primary">Submit form</button>
+    <button (click)="formDisabled = !formDisabled" class="btn btn-primary ms-3">Form state
       = {{formDisabled ? 'disabled' : 'enabled'}}</button>
   </div>
 

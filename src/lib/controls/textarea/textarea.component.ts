@@ -1,29 +1,29 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {ControlValueAccessor, NgControl} from "@angular/forms";
-import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
-import {CheckboxInput} from "dynamic-form/common/checkbox-input";
-import {CommonModule} from "@angular/common";
+import {DynamicControlInterface} from "dynamic-form/interfaces/dynamic-control.interface";
+import {TextBoxInput} from "dynamic-form/common/textbox-input";
+import {TextAreaInput} from "dynamic-form/common/textarea-input";
 import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
 
 @Component({
-  selector: "ngy-checkbox",
+  selector: 'ngy-textarea',
   standalone: true,
-  templateUrl: "./checkbox.component.html",
-  styleUrls: ["./checkbox.component.scss"],
-  imports: [
-    CommonModule,
-    ObservableStringPipe
-  ]
+  imports: [CommonModule, ObservableStringPipe],
+  templateUrl: './textarea.component.html',
+  styleUrls: ['./textarea.component.scss']
 })
-export class CheckboxComponent implements ControlValueAccessor, DynamicControlInterface {
+export class TextareaComponent implements ControlValueAccessor, DynamicControlInterface {
   @Input() formName: string = "";
-  @Input() input!: CheckboxInput<any>;
+  @Input() input!: TextAreaInput<any>;
   @Input() disabled: boolean = false;
 
-  val: boolean = false;
+  @Input() floating: boolean = false;
+
+  val: any;
 
   constructor(public control: NgControl) {
-    control.valueAccessor = this;
+    this.control.valueAccessor = this;
   }
 
   onChange: (value: any) => void = () => {
@@ -51,17 +51,10 @@ export class CheckboxComponent implements ControlValueAccessor, DynamicControlIn
     this.val = obj;
   }
 
-  valChanged($event: Event) {
+  valueChange($event: Event) {
     const target = $event.target as HTMLInputElement;
     if (!target) return;
-
-    this.val = target.checked;
-    this.onChange(this.val);
-  }
-
-  labelClick() {
-    if (this.disabled) return;
-    this.val = !this.val;
+    this.val = target.value;
     this.onChange(this.val);
   }
 }

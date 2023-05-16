@@ -1,35 +1,33 @@
 <ng-container *ngIf="!floating; else floatingTemplate">
   <label [for]="formName + '_' + input.key" class="form-label">{{ input.label | observableString }}</label>
-  <input
+  <textarea
     (blur)="onTouched()"
     (input)="valueChange($event)"
-    *ngIf="input.controlType == 'textbox'"
+    *ngIf="input.controlType == 'textarea'"
     [disabled]="disabled"
     [id]="formName + '_' + input.key"
     [name]="input.key"
     [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
     [placeholder]="input.placeholder | observableString"
     [readOnly]="input.readonly"
-    [type]="input.type"
     [value]="val"
-    class="form-control"/>
+    class="form-control"></textarea>
 </ng-container>
 
 <ng-template #floatingTemplate>
   <div class="form-floating">
-    <input
+    <textarea
       (blur)="onTouched()"
       (input)="valueChange($event)"
-      *ngIf="input.controlType == 'textbox'"
+      *ngIf="input.controlType == 'textarea'"
       [disabled]="disabled"
       [id]="formName + '_' + input.key"
       [name]="input.key"
       [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
-      [placeholder]="input.label | observableString"
+      [placeholder]="input.placeholder | observableString"
       [readOnly]="input.readonly"
-      [type]="input.type"
       [value]="val"
-      class="form-control"/>
+      class="form-control"></textarea>
     <label [for]="formName + '_' + input.key">{{ input.label | observableString }}</label>
   </div>
 </ng-template>

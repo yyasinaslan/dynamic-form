@@ -1,0 +1,29 @@
+<ng-container *ngIf="input && fGroup" [formGroup]="fGroup">
+  <ng-container [ngSwitch]="input.controlType">
+
+    <!-- Iterate array items within form -->
+    <ng-container *ngSwitchCase="'array'" [formArrayName]="input.key">
+      <ng-container *ngFor="let item of arrayItems; let i=index">
+        <ngy-form-control *ngIf="input.input" [arrayItemIndex]="i" [fGroup]="$any(item)" [formName]="formName"
+                          [groupTemplate]="groupTemplate" [input]="input.input"></ngy-form-control>
+      </ng-container>
+    </ng-container>
+
+    <!-- Form group -->
+    <ng-container *ngSwitchCase="'group'">
+      <ng-container #groupTemplateContainer [ngTemplateOutletContext]="{index: arrayItemIndex, fGroup: fGroup, formName: formName, inputs: groupInputsWithKey}"
+                    [ngTemplateOutlet]="groupTemplate ? groupTemplate : defaultGroupTemplate"></ng-container>
+      <ng-template #defaultGroupTemplate>
+        <ng-container *ngFor="let item of groupInputs">
+          <ngy-form-control [fGroup]="fGroup" [formName]="formName" [input]="item" [path]="item.key"></ngy-form-control>
+        </ng-container>
+      </ng-template>
+    </ng-container>
+
+    <!-- Base controls -->
+    <dynamic-control *ngSwitchDefault [fGroup]="fGroup" [formName]="formName" [input]="input"
+                     [path]="path">
+    </dynamic-control>
+
+  </ng-container>
+</ng-container>

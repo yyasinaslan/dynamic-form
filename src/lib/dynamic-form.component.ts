@@ -15,15 +15,23 @@ import {
   ViewChild,
   ViewEncapsulation
 } from "@angular/core";
-import {FormGroup} from "@angular/forms";
-import {AnyInput, createFormGroup} from "./helpers/dynamic-form.interface";
-import {FormControlComponent} from "./common/form-control/form-control.component";
+import {FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControlComponent} from "dynamic-form/components/form-control/form-control.component";
 import {delay, Subscription} from "rxjs";
+import {AnyInput} from "dynamic-form/interfaces/any-input.interface";
+import {createFormGroup} from "dynamic-form/helpers/create-form-group";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: "ngy-dynamic-form",
+  standalone: true,
   templateUrl: "./dynamic-form.component.html",
   styleUrls: ["./dynamic-form.component.scss"],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormControlComponent
+  ],
   encapsulation: ViewEncapsulation.None
 })
 export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit, OnChanges {

@@ -10,14 +10,22 @@ import {
   SimpleChanges
 } from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms"
-import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
-import {DropdownInput, DropdownOption} from "../../helpers/dynamic-form.interface";
+import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
 import {BehaviorSubject, combineLatest, map, Observable, of, Subscription} from "rxjs";
+import {DropdownOption} from "dynamic-form/interfaces/dropdown-option.interface";
+import {DropdownInput} from "dynamic-form/common/dropdown-input";
+import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: "ngy-select",
+  standalone: true,
   templateUrl: "./select.component.html",
   styleUrls: ["./select.component.scss"],
+  imports: [
+    ObservableStringPipe,
+    CommonModule,
+  ]
 })
 export class SelectComponent implements OnInit, OnDestroy, OnChanges, ControlValueAccessor, DynamicControlInterface {
   @Input() formName: string = "";
@@ -25,6 +33,16 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, ControlVal
   @Input() disabled: boolean = false;
 
   @Input() floating: boolean = false;
+  _options: DropdownOption[] = [];
+  showDropdown: boolean = false;
+  val: string[] | string = []; //seçili olan değer (checked)
+  labels$: string | Observable<string> = new BehaviorSubject<string>('');
+  optionLabelsSub?: Subscription;
+  private optionSub?: Subscription;
+
+  constructor(public control: NgControl, private elRef: ElementRef) {
+    control.valueAccessor = this;
+  }
 
   @Optional() @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
     return a === b;
@@ -38,27 +56,11 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, ControlVal
     }
   }
 
-  _options: DropdownOption[] = [];
-  private optionSub?: Subscription;
-
-  showDropdown: boolean = false;
-
-  val: string[] | string = []; //seçili olan değer (checked)
-
-  labels$: string | Observable<string> = new BehaviorSubject<string>('');
-
-  optionLabelsSub?: Subscription;
-
   onChange: (value: any) => void = () => {
   };
 
   onTouched: () => void = () => {
   };
-
-
-  constructor(public control: NgControl, private elRef: ElementRef) {
-    control.valueAccessor = this;
-  }
 
   async calcLabels() {
     const labels = await this.labels();

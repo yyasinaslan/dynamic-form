@@ -1,20 +1,20 @@
 <label class="form-label">{{ input.label | observableString }}</label>
 <div
-  class="d-flex gap-1 flex-wrap"
-  [ngClass]="input.orientation == 'horizontal' ? 'flex-row gap-3 align-items-center' : 'flex-column gap-2'">
+  [ngClass]="input.orientation == 'horizontal' ? 'flex-row gap-3 align-items-center' : 'flex-column gap-2'"
+  class="d-flex gap-1 flex-wrap">
   <ng-container *ngIf="input.controlType == 'checkboxgroup'; else radioGroupTemplate">
-    <div class="form-check" *ngFor="let option of _options; let index = index">
+    <div *ngFor="let option of _options; let index = index" class="form-check">
       <input
-        class="form-check-input"
-        type="checkbox"
-        [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
-        [value]="option.value"
-        [disabled]="disabled"
-        [checked]="valIncludes(val,option.value)"
-        [readOnly]="input.readonly"
         (blur)="onTouched()"
-        (change)="checkboxChanged($event, option.value)"/>
-      <label class="form-check-label" (click)="labelClick(option)">{{ option.label | observableString}}</label>
+        (change)="checkboxChanged($event, option.value)"
+        [checked]="valIncludes(val,option.value)"
+        [disabled]="disabled"
+        [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+        [readOnly]="input.readonly"
+        [value]="option.value"
+        class="form-check-input"
+        type="checkbox"/>
+      <label (click)="labelClick(option)" class="form-check-label">{{ option.label | observableString}}</label>
     </div>
   </ng-container>
   <!--  <div *ngIf="input.controlType == 'checkboxgroup'" [ngClass]="{'align-self-start': input.orientation == 'vertical'}"-->
@@ -44,17 +44,17 @@
 </div>
 
 <ng-template #radioGroupTemplate>
-  <div class="form-check" *ngFor="let option of _options">
+  <div *ngFor="let option of _options" class="form-check">
     <input
-      class="form-check-input"
-      type="radio"
-      [value]="option.value"
-      [name]="input.key"
-      [checked]="compareWith(val, option.value)"
-      [disabled]="disabled"
       (blur)="onTouched()"
       (change)="radioChanged(option.value)"
-      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"/>
-    <label class="form-check-label" (click)="labelClick(option)">{{ option.label | observableString }}</label>
+      [checked]="compareWith(val, option.value)"
+      [disabled]="disabled"
+      [name]="input.key"
+      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+      [value]="option.value"
+      class="form-check-input"
+      type="radio"/>
+    <label (click)="labelClick(option)" class="form-check-label">{{ option.label | observableString }}</label>
   </div>
 </ng-template>

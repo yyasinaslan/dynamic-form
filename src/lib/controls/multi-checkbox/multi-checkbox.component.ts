@@ -1,36 +1,43 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
-import {CheckboxInput, DropdownOption} from "../../helpers/dynamic-form.interface";
-import {DynamicControlInterface} from "../../helpers/dynamic-control.interface";
+import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
 import {Observable, Subscription} from "rxjs";
+import {DropdownOption} from "dynamic-form/interfaces/dropdown-option.interface";
+import {CheckboxInput} from "dynamic-form/common/checkbox-input";
+import {CommonModule} from "@angular/common";
+import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
+import {CheckboxGroupInput} from "dynamic-form/common/checkbox-group-input";
 
 @Component({
   selector: "ngy-multi-checkbox",
+  standalone: true,
   templateUrl: "./multi-checkbox.component.html",
   styleUrls: ["./multi-checkbox.component.scss"],
+  imports: [
+    CommonModule,
+    ObservableStringPipe
+  ]
 })
 export class MultiCheckboxComponent implements ControlValueAccessor, DynamicControlInterface, OnDestroy, OnChanges, OnInit {
   @Optional() @Input() formName: string = "";
-  @Input() input!: CheckboxInput<any>;
+  @Input() input!: CheckboxGroupInput<any>;
   @Input() disabled: boolean = false;
 
   @Input() localizations = {
     "select_all": "Select All",
     "deselect_all": "Deselect All"
   }
-
-  @Optional() @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
-    return a === b;
-  };
-
   _options: DropdownOption[] = [];
-  private optionSub?: Subscription;
-
   val: any;
+  private optionSub?: Subscription;
 
   constructor(public control: NgControl) {
     control.valueAccessor = this;
   }
+
+  @Optional() @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
+    return a === b;
+  };
 
   onChange: (value: any) => void = () => {
   };
@@ -65,13 +72,6 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
     const checked = ($event.target as HTMLInputElement).checked;
 
     this.setArrayValue(checked, value);
-  }
-
-  private makeArray() {
-    // If initial or current value is not array we must ensure we have an array
-    if (!Array.isArray(this.val)) {
-      this.val = [];
-    }
   }
 
   labelClick(option: DropdownOption) {
@@ -143,7 +143,6 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
     this.subOptions();
   }
 
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['input']) {
       this.desubOptions();
@@ -165,6 +164,13 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   desubOptions() {
     if (this.input.options instanceof Observable && this.optionSub) {
       this.optionSub.unsubscribe();
+    }
+  }
+
+  private makeArray() {
+    // If initial or current value is not array we must ensure we have an array
+    if (!Array.isArray(this.val)) {
+      this.val = [];
     }
   }
 }

@@ -5,6 +5,6 @@
     "styleIncludePaths": [
       "../"
     ],
-    "entryFile": "./public-api.ts"
+    "entryFile": "./index.ts"
   }
 }
