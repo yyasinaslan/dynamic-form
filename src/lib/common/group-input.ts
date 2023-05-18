@@ -1,8 +1,7 @@
-import {BaseInput} from "dynamic-form/common/base-input";
 import {FormGroup} from "@angular/forms";
-import {GroupInputOptions} from "dynamic-form/interfaces/group-input.interface";
-import {AnyInput} from "dynamic-form/interfaces/any-input.interface";
-import {ControlType} from "dynamic-form/interfaces/control-type";
+import {ControlType} from "../interfaces/control-type";
+import {BaseInput} from "./base-input";
+import {AnyInput} from "../interfaces/any-input.interface";
 
 /**
  * Form group
@@ -11,9 +10,9 @@ import {ControlType} from "dynamic-form/interfaces/control-type";
 export class GroupInput<T> extends BaseInput<T> {
   override controlType: ControlType = "group";
 
-  override inputs!: AnyInput[];
+  inputs!: AnyInput[];
 
-  constructor(options: GroupInputOptions<T>) {
+  constructor(options: GroupInput<T>) {
     super(options);
 
     this.inputs = options.inputs ?? [];

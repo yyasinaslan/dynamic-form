@@ -6,5 +6,8 @@
       "../"
     ],
     "entryFile": "./index.ts"
-  }
+  },
+  "assets": [
+    "./styles/*.*"
+  ]
 }

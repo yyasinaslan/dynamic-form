@@ -1,5 +1,5 @@
 import {FormGroup} from "@angular/forms";
-import {AnyInput} from "dynamic-form/interfaces/any-input.interface";
+import {AnyInput} from "../interfaces/any-input.interface";
 
 /**
  * Create each form control from each input

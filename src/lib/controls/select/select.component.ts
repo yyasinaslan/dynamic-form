@@ -12,10 +12,10 @@ import {
 import {ControlValueAccessor, NgControl} from "@angular/forms"
 import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
 import {BehaviorSubject, combineLatest, map, Observable, of, Subscription} from "rxjs";
-import {DropdownOption} from "dynamic-form/interfaces/dropdown-option.interface";
-import {DropdownInput} from "dynamic-form/common/dropdown-input";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
 import {CommonModule} from "@angular/common";
+import {DropdownInput} from "../../common/dropdown-input";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
+import {DropdownOption} from "../../interfaces/dropdown-option.interface";
 
 @Component({
   selector: "ngy-select",

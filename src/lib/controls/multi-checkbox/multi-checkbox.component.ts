@@ -2,11 +2,10 @@ import {Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges}
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
 import {Observable, Subscription} from "rxjs";
-import {DropdownOption} from "dynamic-form/interfaces/dropdown-option.interface";
-import {CheckboxInput} from "dynamic-form/common/checkbox-input";
 import {CommonModule} from "@angular/common";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
-import {CheckboxGroupInput} from "dynamic-form/common/checkbox-group-input";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
+import {CheckboxGroupInput} from "../../common/checkbox-group-input";
+import {DropdownOption} from "../../interfaces/dropdown-option.interface";
 
 @Component({
   selector: "ngy-multi-checkbox",

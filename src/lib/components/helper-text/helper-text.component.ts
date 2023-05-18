@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {BaseInput} from "dynamic-form/common/base-input";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
+import {Observable} from "rxjs";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 
 @Component({
   selector: "ngy-helper-text",
@@ -12,5 +12,5 @@ import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
   ]
 })
 export class HelperTextComponent {
-  @Input() input!: BaseInput<any>;
+  @Input() text!: string | Observable<string>;
 }

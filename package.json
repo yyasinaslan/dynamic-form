@@ -9,6 +9,7 @@
     "ng": "ng",
     "start": "yarn demo:start",
     "build": "yarn dynamic-form:build",
+    "build:sass": "sass --load-path=./ ./src/styles/dynamic-form.scss ./src/styles/dynamic-form.css",
     "watch": "yarn dynamic-form:watch",
     "test": "ng test",
     "dynamic-form:build": "ng build dynamic-form",

@@ -1,9 +1,9 @@
 import {Component, Input} from "@angular/core";
 import {ControlValueAccessor, FormsModule, NgControl} from "@angular/forms";
 import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
-import {BaseInput} from "dynamic-form/common/base-input";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
 import {CommonModule} from "@angular/common";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
+import {BaseInput} from "../../common/base-input";
 
 @Component({
   selector: "ngy-switch",

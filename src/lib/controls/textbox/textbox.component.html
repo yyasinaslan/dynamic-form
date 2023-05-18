@@ -1,35 +1,48 @@
-<ng-container *ngIf="!floating; else floatingTemplate">
-  <label [for]="formName + '_' + input.key" class="form-label">{{ input.label | observableString }}</label>
+<ng-template #inputTemplate>
   <input
-    (blur)="onTouched()"
+    (blur)="onTouched(); ngyBlur.emit($event)"
+    (focus)="ngyFocus.emit($event)"
+    (click)="ngyClick.emit($event)"
+    (contextmenu)="ngyContextMenu.emit($event)"
     (input)="valueChange($event)"
-    *ngIf="input.controlType == 'textbox'"
     [disabled]="disabled"
-    [id]="formName + '_' + input.key"
-    [name]="input.key"
-    [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
-    [placeholder]="input.placeholder | observableString"
-    [readOnly]="input.readonly"
-    [type]="input.type"
-    [value]="val"
+    [id]="id + '_' + key"
+    [name]="key"
+    [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
+    [placeholder]="placeholder | observableString"
+    [readOnly]="readonly"
+    [type]="type"
+    [value]="_val"
     class="form-control"/>
-</ng-container>
+</ng-template>
+
 
 <ng-template #floatingTemplate>
   <div class="form-floating">
-    <input
-      (blur)="onTouched()"
-      (input)="valueChange($event)"
-      *ngIf="input.controlType == 'textbox'"
-      [disabled]="disabled"
-      [id]="formName + '_' + input.key"
-      [name]="input.key"
-      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
-      [placeholder]="input.label | observableString"
-      [readOnly]="input.readonly"
-      [type]="input.type"
-      [value]="val"
-      class="form-control"/>
-    <label [for]="formName + '_' + input.key">{{ input.label | observableString }}</label>
+    <ng-container [ngTemplateOutlet]="inputTemplate"/>
+    <label [for]="id + '_' + key">{{ label | observableString }}</label>
   </div>
 </ng-template>
+
+
+<ng-container *ngIf="!floating; else floatingTemplate">
+  <label [for]="id + '_' + key" class="form-label">{{ label | observableString }}</label>
+  <ng-container [ngTemplateOutlet]="inputTemplate"/>
+</ng-container>
+
+<ng-container *ngIf="helperTextTemplate && helperTextTemplate.templateRef">
+  <div class="form-text">
+    <ng-container [ngTemplateOutlet]="helperTextTemplate.templateRef"/>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="validatorsMessage && validatorsMessage.length > 0">
+  <div class="ngy-invalid-feedback small">
+    <ng-container *ngFor="let directive of validatorsMessage">
+      <div *ngIf="control?.errors?.[directive.ngyValidatorMessage]">
+        <ng-container [ngTemplateOutlet]="directive.templateRef"/>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+

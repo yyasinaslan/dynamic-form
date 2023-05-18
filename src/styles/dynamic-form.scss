@@ -26,14 +26,14 @@
   $focus-box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($color, $input-btn-focus-color-opacity),
   $border-color: $color
 ) {
-  .#{$state}-feedback {
+  .ngy-#{$state}-feedback {
     display: none;
     width: 100%;
     margin-top: $form-feedback-margin-top;
     color: $color;
   }
 
-  .#{$state}-tooltip {
+  .ngy-#{$state}-tooltip {
     position: absolute;
     top: 100%;
     z-index: 5;
@@ -49,10 +49,13 @@
   }
 
   @include reactive-form-validation-state-selector($state) {
-    ~ .#{$state}-feedback,
-    ~ .#{$state}-tooltip,
-    ~ ngy-validation-feedback .#{$state}-feedback,
-    ~ ngy-validation-feedback .#{$state}-tooltip {
+    //~ .#{$state}-feedback,
+    //~ .#{$state}-tooltip,
+    ~ ngy-validation-feedback .ngy-#{$state}-feedback,
+    ~ ngy-validation-feedback .ngy-#{$state}-tooltip,
+    ~.ngy-#{$state}-feedback,
+    ~.ngy-#{$state}-tooltip,
+    {
       display: block;
     }
   }
@@ -133,7 +136,7 @@
     }
   }
   .form-check-inline .form-check-input {
-    ~ .#{$state}-feedback, ~ ngy-validation-feedback {
+    ~ .ngy-#{$state}-feedback, ~ ngy-validation-feedback {
       margin-left: .5em;
     }
   }

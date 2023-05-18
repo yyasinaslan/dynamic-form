@@ -1,10 +1,21 @@
-import {Component, Input} from "@angular/core";
+import {
+  Component,
+  ContentChild,
+  ContentChildren,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  QueryList
+} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
-import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
-import {TextAreaInput} from "dynamic-form/common/textarea-input";
-import {TextBoxInput} from "dynamic-form/common/textbox-input";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
 import {CommonModule} from "@angular/common";
+import {Observable} from "rxjs";
+import {ValidationFeedbackComponent} from "../../components/validation-feedback/validation-feedback.component";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
+import {HelperTextDirective} from "../../directives/helper-text.directive";
+import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 
 @Component({
   selector: "ngy-textbox",
@@ -13,20 +24,40 @@ import {CommonModule} from "@angular/common";
   imports: [
     ObservableStringPipe,
     CommonModule,
+    ValidationFeedbackComponent,
   ],
   styleUrls: ["./textbox.component.scss"]
 })
-export class TextboxComponent implements ControlValueAccessor, DynamicControlInterface {
-  @Input() formName: string = "";
-  @Input() input!: TextBoxInput<string>;
+export class TextboxComponent implements OnInit, ControlValueAccessor {
+
+  @Input() key!: string;
+
+  @Input() id: string = "";
+
+  @Input() label: string | Observable<string> = "";
+  @Input() value?: any;
+
+
+  @Input() type: string = 'text';
+  @Input() readonly: boolean = false;
   @Input() disabled: boolean = false;
-
   @Input() floating: boolean = false;
+  @Input() placeholder?: string;
 
-  val: any;
+  @Output() ngyChange = new EventEmitter<any>();
+  @Output() ngyFocus = new EventEmitter<FocusEvent>();
+  @Output() ngyBlur = new EventEmitter<FocusEvent>();
+  @Output() ngyClick = new EventEmitter<MouseEvent>();
+  @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
 
-  constructor(public control: NgControl) {
-    this.control.valueAccessor = this;
+  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
+  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
+
+  _val: any = null;
+
+  constructor(@Optional() public control?: NgControl) {
+    if (this.control)
+      this.control.valueAccessor = this;
   }
 
   onChange: (value: any) => void = () => {
@@ -36,6 +67,9 @@ export class TextboxComponent implements ControlValueAccessor, DynamicControlInt
   };
 
   ngOnInit(): void {
+    if (this.value) {
+      this._val = this.value;
+    }
   }
 
   public registerOnChange(fn: (value: any | null) => void) {
@@ -51,13 +85,15 @@ export class TextboxComponent implements ControlValueAccessor, DynamicControlInt
   }
 
   writeValue(obj: any) {
-    this.val = obj;
+    this._val = obj;
   }
 
   valueChange($event: Event) {
     const target = $event.target as HTMLInputElement;
     if (!target) return;
-    this.val = target.value;
-    this.onChange(this.val);
+    this._val = target.value;
+    this.onChange(this._val);
+    this.ngyChange.emit(this._val);
   }
+
 }

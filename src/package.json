@@ -17,5 +17,10 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "exports": {
+    ".": {
+      "styles": "./styles/dynamic-form.scss"
+    }
   }
 }

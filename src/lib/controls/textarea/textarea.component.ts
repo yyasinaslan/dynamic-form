@@ -1,10 +1,9 @@
 import {Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ControlValueAccessor, NgControl} from "@angular/forms";
-import {DynamicControlInterface} from "dynamic-form/interfaces/dynamic-control.interface";
-import {TextBoxInput} from "dynamic-form/common/textbox-input";
-import {TextAreaInput} from "dynamic-form/common/textarea-input";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
+import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
+import {TextAreaInput} from "../../common/textarea-input";
 
 @Component({
   selector: 'ngy-textarea',

@@ -1,14 +1,15 @@
-import {TextBoxInput} from "dynamic-form/common/textbox-input";
-import {BaseInput} from "dynamic-form/common/base-input";
-import {FileInput} from "dynamic-form/common/file-input";
-import {DropdownInput} from "dynamic-form/common/dropdown-input";
-import {TextAreaInput} from "dynamic-form/common/textarea-input";
-import {SwitchInput} from "dynamic-form/common/switch-input";
-import {CheckboxInput} from "dynamic-form/common/checkbox-input";
-import {CheckboxGroupInput} from "dynamic-form/common/checkbox-group-input";
-import {RadioGroupInput} from "dynamic-form/common/radio-group-input";
-import {GroupInput} from "dynamic-form/common/group-input";
-import {ArrayInput} from "dynamic-form/common/array-input";
+import {DropdownInput} from "../common/dropdown-input";
+import {BaseInput} from "../common/base-input";
+import {TextBoxInput} from "../common/textbox-input";
+import {FileInput} from "../common/file-input";
+import {TextAreaInput} from "../common/textarea-input";
+import {SwitchInput} from "../common/switch-input";
+import {CheckboxInput} from "../common/checkbox-input";
+import {CheckboxGroupInput} from "../common/checkbox-group-input";
+import {RadioGroupInput} from "../common/radio-group-input";
+import {GroupInput} from "../common/group-input";
+import {ArrayInput} from "../common/array-input";
+
 
 /**
  * Inputs type wrapper

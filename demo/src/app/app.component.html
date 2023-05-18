@@ -1,18 +1,27 @@
 <div class="container mt-5">
-  <ngy-dynamic-form #formComponent (post)="formPosted($event)" [formDisabled]="formDisabled" [inputs]="inputs"
-                    [valueToPatch]="{textboxexample: 'Hello'}" formName="userLoginForm"></ngy-dynamic-form>
+  <div
+    class="mb-4 py-1 border-bottom d-flex justify-content-start align-items-center gap-2 bg-body position-sticky top-0"
+    style="z-index: 999">
+    <div class="lead">Dynamic Form</div>
 
-  <div class="mt-5">
-    <div>Submit from outside</div>
-    <button (click)="formComponent.submitForm()" class="btn btn-primary">Submit form</button>
-    <button (click)="formDisabled = !formDisabled" class="btn btn-primary ms-3">Form state
-      = {{formDisabled ? 'disabled' : 'enabled'}}</button>
-  </div>
+    <div class="flex-fill d-flex justify-content-center gap-2">
+      <button class="btn btn-outline-primary border-0" [class.active]="exampleType == 'classic'"
+              (click)="setExampleType('classic')">Classic Examples
+      </button>
+      <button class="btn btn-outline-primary border-0" [class.active]="exampleType == 'imperative'"
+              (click)="setExampleType('imperative')">Imperative Examples
+      </button>
+      <button class="btn btn-outline-primary border-0" [class.active]="exampleType == 'declarative'"
+              (click)="setExampleType('declarative')">Declarative Examples
+      </button>
+    </div>
 
-  <div class="my-5 p-4 bg-light border shadow-sm rounded-3">
-    <h5>Form value</h5>
-    <pre>
-<!--      {{formComponent.form.value | json}}-->
-    </pre>
+    <a class="small" target="_blank" href="https://www.npmjs.com/package/@yyasinaslan/dynamic-form">NPM</a>
+    <a class="small" target="_blank" href="https://github.com/yyasinaslan/dynamic-form">Github</a>
   </div>
+  <ng-container [ngSwitch]="exampleType">
+    <app-classic-examples *ngSwitchCase="'classic'"></app-classic-examples>
+    <app-imperative-examples *ngSwitchCase="'imperative'"></app-imperative-examples>
+    <app-declarative-examples *ngSwitchCase="'declarative'"></app-declarative-examples>
+  </ng-container>
 </div>

@@ -1,9 +1,9 @@
 import {Component, Input} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
-import {CheckboxInput} from "dynamic-form/common/checkbox-input";
 import {CommonModule} from "@angular/common";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
+import {CheckboxInput} from "../../common/checkbox-input";
 
 @Component({
   selector: "ngy-checkbox",

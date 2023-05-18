@@ -1,5 +1,6 @@
-import {BaseInput} from "dynamic-form/common/base-input";
-import {ControlType} from "dynamic-form/interfaces/control-type";
+import {BaseInput} from "./base-input";
+import {ControlType} from "../interfaces/control-type";
+
 
 /**
  * Hidden Input type

@@ -1,9 +1,10 @@
 import {AbstractControl, FormControl, ValidatorFn} from "@angular/forms";
-import {randomString} from "dynamic-form/helpers/random-string";
 import {Observable} from "rxjs";
-import {ControlType} from "dynamic-form/interfaces/control-type";
+import {BaseInputInterface} from "../interfaces/base-input.interface";
+import {ControlType} from "../interfaces/control-type";
+import {randomString} from "../helpers/random-string";
 
-export class BaseInput<T> {
+export class BaseInput<T> implements BaseInputInterface<T> {
   /**
    * Unique key that identify form control (Required)
    */
@@ -81,21 +82,36 @@ export class BaseInput<T> {
    */
   helperText?: string | Observable<string>;
 
-  constructor(options: BaseInput<any>) {
-    this.value = options.value;
-    this.key = options.key ?? "";
-    this.label = options.label ?? "";
-    this.required = !!options.required;
-    this.order = options.order === undefined ? 1 : options.order;
-    this.controlType = options.controlType ?? "textbox";
-    this.validators = options.validators ?? [];
-    this.validatorsMessage = options.validatorsMessage ?? [];
-    this.size = options.size ?? "12";
-    this.inputSize = options.inputSize ?? "";
-    this.helperText = options.helperText ?? "";
-    this.id = options.id ?? options.key + "_" + randomString(10);
-    this.disabled = options.disabled ?? false;
-    this.readonly = options.readonly ?? false;
+  // Event handlers
+  change?: (value: T) => void
+  focus?: (event: FocusEvent) => void
+  blur?: (event: FocusEvent) => void
+  click?: (event: MouseEvent) => void
+  contextMenu?: (event: MouseEvent) => void
+
+  constructor(config: BaseInputInterface<T>) {
+    this.value = config.value;
+    this.key = config.key ?? "";
+    this.label = config.label ?? "";
+    this.required = !!config.required;
+    this.order = config.order === undefined ? 1 : config.order;
+    this.controlType = config.controlType ?? "textbox";
+    this.validators = config.validators ?? [];
+    this.validatorsMessage = config.validatorsMessage ?? [];
+    this.size = config.size ?? "12";
+    this.inputSize = config.inputSize ?? "";
+    this.helperText = config.helperText ?? "";
+    this.id = config.id ?? config.key + "_" + randomString(10);
+    this.disabled = config.disabled ?? false;
+    this.readonly = config.readonly ?? false;
+
+
+    this.change = config.change ?? undefined;
+    this.focus = config.focus ?? undefined;
+    this.blur = config.blur ?? undefined;
+    this.click = config.click ?? undefined;
+    this.contextMenu = config.contextMenu ?? undefined;
+
   }
 
   /**

@@ -1,8 +1,8 @@
 import {Component, Input} from "@angular/core";
-import {AbstractControl} from "@angular/forms";
-import {BaseInput} from "dynamic-form/common/base-input";
-import {ObservableStringPipe} from "dynamic-form/pipes/observable-string.pipe";
+import {AbstractControl, NgControl} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import {Observable} from "rxjs";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 
 @Component({
   selector: "ngy-validation-feedback",
@@ -15,6 +15,6 @@ import {CommonModule} from "@angular/common";
   ]
 })
 export class ValidationFeedbackComponent {
-  @Input() input!: BaseInput<any>;
-  @Input() control: AbstractControl | null = null;
+  @Input() validatorsMessage!: { key: string; message: string | Observable<string> }[];
+  @Input() control: AbstractControl | NgControl | null = null;
 }

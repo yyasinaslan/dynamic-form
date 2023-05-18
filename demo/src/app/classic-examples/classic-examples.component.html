@@ -1,0 +1,16 @@
+<ngy-dynamic-form #formComponent (post)="formPosted($event)" [formDisabled]="formDisabled" [inputs]="inputs"
+                  [valueToPatch]="{textboxexample: 'Hello'}" formName="userLoginForm"></ngy-dynamic-form>
+
+<div class="mt-5">
+  <div>Submit from outside</div>
+  <button (click)="formComponent.submitForm()" class="btn btn-primary">Submit form</button>
+  <button (click)="formDisabled = !formDisabled" class="btn btn-primary ms-3">Form state
+    = {{formDisabled ? 'disabled' : 'enabled'}}</button>
+</div>
+
+<div class="my-5 p-4 bg-light border shadow-sm rounded-3">
+  <h5>Form value</h5>
+  <pre>
+<!--      {{formComponent.form.value | json}}-->
+    </pre>
+</div>

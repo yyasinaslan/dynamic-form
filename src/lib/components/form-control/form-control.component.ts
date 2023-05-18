@@ -12,11 +12,19 @@ import {
 } from "@angular/core";
 import {FormArray, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {AnyInput} from "dynamic-form/interfaces/any-input.interface";
-import {ArrayInput} from "dynamic-form/common/array-input";
-import {GroupInput} from "dynamic-form/common/group-input";
 import {CommonModule} from "@angular/common";
-import {DynamicControlComponent} from "dynamic-form/components/dynamic-control/dynamic-control.component";
+import {MultiCheckboxComponent} from "../../controls/multi-checkbox/multi-checkbox.component";
+import {CheckboxComponent} from "../../controls/checkbox/checkbox.component";
+import {FileInputComponent} from "../../controls/file-input/file-input.component";
+import {HelperTextComponent} from "../helper-text/helper-text.component";
+import {SelectComponent} from "../../controls/select/select.component";
+import {SwitchComponent} from "../../controls/switch/switch.component";
+import {TextboxComponent} from "../../controls/textbox/textbox.component";
+import {ValidationFeedbackComponent} from "../validation-feedback/validation-feedback.component";
+import {TextareaComponent} from "../../controls/textarea/textarea.component";
+import {AnyInput} from "../../interfaces/any-input.interface";
+import {ArrayInput} from "../../common/array-input";
+import {GroupInput} from "../../common/group-input";
 
 @Component({
   selector: "ngy-form-control",
@@ -26,7 +34,15 @@ import {DynamicControlComponent} from "dynamic-form/components/dynamic-control/d
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    DynamicControlComponent,
+    CheckboxComponent,
+    FileInputComponent,
+    HelperTextComponent,
+    MultiCheckboxComponent,
+    SelectComponent,
+    SwitchComponent,
+    TextboxComponent,
+    ValidationFeedbackComponent,
+    TextareaComponent,
   ]
 })
 export class FormControlComponent implements OnInit, AfterViewInit, OnDestroy {

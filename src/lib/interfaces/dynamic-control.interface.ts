@@ -1,4 +1,5 @@
-import {BaseInput} from "dynamic-form/common/base-input";
+import {BaseInput} from "../common/base-input";
+
 
 export interface DynamicControlInterface {
   /**

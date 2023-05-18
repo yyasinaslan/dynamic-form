@@ -16,11 +16,11 @@ import {
   ViewEncapsulation
 } from "@angular/core";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {FormControlComponent} from "dynamic-form/components/form-control/form-control.component";
 import {delay, Subscription} from "rxjs";
-import {AnyInput} from "dynamic-form/interfaces/any-input.interface";
-import {createFormGroup} from "dynamic-form/helpers/create-form-group";
 import {CommonModule} from "@angular/common";
+import {AnyInput} from "./interfaces/any-input.interface";
+import {FormControlComponent} from "./components/form-control/form-control.component";
+import {createFormGroup} from "./helpers/create-form-group";
 
 @Component({
   selector: "ngy-dynamic-form",

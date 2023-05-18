@@ -1,0 +1,25 @@
+<form (ngSubmit)="eventTest($event)">
+
+  <ngy-textbox label="Textbox 1"
+               key="textbox1"
+               [(ngModel)]="model1" #formControl="ngModel"
+               name="textbox1"
+               (ngyFocus)="eventTest($event)" (ngyBlur)="eventTest($event)"
+               (ngyClick)="eventTest($event)"
+               (ngyContextMenu)="eventTest($event)"
+               [required]="true" [minlength]="5" [maxlength]="10"
+  >
+    <ng-template ngyHelperText>This is helper text</ng-template>
+
+    <ng-template ngyValidatorMessage="required">Textbox required</ng-template>
+    <ng-template ngyValidatorMessage="minlength">Textbox min length must be 5</ng-template>
+    <ng-template ngyValidatorMessage="maxlength">Textbox max length must be 10</ng-template>
+  </ngy-textbox>
+
+  <div class="mt-5">
+    <div>Textbox 1: {{model1}}</div>
+    <div>Textbox 1 is valid: {{formControl.valid}}</div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
