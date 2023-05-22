@@ -2742,6 +2742,7 @@ __metadata:
     "@popperjs/core": ^2.11.6
     "@types/jasmine": ~4.3.0
     bootstrap: ">=5.2.0"
+    highlightjs: ^9.16.2
     jasmine-core: ~4.5.0
     karma: ~6.4.0
     karma-chrome-launcher: ~3.1.0
@@ -4972,6 +4973,13 @@ fsevents@~2.3.2:
   version: 3.0.0
   resolution: "hdr-histogram-percentiles-obj@npm:3.0.0"
   checksum: ab238edcb38d9b60d23ca53da0ecd9a6b1c8ee9a49e30a6146bd3f8f70f26244652f28b79974157c00504e7ddf3129e0ddb217baf71d32330e3fae0105bf30ed
+  languageName: node
+  linkType: hard
+
+"highlightjs@npm:^9.16.2":
+  version: 9.16.2
+  resolution: "highlightjs@npm:9.16.2"
+  checksum: 511de5a5f2d3568963ebe4a337b2abe4fd5856de458b85af877eca0958c66245e107ca90a8f8ab06a3c3169f0f0f7c08d668e1c649ec0a8a1d871d99f7e7a476
   languageName: node
   linkType: hard
 

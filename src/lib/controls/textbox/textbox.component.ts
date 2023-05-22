@@ -93,7 +93,12 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
     if (!target) return;
     this._val = target.value;
     this.onChange(this._val);
-    this.ngyChange.emit(this._val);
+    this.ngyChange.emit({
+      target: $event.target,
+      originalEvent: $event,
+      value: this._val,
+      type: 'change'
+    });
   }
 
 }

@@ -75,10 +75,22 @@
     <!-- TEXTAREA TEMPLATE -->
     <ng-template #textAreaTemplate let-inputData let-pathData="pathData">
       <ngy-textarea
+        [key]="inputData.key"
+        [id]="inputData.id"
+        [label]="inputData.label"
+        [value]="inputData.value"
+        [type]="inputData.type"
+        [readonly]="inputData.readonly"
         [floating]="inputData.floating"
+        [placeholder]="inputData.placeholder"
+
         [formControlName]="inputData.key"
-        [formName]="formName"
-        [input]="inputData"></ngy-textarea>
+
+        (ngyChange)="inputData.change ? inputData.change($event) : null"
+        (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
+        (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
+        (ngyClick)="inputData.click ? inputData.click($event) : null"
+        (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"></ngy-textarea>
     </ng-template>
 
     <!-- SWITCH TEMPLATE -->

@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {BaseInputInterface} from "../interfaces/base-input.interface";
 import {ControlType} from "../interfaces/control-type";
 import {randomString} from "../helpers/random-string";
+import {ChangeEventInterface} from "../interfaces/change-event.interface";
 
 export class BaseInput<T> implements BaseInputInterface<T> {
   /**
@@ -83,7 +84,7 @@ export class BaseInput<T> implements BaseInputInterface<T> {
   helperText?: string | Observable<string>;
 
   // Event handlers
-  change?: (value: T) => void
+  change?: (event: ChangeEventInterface) => void
   focus?: (event: FocusEvent) => void
   blur?: (event: FocusEvent) => void
   click?: (event: MouseEvent) => void

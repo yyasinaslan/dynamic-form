@@ -9,7 +9,6 @@ export class ValidatorMessageDirective {
   @Input() ngyValidatorMessage!: string;
 
   constructor(public templateRef: TemplateRef<string>) {
-    console.log({templateRef})
   }
 
 }

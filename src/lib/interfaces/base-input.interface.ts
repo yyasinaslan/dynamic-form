@@ -1,6 +1,7 @@
 import {Observable} from "rxjs";
 import {ValidatorFn} from "@angular/forms";
 import {ControlType} from "./control-type";
+import {ChangeEventInterface} from "./change-event.interface";
 
 export interface BaseInputInterface<T> {
   // Configurations
@@ -20,7 +21,7 @@ export interface BaseInputInterface<T> {
   helperText?: string | Observable<string>;
 
   // Event handlers
-  change?: (value: T) => void
+  change?: (event: ChangeEventInterface) => void
   focus?: (event: FocusEvent) => void
   blur?: (event: FocusEvent) => void
   click?: (event: MouseEvent) => void
