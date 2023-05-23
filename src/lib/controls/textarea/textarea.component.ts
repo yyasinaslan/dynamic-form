@@ -5,6 +5,7 @@ import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {Observable} from "rxjs";
 import {HelperTextDirective} from "../../directives/helper-text.directive";
 import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
+import {ChangeEventInterface} from "../../interfaces/change-event.interface";
 
 @Component({
   selector: 'ngy-textarea',
@@ -27,7 +28,7 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
   @Input() floating: boolean = false;
   @Input() placeholder?: string;
 
-  @Output() ngyChange = new EventEmitter<any>();
+  @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
   @Output() ngyFocus = new EventEmitter<FocusEvent>();
   @Output() ngyBlur = new EventEmitter<FocusEvent>();
   @Output() ngyClick = new EventEmitter<MouseEvent>();

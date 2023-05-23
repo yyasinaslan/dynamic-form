@@ -16,6 +16,7 @@ import {ValidationFeedbackComponent} from "../../components/validation-feedback/
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {HelperTextDirective} from "../../directives/helper-text.directive";
 import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
+import {ChangeEventInterface} from "../../interfaces/change-event.interface";
 
 @Component({
   selector: "ngy-textbox",
@@ -44,7 +45,7 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
   @Input() floating: boolean = false;
   @Input() placeholder?: string;
 
-  @Output() ngyChange = new EventEmitter<any>();
+  @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
   @Output() ngyFocus = new EventEmitter<FocusEvent>();
   @Output() ngyBlur = new EventEmitter<FocusEvent>();
   @Output() ngyClick = new EventEmitter<MouseEvent>();

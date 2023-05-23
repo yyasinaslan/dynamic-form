@@ -9,6 +9,7 @@
   position: relative;
 
   .dropdown-menu {
-    position: absolute;
+    max-height: var(--ngy-dropdown-max-height, 75vh);
+    overflow: auto;
   }
 }

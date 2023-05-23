@@ -3,6 +3,7 @@ export {DynamicFormComponent} from './lib/dynamic-form.component';
 export {FormControlComponent} from './lib/components/form-control/form-control.component';
 export {ValidationFeedbackComponent} from './lib/components/validation-feedback/validation-feedback.component';
 export {HelperTextComponent} from './lib/components/helper-text/helper-text.component';
+export {OptionComponent} from './lib/components/option/option.component';
 
 // Input types
 export {ArrayInput} from './lib/common/array-input';

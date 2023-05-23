@@ -68,8 +68,27 @@
 
     <!-- DROPDOWN TEMPLATE -->
     <ng-template #dropDownTemplate let-inputData let-pathData="pathData">
-      <ngy-select [compareWith]="inputData.compareWith" [formControlName]="inputData.key"
-                  [input]="inputData"></ngy-select>
+      <ngy-select [compareWith]="inputData.compareWith"
+                  [key]="inputData.key"
+                  [id]="inputData.id"
+                  [label]="inputData.label"
+                  [value]="inputData.value"
+                  [type]="inputData.type"
+                  [readonly]="inputData.readonly"
+                  [floating]="inputData.floating"
+                  [placeholder]="inputData.placeholder"
+
+                  [multiple]="inputData.multiple"
+                  [options]="inputData.options"
+
+                  [formControlName]="inputData.key"
+
+                  (ngyChange)="inputData.change ? inputData.change($event) : null"
+                  (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
+                  (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
+                  (ngyClick)="inputData.click ? inputData.click($event) : null"
+                  (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"
+      ></ngy-select>
     </ng-template>
 
     <!-- TEXTAREA TEMPLATE -->
@@ -95,7 +114,19 @@
 
     <!-- SWITCH TEMPLATE -->
     <ng-template #switchTemplate let-inputData let-pathData="pathData">
-      <ngy-switch [formControlName]="inputData.key" [input]="inputData"></ngy-switch>
+      <ngy-switch [key]="inputData.key"
+                  [id]="inputData.id"
+                  [label]="inputData.label"
+                  [value]="inputData.value"
+                  [readonly]="inputData.readonly"
+
+                  [formControlName]="inputData.key"
+
+                  (ngyChange)="inputData.change ? inputData.change($event) : null"
+                  (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
+                  (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
+                  (ngyClick)="inputData.click ? inputData.click($event) : null"
+                  (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"></ngy-switch>
     </ng-template>
 
     <!-- CHECKBOX TEMPLATE -->

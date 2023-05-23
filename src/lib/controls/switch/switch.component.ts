@@ -1,9 +1,11 @@
-import {Component, Input} from "@angular/core";
-import {ControlValueAccessor, FormsModule, NgControl} from "@angular/forms";
-import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
+import {Component, ContentChild, ContentChildren, EventEmitter, Input, Output, QueryList} from "@angular/core";
+import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
-import {BaseInput} from "../../common/base-input";
+import {Observable} from "rxjs";
+import {ChangeEventInterface} from "../../interfaces/change-event.interface";
+import {HelperTextDirective} from "../../directives/helper-text.directive";
+import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 
 @Component({
   selector: "ngy-switch",
@@ -12,16 +14,35 @@ import {BaseInput} from "../../common/base-input";
   styleUrls: ["./switch.component.scss"],
   imports: [
     CommonModule,
-    FormsModule,
     ObservableStringPipe
   ]
 })
-export class SwitchComponent implements ControlValueAccessor, DynamicControlInterface {
-  @Input() formName: string = "";
-  @Input() input!: BaseInput<any>;
-  @Input() disabled: boolean = false;
+export class SwitchComponent implements ControlValueAccessor {
+  @Input() key!: string;
 
-  val: any;
+  @Input() id: string = "";
+
+  @Input() label: string | Observable<string> = "";
+
+  @Input() value?: boolean;
+
+
+  @Input() type: string = 'text';
+  @Input() readonly: boolean = false;
+  @Input() disabled: boolean = false;
+  @Input() floating: boolean = false;
+  @Input() placeholder?: string;
+
+  @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
+  @Output() ngyFocus = new EventEmitter<FocusEvent>();
+  @Output() ngyBlur = new EventEmitter<FocusEvent>();
+  @Output() ngyClick = new EventEmitter<MouseEvent>();
+  @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
+
+  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
+  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
+
+  val?: boolean;
 
   constructor(public control: NgControl) {
     control.valueAccessor = this;
@@ -34,6 +55,9 @@ export class SwitchComponent implements ControlValueAccessor, DynamicControlInte
   };
 
   ngOnInit(): void {
+    if (this.value !== undefined) {
+      this.val = this.value;
+    }
   }
 
   public registerOnChange(fn: (value: any | null) => void) {
@@ -52,9 +76,17 @@ export class SwitchComponent implements ControlValueAccessor, DynamicControlInte
     this.val = obj;
   }
 
-  valChanged(val: boolean) {
-    this.val = val;
+  valChanged(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.val = target.checked;
+
     this.onChange(this.val);
+    this.ngyChange.emit({
+      target: event.target,
+      originalEvent: event,
+      value: this.val,
+      type: 'change'
+    })
   }
 
   labelClick() {

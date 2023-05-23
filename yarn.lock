@@ -2251,7 +2251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.6":
+"@popperjs/core@npm:^2.11.7":
   version: 2.11.7
   resolution: "@popperjs/core@npm:2.11.7"
   checksum: 5b6553747899683452a1d28898c1b39173a4efd780e74360bfcda8eb42f1c5e819602769c81a10920fc68c881d07fb40429604517d499567eac079cfa6470f19
@@ -2739,7 +2739,7 @@ __metadata:
     "@angular/platform-browser": ^15.1.0
     "@angular/platform-browser-dynamic": ^15.1.0
     "@angular/router": ^15.1.0
-    "@popperjs/core": ^2.11.6
+    "@popperjs/core": ^2.11.7
     "@types/jasmine": ~4.3.0
     bootstrap: ">=5.2.0"
     highlightjs: ^9.16.2
