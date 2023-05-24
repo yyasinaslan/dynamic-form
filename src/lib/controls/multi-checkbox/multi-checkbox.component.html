@@ -1,47 +1,43 @@
-<label class="form-label">{{ input.label | observableString }}</label>
+<label class="form-label">{{ label | observableString }}</label>
 <div
-  [ngClass]="input.orientation == 'horizontal' ? 'flex-row gap-3 align-items-center' : 'flex-column gap-2'"
+  [ngClass]="[orientation == 'horizontal' ? 'flex-row gap-3 align-items-center' : 'flex-column gap-2', control.invalid ? 'ng-invalid':'ng-valid']"
   class="d-flex gap-1 flex-wrap">
-  <ng-container *ngIf="input.controlType == 'checkboxgroup'; else radioGroupTemplate">
+  <ng-container *ngIf="inputType == 'checkbox'; else radioGroupTemplate">
     <div *ngFor="let option of _options; let index = index" class="form-check">
       <input
-        (blur)="onTouched()"
+        (blur)="onTouched(); ngyBlur.emit($event)"
+        (focus)="ngyFocus.emit($event)"
+        (contextmenu)="ngyContextMenu.emit($event)"
+        (click)="ngyClick.emit($event)"
         (change)="checkboxChanged($event, option.value)"
         [checked]="valIncludes(val,option.value)"
         [disabled]="disabled"
         [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
-        [readOnly]="input.readonly"
+        [readOnly]="readonly"
         [value]="option.value"
         class="form-check-input"
         type="checkbox"/>
       <label (click)="labelClick(option)" class="form-check-label">{{ option.label | observableString}}</label>
     </div>
   </ng-container>
-  <!--  <div *ngIf="input.controlType == 'checkboxgroup'" [ngClass]="{'align-self-start': input.orientation == 'vertical'}"-->
-  <!--       class="btn-group btn-group-sm">-->
-  <!--    <button type="button" class="btn btn-outline-secondary" [disabled]="disabled"-->
-  <!--            (click)="selectAll()">-->
-  <!--      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="icon-svg me-1" fill="currentColor"-->
-  <!--           viewBox="0 0 16 16">-->
-  <!--        <path-->
-  <!--          d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>-->
-  <!--      </svg>-->
-  <!--      <span>{{ localizations.select_all }}</span>-->
-  <!--    </button>-->
-  <!--    <button-->
-  <!--      type="button"-->
-  <!--      class="btn btn-outline-secondary"-->
-  <!--      [disabled]="disabled"-->
-  <!--      (click)="deselectAll()"-->
-  <!--      [title]="localizations.deselect_all">-->
-  <!--      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="icon-svg" fill="currentColor"-->
-  <!--           viewBox="0 0 16 16">-->
-  <!--        <path-->
-  <!--          d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>-->
-  <!--      </svg>-->
-  <!--    </button>-->
-  <!--  </div>-->
 </div>
+
+<ng-container *ngIf="helperTextTemplate && helperTextTemplate.templateRef">
+  <div class="form-text">
+    <ng-container [ngTemplateOutlet]="helperTextTemplate.templateRef"/>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="validatorsMessage && validatorsMessage.length > 0">
+  <div class="ngy-invalid-feedback small">
+    <ng-container *ngFor="let directive of validatorsMessage">
+      <div *ngIf="control?.errors?.[directive.ngyValidatorMessage]">
+        <ng-container [ngTemplateOutlet]="directive.templateRef"/>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
 
 <ng-template #radioGroupTemplate>
   <div *ngFor="let option of _options" class="form-check">
@@ -50,7 +46,7 @@
       (change)="radioChanged(option.value)"
       [checked]="compareWith(val, option.value)"
       [disabled]="disabled"
-      [name]="input.key"
+      [name]="key"
       [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
       [value]="option.value"
       class="form-check-input"

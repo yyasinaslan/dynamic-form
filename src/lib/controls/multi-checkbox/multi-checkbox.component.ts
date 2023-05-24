@@ -1,11 +1,26 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges} from "@angular/core";
+import {
+  Component,
+  ContentChild,
+  ContentChildren,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  QueryList,
+  SimpleChanges
+} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
-import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
 import {Observable, Subscription} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
-import {CheckboxGroupInput} from "../../common/checkbox-group-input";
 import {DropdownOption} from "../../interfaces/dropdown-option.interface";
+import {ChangeEventInterface} from "../../interfaces/change-event.interface";
+import {HelperTextDirective} from "../../directives/helper-text.directive";
+import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
+import {OptionComponent} from "../../components/option/option.component";
 
 @Component({
   selector: "ngy-multi-checkbox",
@@ -17,10 +32,44 @@ import {DropdownOption} from "../../interfaces/dropdown-option.interface";
     ObservableStringPipe
   ]
 })
-export class MultiCheckboxComponent implements ControlValueAccessor, DynamicControlInterface, OnDestroy, OnChanges, OnInit {
-  @Optional() @Input() formName: string = "";
-  @Input() input!: CheckboxGroupInput<any>;
+export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, ControlValueAccessor {
+  //<editor-fold desc="Inputs">
+  @Input() key!: string;
+
+  @Input() id: string = "";
+
+  @Input() label: string | Observable<string> = "";
+  @Input() value?: any;
+
+  @Input() inputType: 'checkbox' | 'radio' = 'checkbox';
+
+  // Clear button
+  @Input() showClearButton: boolean = false;
+  @Input() clearButtonText: string = 'Clear';
+
+  @Input() readonly: boolean = false;
   @Input() disabled: boolean = false;
+
+  @Input() orientation: 'horizontal' | 'vertical' = 'vertical';
+
+  @Input() options: DropdownOption[] | Observable<DropdownOption[]> = [];
+
+  @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
+    return a === b;
+  };
+  //</editor-fold>
+
+  //<editor-fold desc="Outputs">
+  @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
+  @Output() ngyFocus = new EventEmitter<FocusEvent>();
+  @Output() ngyBlur = new EventEmitter<FocusEvent>();
+  @Output() ngyClick = new EventEmitter<MouseEvent>();
+  @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
+  //</editor-fold>
+
+  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
+  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
+  @ContentChildren(OptionComponent) optionTags?: QueryList<OptionComponent>;
 
   @Input() localizations = {
     "select_all": "Select All",
@@ -29,14 +78,34 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   _options: DropdownOption[] = [];
   val: any;
   private optionSub?: Subscription;
+  private optionTagsSub?: Subscription;
 
-  constructor(public control: NgControl) {
-    control.valueAccessor = this;
+  constructor(@Optional() public control: NgControl) {
+    if (control)
+      control.valueAccessor = this;
   }
 
-  @Optional() @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
-    return a === b;
-  };
+  ngAfterContentInit(): void {
+    if (this.optionTags) {
+      this.handleOptionTags(this.optionTags);
+      this.optionTagsSub = this.optionTags.changes.subscribe((optionTags) => {
+        this.handleOptionTags(optionTags)
+      })
+    }
+
+  }
+
+  handleOptionTags(optionTags: QueryList<any>) {
+    if (!optionTags || optionTags.length == 0) return;
+
+    this.options = optionTags.map((optionComponent: OptionComponent) => ({
+      label: optionComponent.label,
+      value: optionComponent.value
+    }))
+
+    this.desubOptions();
+    this.subOptions();
+  }
 
   onChange: (value: any) => void = () => {
   };
@@ -78,7 +147,7 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
 
     this.makeArray();
 
-    if (this.input.controlType == "radiogroup") {
+    if (this.inputType == "radio") {
       this.radioChanged(option.value);
       return;
     }
@@ -110,7 +179,7 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   }
 
   selectAll() {
-    const options = this.input.options;
+    const options = this.options;
 
     if (!options) {
       return;
@@ -136,6 +205,9 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
 
   ngOnDestroy(): void {
     this.desubOptions();
+    if (this.optionTagsSub) {
+      this.optionTagsSub.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
@@ -150,18 +222,18 @@ export class MultiCheckboxComponent implements ControlValueAccessor, DynamicCont
   }
 
   subOptions() {
-    if (this.input.options instanceof Observable) {
-      this.optionSub = this.input.options.subscribe((options) => {
+    if (this.options instanceof Observable) {
+      this.optionSub = this.options.subscribe((options) => {
         this._options = options;
       });
       return;
     }
 
-    this._options = this.input.options as DropdownOption[];
+    this._options = this.options as DropdownOption[];
   }
 
   desubOptions() {
-    if (this.input.options instanceof Observable && this.optionSub) {
+    if (this.options instanceof Observable && this.optionSub) {
       this.optionSub.unsubscribe();
     }
   }

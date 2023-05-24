@@ -15,7 +15,8 @@
     "dynamic-form:build": "ng build dynamic-form",
     "dynamic-form:watch": "ng build --project dynamic-form --watch --configuration development",
     "demo:start": "ng serve demo",
-    "demo:build": "ng build demo"
+    "demo:build": "ng build demo",
+    "deploy": "yarn build & yarn demo:build"
   },
   "dependencies": {
     "@angular/animations": "^15.1.0",

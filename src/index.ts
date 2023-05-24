@@ -23,7 +23,6 @@ export {TextBoxInput} from './lib/common/textbox-input';
 export {FileInputComponent} from './lib/controls/file-input/file-input.component';
 export {SelectComponent} from './lib/controls/select/select.component';
 export {CheckboxComponent} from './lib/controls/checkbox/checkbox.component';
-export {SwitchComponent} from './lib/controls/switch/switch.component';
 export {TextareaComponent} from './lib/controls/textarea/textarea.component';
 export {MultiCheckboxComponent} from './lib/controls/multi-checkbox/multi-checkbox.component';
 export {TextboxComponent} from './lib/controls/textbox/textbox.component';

@@ -114,36 +114,76 @@
 
     <!-- SWITCH TEMPLATE -->
     <ng-template #switchTemplate let-inputData let-pathData="pathData">
-      <ngy-switch [key]="inputData.key"
-                  [id]="inputData.id"
-                  [label]="inputData.label"
-                  [value]="inputData.value"
-                  [readonly]="inputData.readonly"
+      <ngy-checkbox type="switch" [key]="inputData.key"
+                    [id]="inputData.id"
+                    [label]="inputData.label"
+                    [value]="inputData.value"
+                    [readonly]="inputData.readonly"
 
-                  [formControlName]="inputData.key"
+                    [formControlName]="inputData.key"
 
-                  (ngyChange)="inputData.change ? inputData.change($event) : null"
-                  (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
-                  (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
-                  (ngyClick)="inputData.click ? inputData.click($event) : null"
-                  (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"></ngy-switch>
+                    (ngyChange)="inputData.change ? inputData.change($event) : null"
+                    (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
+                    (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
+                    (ngyClick)="inputData.click ? inputData.click($event) : null"
+                    (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"></ngy-checkbox>
     </ng-template>
 
     <!-- CHECKBOX TEMPLATE -->
     <ng-template #checkboxTemplate let-inputData let-pathData="pathData">
-      <ngy-checkbox [formControlName]="inputData.key" [input]="inputData"></ngy-checkbox>
+      <ngy-checkbox [key]="inputData.key"
+                    [id]="inputData.id"
+                    [label]="inputData.label"
+                    [value]="inputData.value"
+                    [readonly]="inputData.readonly"
+
+                    [formControlName]="inputData.key"
+
+                    (ngyChange)="inputData.change ? inputData.change($event) : null"
+                    (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
+                    (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
+                    (ngyClick)="inputData.click ? inputData.click($event) : null"
+                    (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"></ngy-checkbox>
     </ng-template>
 
     <!-- CHECKBOXGROUP TEMPLATE -->
     <ng-template #checkboxGroupTemplate let-inputData let-pathData="pathData">
-      <ngy-multi-checkbox [compareWith]="inputData.compareWith" [formControlName]="inputData.key"
-                          [input]="inputData"></ngy-multi-checkbox>
+      <ngy-multi-checkbox inputType="checkbox" [compareWith]="inputData.compareWith"
+                          [key]="inputData.key"
+                          [id]="inputData.id"
+                          [label]="inputData.label"
+                          [value]="inputData.value"
+                          [readonly]="inputData.readonly"
+
+                          [options]="inputData.options"
+
+                          [formControlName]="inputData.key"
+
+                          (ngyChange)="inputData.change ? inputData.change($event) : null"
+                          (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
+                          (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
+                          (ngyClick)="inputData.click ? inputData.click($event) : null"
+                          (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"></ngy-multi-checkbox>
     </ng-template>
 
     <!-- RADIOGROUP TEMPLATE -->
     <ng-template #radioGroupTemplate let-inputData let-pathData="pathData">
-      <ngy-multi-checkbox [compareWith]="inputData.compareWith" [formControlName]="inputData.key"
-                          [input]="inputData"></ngy-multi-checkbox>
+      <ngy-multi-checkbox inputType="radio" [compareWith]="inputData.compareWith"
+                          [key]="inputData.key"
+                          [id]="inputData.id"
+                          [label]="inputData.label"
+                          [value]="inputData.value"
+                          [readonly]="inputData.readonly"
+
+                          [options]="inputData.options"
+
+                          [formControlName]="inputData.key"
+
+                          (ngyChange)="inputData.change ? inputData.change($event) : null"
+                          (ngyFocus)="inputData.focus ? inputData.focus($event) : null"
+                          (ngyBlur)="inputData.blur ? inputData.blur($event) : null"
+                          (ngyClick)="inputData.click ? inputData.click($event) : null"
+                          (ngyContextMenu)="inputData.contextMenu ? inputData.contextMenu($event) : null"></ngy-multi-checkbox>
     </ng-template>
 
     <ngy-helper-text *ngIf="input.helperText" [text]="input.helperText"></ngy-helper-text>

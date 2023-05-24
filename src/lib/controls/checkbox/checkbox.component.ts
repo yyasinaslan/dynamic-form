@@ -1,9 +1,20 @@
-import {Component, Input} from "@angular/core";
+import {
+  Component,
+  ContentChild,
+  ContentChildren,
+  EventEmitter,
+  Input,
+  Optional,
+  Output,
+  QueryList
+} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
-import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
 import {CommonModule} from "@angular/common";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
-import {CheckboxInput} from "../../common/checkbox-input";
+import {Observable} from "rxjs";
+import {ChangeEventInterface} from "../../interfaces/change-event.interface";
+import {HelperTextDirective} from "../../directives/helper-text.directive";
+import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 
 @Component({
   selector: "ngy-checkbox",
@@ -15,15 +26,32 @@ import {CheckboxInput} from "../../common/checkbox-input";
     ObservableStringPipe
   ]
 })
-export class CheckboxComponent implements ControlValueAccessor, DynamicControlInterface {
-  @Input() formName: string = "";
-  @Input() input!: CheckboxInput<any>;
+export class CheckboxComponent implements ControlValueAccessor {
+  @Input() key!: string;
+  @Input() type: 'checkbox' | 'switch' = 'checkbox';
+
+  @Input() id: string = "";
+
+  @Input() label: string | Observable<string> = "";
+  @Input() value?: any;
+
+  @Input() readonly: boolean = false;
   @Input() disabled: boolean = false;
+
+  @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
+  @Output() ngyFocus = new EventEmitter<FocusEvent>();
+  @Output() ngyBlur = new EventEmitter<FocusEvent>();
+  @Output() ngyClick = new EventEmitter<MouseEvent>();
+  @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
+
+  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
+  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
 
   val: boolean = false;
 
-  constructor(public control: NgControl) {
-    control.valueAccessor = this;
+  constructor(@Optional() public control: NgControl) {
+    if (control)
+      control.valueAccessor = this;
   }
 
   onChange: (value: any) => void = () => {
@@ -33,6 +61,9 @@ export class CheckboxComponent implements ControlValueAccessor, DynamicControlIn
   };
 
   ngOnInit(): void {
+    if (this.value !== undefined) {
+      this.val = this.value;
+    }
   }
 
   public registerOnChange(fn: (value: any | null) => void) {
@@ -51,17 +82,29 @@ export class CheckboxComponent implements ControlValueAccessor, DynamicControlIn
     this.val = obj;
   }
 
-  valChanged($event: Event) {
-    const target = $event.target as HTMLInputElement;
+  valChanged(event: Event) {
+    const target = event.target as HTMLInputElement;
     if (!target) return;
 
     this.val = target.checked;
     this.onChange(this.val);
+    this.ngyChange.emit({
+      target: event.target,
+      originalEvent: event,
+      value: this.val,
+      type: 'change'
+    })
   }
 
-  labelClick() {
+  labelClick(event: MouseEvent) {
     if (this.disabled) return;
     this.val = !this.val;
     this.onChange(this.val);
+    this.ngyChange.emit({
+      target: event.target,
+      originalEvent: event,
+      value: this.val,
+      type: 'change'
+    })
   }
 }

@@ -13,8 +13,8 @@
                      (ngyClick)="eventTest($event)"
                      (ngyContextMenu)="eventTest($event)"
 
+                     ngModel
                      name="textBox"
-                     [(ngModel)]="model1"
                      [required]="true" [minlength]="5" [maxlength]="10"
         >
           <ng-template ngyHelperText>This is helper text</ng-template>
@@ -41,7 +41,7 @@
         <h1>Textarea</h1>
         <ngy-textarea label="Textarea"
                       key="textArea"
-                      [(ngModel)]="model2"
+                      ngModel
                       name="textArea"
                       (ngyChange)="eventTest($event)"
                       (ngyFocus)="eventTest($event)"
@@ -81,7 +81,7 @@
                     (ngyClick)="eventTest($event)"
                     (ngyContextMenu)="eventTest($event)"
 
-                    [(ngModel)]="model3"
+                    ngModel
                     name="select"
                     [required]="true" [minlength]="2" [maxlength]="3"
         >
@@ -113,22 +113,22 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h1>Switch Input</h1>
-        <ngy-switch label="Switch example"
-                    key="switch"
-                    (ngyChange)="eventTest($event)"
-                    (ngyFocus)="eventTest($event)"
-                    (ngyBlur)="eventTest($event)"
-                    (ngyClick)="eventTest($event)"
-                    (ngyContextMenu)="eventTest($event)"
+        <ngy-checkbox type="switch" label="Switch example"
+                      key="switch"
+                      (ngyChange)="eventTest($event)"
+                      (ngyFocus)="eventTest($event)"
+                      (ngyBlur)="eventTest($event)"
+                      (ngyClick)="eventTest($event)"
+                      (ngyContextMenu)="eventTest($event)"
 
-                    ngModel
-                    name="switch"
-                    [required]="true"
+                      ngModel
+                      name="switch"
+                      [required]="true"
         >
           <ng-template ngyHelperText>This is helper text</ng-template>
 
           <ng-template ngyValidatorMessage="required">Required</ng-template>
-        </ngy-switch>
+        </ngy-checkbox>
       </div>
     </div>
     <div class="col-md-6">
@@ -139,6 +139,121 @@
     </div>
   </div>
   <!-- endregion -->
+
+  <!-- region Checkbox -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="sticky-example">
+        <h1>Checkbox Input</h1>
+        <ngy-checkbox label="Checkbox example"
+                      key="checkbox"
+                      (ngyChange)="eventTest($event)"
+                      (ngyFocus)="eventTest($event)"
+                      (ngyBlur)="eventTest($event)"
+                      (ngyClick)="eventTest($event)"
+                      (ngyContextMenu)="eventTest($event)"
+
+                      [value]="true"
+
+                      ngModel
+                      name="checkbox"
+                      [required]="true"
+        >
+          <ng-template ngyHelperText>This is helper text</ng-template>
+
+          <ng-template ngyValidatorMessage="required">Required</ng-template>
+        </ngy-checkbox>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h6 mb-0 pb-0">Example usage:</div>
+      <pre>
+        <code class="language-html border">{{codeExamples.checkbox}}</code>
+      </pre>
+    </div>
+  </div>
+  <!-- endregion -->
+
+  <!-- region Checkbox Group -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="sticky-example">
+        <h1>Checkbox Group</h1>
+        <ngy-multi-checkbox inputType="checkbox" label="Checkbox group"
+                            key="checkboxGroup"
+                            (ngyChange)="eventTest($event)"
+                            (ngyFocus)="eventTest($event)"
+                            (ngyBlur)="eventTest($event)"
+                            (ngyClick)="eventTest($event)"
+                            (ngyContextMenu)="eventTest($event)"
+
+                            ngModel
+                            name="checkboxGroup"
+                            [required]="true" [minlength]="2" [maxlength]="3"
+        >
+          <ngy-option [value]="'item1'" label="Item 1"/>
+          <ngy-option [value]="'item2'" label="Item 2"/>
+          <ngy-option value="item3" label="Item 3"/>
+          <ngy-option value="item4" label="Item 4"/>
+          <ngy-option value="item5" label="Item 5"/>
+
+          <ng-template ngyHelperText>This is helper text</ng-template>
+
+          <ng-template ngyValidatorMessage="required">required</ng-template>
+          <ng-template ngyValidatorMessage="minlength">min length must be 2</ng-template>
+          <ng-template ngyValidatorMessage="maxlength">max length must be 3</ng-template>
+        </ngy-multi-checkbox>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h6 mb-0 pb-0">Example usage:</div>
+      <pre>
+        <code class="language-html border">{{codeExamples.checkboxGroup}}</code>
+      </pre>
+    </div>
+  </div>
+  <!-- endregion -->
+
+  <!-- region Radio Group -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="sticky-example">
+        <h1>Radio Group</h1>
+        <ngy-multi-checkbox inputType="radio"
+                            orientation="horizontal"
+                            label="Radio Group"
+                            key="radioGroup"
+                            (ngyChange)="eventTest($event)"
+                            (ngyFocus)="eventTest($event)"
+                            (ngyBlur)="eventTest($event)"
+                            (ngyClick)="eventTest($event)"
+                            (ngyContextMenu)="eventTest($event)"
+
+                            ngModel
+                            name="radioGroup"
+                            [required]="true"
+        >
+          <ngy-option [value]="'item1'" label="Item 1"/>
+          <ngy-option [value]="'item2'" label="Item 2"/>
+          <ngy-option value="item3" label="Item 3"/>
+          <ngy-option value="item4" label="Item 4"/>
+          <ngy-option value="item5" label="Item 5"/>
+
+          <ng-template ngyHelperText>This is helper text</ng-template>
+
+          <ng-template ngyValidatorMessage="required">required</ng-template>
+        </ngy-multi-checkbox>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h6 mb-0 pb-0">Example usage:</div>
+      <pre>
+        <code class="language-html border">{{codeExamples.radioGroup}}</code>
+      </pre>
+    </div>
+  </div>
+  <!-- endregion -->
+
 
   <button type="submit" class="mt-4 btn btn-primary">Submit</button>
 </form>

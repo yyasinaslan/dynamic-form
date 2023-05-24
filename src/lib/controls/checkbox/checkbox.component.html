@@ -1,13 +1,33 @@
-<div class="form-check">
+<div class="form-check" [class.form-switch]="type === 'switch'">
   <input
     #check
-    (blur)="onTouched()"
-    (change)="valChanged($event)"
-    [checked]="val == true"
+    (blur)="onTouched(); ngyBlur.emit($event)"
+    (focus)="ngyFocus.emit($event)"
+    (click)="ngyClick.emit($event)"
+    (contextmenu)="ngyContextMenu.emit($event)"
+    (input)="valChanged($event)"
+    [checked]="val"
     [disabled]="disabled"
-    [name]="input.key"
-    [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+    [name]="key"
+    [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
     class="form-check-input"
     type="checkbox"/>
-  <label (click)="labelClick()" class="form-check-label">{{ input.label | observableString }}</label>
+  <label (click)="labelClick($event)" class="form-check-label">{{ label | observableString }}</label>
+
+  <ng-container *ngIf="helperTextTemplate && helperTextTemplate.templateRef">
+    <div class="form-text">
+      <ng-container [ngTemplateOutlet]="helperTextTemplate.templateRef"/>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="validatorsMessage && validatorsMessage.length > 0">
+    <div class="ngy-invalid-feedback small">
+      <ng-container *ngFor="let directive of validatorsMessage">
+        <div *ngIf="control?.errors?.[directive.ngyValidatorMessage]">
+          <ng-container [ngTemplateOutlet]="directive.templateRef"/>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
 </div>

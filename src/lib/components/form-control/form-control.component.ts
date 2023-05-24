@@ -18,7 +18,6 @@ import {CheckboxComponent} from "../../controls/checkbox/checkbox.component";
 import {FileInputComponent} from "../../controls/file-input/file-input.component";
 import {HelperTextComponent} from "../helper-text/helper-text.component";
 import {SelectComponent} from "../../controls/select/select.component";
-import {SwitchComponent} from "../../controls/switch/switch.component";
 import {TextboxComponent} from "../../controls/textbox/textbox.component";
 import {ValidationFeedbackComponent} from "../validation-feedback/validation-feedback.component";
 import {TextareaComponent} from "../../controls/textarea/textarea.component";
@@ -39,7 +38,6 @@ import {GroupInput} from "../../common/group-input";
     HelperTextComponent,
     MultiCheckboxComponent,
     SelectComponent,
-    SwitchComponent,
     TextboxComponent,
     ValidationFeedbackComponent,
     TextareaComponent,

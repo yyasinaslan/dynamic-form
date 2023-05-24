@@ -11,6 +11,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   QueryList,
   SimpleChanges,
@@ -104,8 +105,9 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   private optionSub?: Subscription;
   private optionTagsSub?: Subscription;
 
-  constructor(public control: NgControl, private elRef: ElementRef) {
-    control.valueAccessor = this;
+  constructor(@Optional() public control: NgControl, private elRef: ElementRef) {
+    if (control)
+      control.valueAccessor = this;
   }
 
   //<editor-fold desc="Angular hooks">
@@ -148,7 +150,9 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   ngAfterViewInit(): void {
     if (!this.dropdownToggle || !this.dropdownMenu) return;
 
-    this.popperRef = createPopper(this.dropdownToggle.nativeElement, this.dropdownMenu.nativeElement)
+    this.popperRef = createPopper(this.dropdownToggle.nativeElement, this.dropdownMenu.nativeElement, {
+      strategy: 'absolute'
+    })
   }
 
   //</editor-fold>

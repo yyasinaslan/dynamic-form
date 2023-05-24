@@ -1,4 +1,14 @@
-import {Component, ContentChild, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList} from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  ContentChildren,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  QueryList
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
@@ -39,7 +49,7 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
 
   _val: any;
 
-  constructor(public control: NgControl) {
+  constructor(@Optional() public control: NgControl) {
     this.control.valueAccessor = this;
   }
 

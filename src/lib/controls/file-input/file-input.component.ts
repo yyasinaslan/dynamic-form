@@ -14,7 +14,7 @@ import {TextAreaInput} from "../../common/textarea-input";
     CommonModule,
     ObservableStringPipe
   ],
-  styleUrls: ['./file-input.component.css']
+  styleUrls: ['./file-input.component.scss']
 })
 export class FileInputComponent implements ControlValueAccessor, DynamicControlInterface {
   @Input() formName: string = "";

@@ -2,10 +2,11 @@ import {AfterViewInit, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {
+  CheckboxComponent,
   HelperTextDirective,
+  MultiCheckboxComponent,
   OptionComponent,
   SelectComponent,
-  SwitchComponent,
   TextareaComponent,
   TextboxComponent,
   ValidatorMessageDirective
@@ -17,14 +18,11 @@ declare const hljs: any;
 @Component({
   selector: 'app-declarative-examples',
   standalone: true,
-  imports: [CommonModule, TextboxComponent, FormsModule, ValidatorMessageDirective, HelperTextDirective, TextareaComponent, SelectComponent, OptionComponent, SwitchComponent],
+  imports: [CommonModule, FormsModule, TextboxComponent, ValidatorMessageDirective, HelperTextDirective, TextareaComponent, SelectComponent, OptionComponent, CheckboxComponent, MultiCheckboxComponent],
   templateUrl: './declarative-examples.component.html',
   styleUrls: ['./declarative-examples.component.scss']
 })
 export class DeclarativeExamplesComponent implements AfterViewInit {
-  model1: string = '';
-  model2: string = '';
-  model3: string = '';
   eventLog: any[] = [];
 
   //<editor-fold desc="Event test">

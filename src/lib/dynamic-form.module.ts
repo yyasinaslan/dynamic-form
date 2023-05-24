@@ -5,7 +5,6 @@ import {TextboxComponent} from "./controls/textbox/textbox.component";
 import {MultiCheckboxComponent} from "./controls/multi-checkbox/multi-checkbox.component";
 import {FileInputComponent} from "./controls/file-input/file-input.component";
 import {SelectComponent} from "./controls/select/select.component";
-import {SwitchComponent} from "./controls/switch/switch.component";
 import {TextareaComponent} from "./controls/textarea/textarea.component";
 import {HelperTextDirective} from "./directives/helper-text.directive";
 import {ValidatorMessageDirective} from "./directives/validator-message.directive";
@@ -24,7 +23,6 @@ const COMPONENTS = [
   MultiCheckboxComponent,
   FileInputComponent,
   SelectComponent,
-  SwitchComponent,
   TextareaComponent,
 
   HelperTextDirective,
