@@ -49,8 +49,9 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
 
   _val: any;
 
-  constructor(@Optional() public control: NgControl) {
-    this.control.valueAccessor = this;
+  constructor(@Optional() public control?: NgControl) {
+    if (control)
+      control.valueAccessor = this;
   }
 
   onChange: (value: any) => void = () => {

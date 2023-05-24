@@ -105,7 +105,7 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   private optionSub?: Subscription;
   private optionTagsSub?: Subscription;
 
-  constructor(@Optional() public control: NgControl, private elRef: ElementRef) {
+  constructor(private elRef: ElementRef, @Optional() public control?: NgControl) {
     if (control)
       control.valueAccessor = this;
   }
@@ -278,7 +278,7 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   }
 
   toggleDropdown(event: MouseEvent, state?: boolean) {
-    if (this.control.disabled) {
+    if (this.disabled) {
       return;
     }
 

@@ -49,7 +49,7 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   val: boolean = false;
 
-  constructor(@Optional() public control: NgControl) {
+  constructor(@Optional() public control?: NgControl) {
     if (control)
       control.valueAccessor = this;
   }

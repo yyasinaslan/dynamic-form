@@ -1,5 +1,5 @@
 <label (click)="toggleDropdown($event)" class="form-label">{{ label | observableString }}</label>
-<div class="dropdown-container" [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }">
+<div class="dropdown-container" [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }">
   <div class="dropdown">
     <button
       #dropdownToggle
@@ -8,7 +8,7 @@
       (contextmenu)="ngyContextMenu.emit($event)"
       (click)="toggleDropdown($event);ngyClick.emit($event)"
       [disabled]="disabled"
-      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+      [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
       class="form-select d-flex w-100 justify-content-between align-items-center "
       type="button">
       <span class="text-truncate">{{ labels$ | observableString }}</span>

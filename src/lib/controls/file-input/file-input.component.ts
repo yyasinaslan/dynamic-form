@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Optional} from '@angular/core';
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {DynamicControlInterface} from "../../interfaces/dynamic-control.interface";
 import {CommonModule} from "@angular/common";
@@ -23,8 +23,9 @@ export class FileInputComponent implements ControlValueAccessor, DynamicControlI
 
   val: any;
 
-  constructor(public control: NgControl) {
-    this.control.valueAccessor = this;
+  constructor(@Optional() public control?: NgControl) {
+    if (control)
+      control.valueAccessor = this;
   }
 
   onChange: (value: any) => void = () => {

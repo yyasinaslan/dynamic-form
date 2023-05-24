@@ -57,8 +57,8 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
   _val: any = null;
 
   constructor(@Optional() public control?: NgControl) {
-    if (this.control)
-      this.control.valueAccessor = this;
+    if (control)
+      control.valueAccessor = this;
   }
 
   onChange: (value: any) => void = () => {

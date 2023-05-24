@@ -1,6 +1,6 @@
 <label class="form-label">{{ label | observableString }}</label>
 <div
-  [ngClass]="[orientation == 'horizontal' ? 'flex-row gap-3 align-items-center' : 'flex-column gap-2', control.invalid ? 'ng-invalid':'ng-valid']"
+  [ngClass]="[orientation == 'horizontal' ? 'flex-row gap-3 align-items-center' : 'flex-column gap-2', control?.invalid ? 'ng-invalid':'ng-valid']"
   class="d-flex gap-1 flex-wrap">
   <ng-container *ngIf="inputType == 'checkbox'; else radioGroupTemplate">
     <div *ngFor="let option of _options; let index = index" class="form-check">
@@ -12,7 +12,7 @@
         (change)="checkboxChanged($event, option.value)"
         [checked]="valIncludes(val,option.value)"
         [disabled]="disabled"
-        [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+        [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
         [readOnly]="readonly"
         [value]="option.value"
         class="form-check-input"
@@ -47,7 +47,7 @@
       [checked]="compareWith(val, option.value)"
       [disabled]="disabled"
       [name]="key"
-      [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+      [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
       [value]="option.value"
       class="form-check-input"
       type="radio"/>

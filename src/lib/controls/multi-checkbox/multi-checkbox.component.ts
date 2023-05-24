@@ -80,7 +80,7 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
   private optionSub?: Subscription;
   private optionTagsSub?: Subscription;
 
-  constructor(@Optional() public control: NgControl) {
+  constructor(@Optional() public control?: NgControl) {
     if (control)
       control.valueAccessor = this;
   }
@@ -143,7 +143,7 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
   }
 
   labelClick(option: DropdownOption) {
-    if (this.control.disabled) return;
+    if (this.disabled) return;
 
     this.makeArray();
 

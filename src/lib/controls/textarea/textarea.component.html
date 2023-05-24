@@ -8,7 +8,7 @@
      [disabled]="disabled"
      [id]="id + '_' + key"
      [name]="key"
-     [ngClass]="{ 'ng-invalid': control.invalid, 'ng-valid': control.valid }"
+     [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
      [placeholder]="placeholder | observableString"
      [readOnly]="readonly"
      [value]="_val"
