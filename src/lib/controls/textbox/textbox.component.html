@@ -11,7 +11,7 @@
     [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
     [placeholder]="placeholder | observableString"
     [readOnly]="readonly"
-    [type]="type"
+    [type]="inputType"
     [value]="_val"
     class="form-control"/>
 </ng-template>
@@ -30,18 +30,5 @@
   <ng-container [ngTemplateOutlet]="inputTemplate"/>
 </ng-container>
 
-<ng-container *ngIf="helperTextTemplate && helperTextTemplate.templateRef">
-  <div class="form-text">
-    <ng-container [ngTemplateOutlet]="helperTextTemplate.templateRef"/>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="validatorsMessage && validatorsMessage.length > 0">
-  <div class="ngy-invalid-feedback small">
-    <ng-container *ngFor="let directive of validatorsMessage">
-      <div *ngIf="control?.errors?.[directive.ngyValidatorMessage]">
-        <ng-container [ngTemplateOutlet]="directive.templateRef"/>
-      </div>
-    </ng-container>
-  </div>
-</ng-container>
+<ng-content select="ngy-helper-text"></ng-content>
+<ng-content select="ngy-invalid-message"></ng-content>

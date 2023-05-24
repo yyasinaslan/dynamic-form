@@ -1,20 +1,9 @@
-import {
-  Component,
-  ContentChild,
-  ContentChildren,
-  EventEmitter,
-  Input,
-  Optional,
-  Output,
-  QueryList
-} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Optional, Output} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {Observable} from "rxjs";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
-import {HelperTextDirective} from "../../directives/helper-text.directive";
-import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 
 @Component({
   selector: "ngy-checkbox",
@@ -26,26 +15,23 @@ import {ValidatorMessageDirective} from "../../directives/validator-message.dire
     ObservableStringPipe
   ]
 })
-export class CheckboxComponent implements ControlValueAccessor {
+export class CheckboxComponent implements ControlValueAccessor, OnInit {
   @Input() key!: string;
   @Input() type: 'checkbox' | 'switch' = 'checkbox';
 
-  @Input() id: string = "";
+  @Input() id?: string = "";
 
-  @Input() label: string | Observable<string> = "";
+  @Input() label?: string | Observable<string> = "";
   @Input() value?: any;
 
-  @Input() readonly: boolean = false;
-  @Input() disabled: boolean = false;
+  @Input() readonly?: boolean = false;
+  @Input() disabled?: boolean = false;
 
   @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
   @Output() ngyFocus = new EventEmitter<FocusEvent>();
   @Output() ngyBlur = new EventEmitter<FocusEvent>();
   @Output() ngyClick = new EventEmitter<MouseEvent>();
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
-
-  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
-  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
 
   val: boolean = false;
 
@@ -88,7 +74,7 @@ export class CheckboxComponent implements ControlValueAccessor {
 
     this.val = target.checked;
     this.onChange(this.val);
-    this.ngyChange.emit({
+    this.ngyChange?.emit({
       target: event.target,
       originalEvent: event,
       value: this.val,
@@ -100,7 +86,7 @@ export class CheckboxComponent implements ControlValueAccessor {
     if (this.disabled) return;
     this.val = !this.val;
     this.onChange(this.val);
-    this.ngyChange.emit({
+    this.ngyChange?.emit({
       target: event.target,
       originalEvent: event,
       value: this.val,

@@ -1,20 +1,8 @@
-import {
-  Component,
-  ContentChild,
-  ContentChildren,
-  EventEmitter,
-  Input,
-  OnInit,
-  Optional,
-  Output,
-  QueryList
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Optional, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {Observable} from "rxjs";
-import {HelperTextDirective} from "../../directives/helper-text.directive";
-import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
 
 @Component({
@@ -43,9 +31,6 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
   @Output() ngyBlur = new EventEmitter<FocusEvent>();
   @Output() ngyClick = new EventEmitter<MouseEvent>();
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
-
-  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
-  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
 
   _val: any;
 

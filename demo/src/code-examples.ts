@@ -1,4 +1,17 @@
 export const codeExamples = {
+  invalidMessage: `<ngy-textbox label="Label of textbox" ngModel name="textBox"  [required]="true" [minlength]="5" [maxlength]="10">
+  <ngy-invalid-message errorName="required">Textbox is required</ngy-invalid-message>
+  <ngy-invalid-message errorName="minlength">Min length must be 5</ngy-invalid-message>
+  <ngy-invalid-message errorName="maxlength">Max length must be 10</ngy-invalid-message>
+</ngy-textbox>`,
+
+  helperTextComponent: `<!-- helper-text.component.html -->
+<div class="form-text">
+  <ng-content/>
+</div>`,
+
+  helperText: `<ngy-helper-text>Helper text content</ngy-helper-text>`,
+
   //<editor-fold desc="Textbox">
   textbox: `<ngy-textbox label="Label of textbox"
                      key="textBox"
@@ -12,11 +25,11 @@ export const codeExamples = {
                      name="textBox"
                      [required]="true" [minlength]="5" [maxlength]="10"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
 
-          <ng-template ngyValidatorMessage="required">Required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">Min length must be 5</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">Max length must be 10</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Textbox is required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 5</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 10</ngy-invalid-message>
         </ngy-textbox>`,
   //</editor-fold>
 
@@ -32,16 +45,15 @@ export const codeExamples = {
                       (ngyContextMenu)="eventTest($event)"
                       [required]="true" [minlength]="5" [maxlength]="10"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">min length must be 5</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">max length must be 10</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 5</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 10</ngy-invalid-message>
         </ngy-textarea>`,
   //</editor-fold>
 
   //<editor-fold desc="Select">
-  select: `        <ngy-select label="Select"
+  select: `<ngy-select label="Select"
                     key="select"
                     [multiple]="true"
                     (ngyChange)="eventTest($event)"
@@ -60,11 +72,10 @@ export const codeExamples = {
           <ngy-option value="item4" label="Item 4"/>
           <ngy-option value="item5" label="Item 5"/>
 
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">min length must be 2</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">max length must be 3</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 2</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 3</ngy-invalid-message>
         </ngy-select>`,
   //</editor-fold>
 
@@ -81,9 +92,8 @@ export const codeExamples = {
                       name="switch"
                       [required]="true"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">Required</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
         </ngy-checkbox>`,
   //</editor-fold>
 
@@ -102,9 +112,8 @@ export const codeExamples = {
                       name="checkbox"
                       [required]="true"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">Required</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
         </ngy-checkbox>`,
   //</editor-fold>
 
@@ -127,11 +136,10 @@ export const codeExamples = {
           <ngy-option value="item4" label="Item 4"/>
           <ngy-option value="item5" label="Item 5"/>
 
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">min length must be 2</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">max length must be 3</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 2</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 3</ngy-invalid-message>
         </ngy-multi-checkbox>`,
   //</editor-fold>
 
@@ -156,9 +164,8 @@ export const codeExamples = {
           <ngy-option value="item4" label="Item 4"/>
           <ngy-option value="item5" label="Item 5"/>
 
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
         </ngy-multi-checkbox>`,
   //</editor-fold>
 }

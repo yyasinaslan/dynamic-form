@@ -3,13 +3,13 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {
   CheckboxComponent,
-  HelperTextDirective,
+  HelperTextComponent,
+  InvalidMessageComponent,
   MultiCheckboxComponent,
   OptionComponent,
   SelectComponent,
   TextareaComponent,
   TextboxComponent,
-  ValidatorMessageDirective
 } from "dynamic-form";
 import {codeExamples} from "../../code-examples";
 
@@ -18,7 +18,9 @@ declare const hljs: any;
 @Component({
   selector: 'app-declarative-examples',
   standalone: true,
-  imports: [CommonModule, FormsModule, TextboxComponent, ValidatorMessageDirective, HelperTextDirective, TextareaComponent, SelectComponent, OptionComponent, CheckboxComponent, MultiCheckboxComponent],
+  imports: [CommonModule, FormsModule, TextboxComponent,
+    TextareaComponent, SelectComponent, OptionComponent,
+    CheckboxComponent, MultiCheckboxComponent, HelperTextComponent, InvalidMessageComponent],
   templateUrl: './declarative-examples.component.html',
   styleUrls: ['./declarative-examples.component.scss']
 })

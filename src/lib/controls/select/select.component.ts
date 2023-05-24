@@ -2,7 +2,6 @@ import {
   AfterContentInit,
   AfterViewInit,
   Component,
-  ContentChild,
   ContentChildren,
   ElementRef,
   EventEmitter,
@@ -22,8 +21,6 @@ import {BehaviorSubject, combineLatest, map, Observable, of, Subscription} from 
 import {CommonModule} from "@angular/common";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {DropdownOption} from "../../interfaces/dropdown-option.interface";
-import {HelperTextDirective} from "../../directives/helper-text.directive";
-import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 import {OptionComponent} from "../../components/option/option.component";
 import {createPopper, Instance} from "@popperjs/core";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
@@ -42,27 +39,25 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   //<editor-fold desc="Inputs">
   @Input() key!: string;
 
-  @Input() id: string = "";
+  @Input() id?: string = "";
 
-  @Input() label: string | Observable<string> = "";
+  @Input() label?: string | Observable<string> = "";
   @Input() value?: any;
 
-  @Input() multiple: boolean = false;
-
-  @Input() type: string = 'text';
+  @Input() multiple?: boolean = false;
 
   // Clear button
-  @Input() showClearButton: boolean = false;
-  @Input() clearButtonText: string = 'Clear';
+  @Input() showClearButton?: boolean = false;
+  @Input() clearButtonText?: string = 'Clear';
 
-  @Input() readonly: boolean = false;
-  @Input() disabled: boolean = false;
-  @Input() floating: boolean = false;
+  @Input() readonly?: boolean = false;
+  @Input() disabled?: boolean = false;
+  @Input() floating?: boolean = false;
   @Input() placeholder?: string;
 
-  @Input() maxHeight: string = '75vh';
+  @Input() maxHeight?: string = '75vh';
 
-  @Input() options: DropdownOption[] | Observable<DropdownOption[]> = [];
+  @Input() options?: DropdownOption[] | Observable<DropdownOption[]> = [];
 
   @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
     return a === b;
@@ -77,8 +72,6 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
   //</editor-fold>
 
-  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
-  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
   @ContentChildren(OptionComponent) optionTags?: QueryList<OptionComponent>;
   private popperRef?: Instance;
 
@@ -98,9 +91,6 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   val: string[] | string = []; //seçili olan değer (checked)
   labels$: string | Observable<string> = new BehaviorSubject<string>('');
   optionLabelsSub?: Subscription;
-
-  // Dropdown direction
-  dropup: boolean = false;
 
   private optionSub?: Subscription;
   private optionTagsSub?: Subscription;
@@ -222,7 +212,7 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
     this.showDropdown = false;
     this.calcLabels();
 
-    this.ngyChange.emit({
+    this.ngyChange?.emit({
       target: this.dropdownToggle!.nativeElement,
       value: this.val,
       type: 'change',
@@ -252,7 +242,7 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
     this.onChange(this.val);
     this.calcLabels();
 
-    this.ngyChange.emit({
+    this.ngyChange?.emit({
       target: this.dropdownToggle!.nativeElement,
       value: this.val,
       type: 'change',

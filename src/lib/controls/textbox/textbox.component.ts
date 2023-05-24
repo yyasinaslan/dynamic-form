@@ -1,21 +1,8 @@
-import {
-  Component,
-  ContentChild,
-  ContentChildren,
-  EventEmitter,
-  Input,
-  OnInit,
-  Optional,
-  Output,
-  QueryList
-} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Optional, Output} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
-import {ValidationFeedbackComponent} from "../../components/validation-feedback/validation-feedback.component";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
-import {HelperTextDirective} from "../../directives/helper-text.directive";
-import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
 
 @Component({
@@ -24,8 +11,7 @@ import {ChangeEventInterface} from "../../interfaces/change-event.interface";
   templateUrl: "./textbox.component.html",
   imports: [
     ObservableStringPipe,
-    CommonModule,
-    ValidationFeedbackComponent,
+    CommonModule
   ],
   styleUrls: ["./textbox.component.scss"]
 })
@@ -33,16 +19,16 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
 
   @Input() key!: string;
 
-  @Input() id: string = "";
+  @Input() id?: string = "";
 
-  @Input() label: string | Observable<string> = "";
+  @Input() label?: string | Observable<string> = "";
   @Input() value?: any;
 
 
-  @Input() type: string = 'text';
-  @Input() readonly: boolean = false;
-  @Input() disabled: boolean = false;
-  @Input() floating: boolean = false;
+  @Input() inputType?: string = 'text';
+  @Input() readonly?: boolean = false;
+  @Input() disabled?: boolean = false;
+  @Input() floating?: boolean = false;
   @Input() placeholder?: string;
 
   @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
@@ -50,9 +36,6 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
   @Output() ngyBlur = new EventEmitter<FocusEvent>();
   @Output() ngyClick = new EventEmitter<MouseEvent>();
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
-
-  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
-  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
 
   _val: any = null;
 
@@ -94,7 +77,7 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
     if (!target) return;
     this._val = target.value;
     this.onChange(this._val);
-    this.ngyChange.emit({
+    this.ngyChange?.emit({
       target: $event.target,
       originalEvent: $event,
       value: this._val,

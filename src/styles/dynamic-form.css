@@ -19,10 +19,8 @@
   border-radius: 0.375rem;
 }
 
-.ng-submitted .ng-valid ~ ngy-validation-feedback .ngy-valid-feedback,
-.ng-submitted .ng-valid ~ ngy-validation-feedback .ngy-valid-tooltip,
-.ng-submitted .ng-valid ~ .ngy-valid-feedback,
-.ng-submitted .ng-valid ~ .ngy-valid-tooltip {
+.ng-submitted .ng-valid .ngy-valid-feedback,
+.ng-submitted .ng-valid .ngy-valid-tooltip {
   display: block;
 }
 
@@ -106,10 +104,8 @@
   border-radius: 0.375rem;
 }
 
-.ng-submitted .ng-invalid ~ ngy-validation-feedback .ngy-invalid-feedback,
-.ng-submitted .ng-invalid ~ ngy-validation-feedback .ngy-invalid-tooltip,
-.ng-submitted .ng-invalid ~ .ngy-invalid-feedback,
-.ng-submitted .ng-invalid ~ .ngy-invalid-tooltip {
+.ng-submitted .ng-invalid .ngy-invalid-feedback,
+.ng-submitted .ng-invalid .ngy-invalid-tooltip {
   display: block;
 }
 

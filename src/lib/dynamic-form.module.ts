@@ -6,27 +6,22 @@ import {MultiCheckboxComponent} from "./controls/multi-checkbox/multi-checkbox.c
 import {FileInputComponent} from "./controls/file-input/file-input.component";
 import {SelectComponent} from "./controls/select/select.component";
 import {TextareaComponent} from "./controls/textarea/textarea.component";
-import {HelperTextDirective} from "./directives/helper-text.directive";
-import {ValidatorMessageDirective} from "./directives/validator-message.directive";
 import {FormControlComponent} from "./components/form-control/form-control.component";
 import {HelperTextComponent} from "./components/helper-text/helper-text.component";
-import {ValidationFeedbackComponent} from "./components/validation-feedback/validation-feedback.component";
+import {InvalidMessageComponent} from "./components/invalid-message/invalid-message.component";
 
 const COMPONENTS = [
   DynamicFormComponent,
   FormControlComponent,
   HelperTextComponent,
-  ValidationFeedbackComponent,
+  InvalidMessageComponent,
 
   CheckboxComponent,
   TextboxComponent,
   MultiCheckboxComponent,
   FileInputComponent,
   SelectComponent,
-  TextareaComponent,
-
-  HelperTextDirective,
-  ValidatorMessageDirective
+  TextareaComponent
 ]
 
 @NgModule({

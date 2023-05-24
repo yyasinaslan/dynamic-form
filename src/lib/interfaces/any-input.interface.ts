@@ -12,10 +12,9 @@ import {ArrayInput} from "../common/array-input";
 
 
 /**
- * Inputs type wrapper
+ * Inputs type union
  */
-export type AnyInput =
-  | BaseInput<any>
+export type AnyInput = BaseInput<any>
   | TextBoxInput<any>
   | FileInput
   | DropdownInput<any>
@@ -24,6 +23,6 @@ export type AnyInput =
   | CheckboxInput<any>
   | CheckboxGroupInput<any>
   | RadioGroupInput<any>
-  | GroupInput<any>
-  | ArrayInput<any>;
+  // & GroupInput<any>
+  // & ArrayInput<any>;
 

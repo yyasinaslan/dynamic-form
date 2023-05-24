@@ -1,7 +1,0 @@
-<div class="ngy-invalid-feedback small">
-  <ng-container *ngFor="let message of validatorsMessage">
-    <div *ngIf="control?.errors?.[message.key]">
-      {{ message.message | observableString}}
-    </div>
-  </ng-container>
-</div>

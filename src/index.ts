@@ -1,7 +1,7 @@
 // Common Components
 export {DynamicFormComponent} from './lib/dynamic-form.component';
 export {FormControlComponent} from './lib/components/form-control/form-control.component';
-export {ValidationFeedbackComponent} from './lib/components/validation-feedback/validation-feedback.component';
+export {InvalidMessageComponent} from './lib/components/invalid-message/invalid-message.component';
 export {HelperTextComponent} from './lib/components/helper-text/helper-text.component';
 export {OptionComponent} from './lib/components/option/option.component';
 
@@ -37,10 +37,6 @@ export {PlaceholderInterface} from "./lib/interfaces/placeholder.interface";
 export {FloatingInterface} from "./lib/interfaces/floating.interface";
 export {ControlType} from "./lib/interfaces/control-type";
 export {DynamicControlInterface} from "./lib/interfaces/dynamic-control.interface";
-
-// Directives
-export {ValidatorMessageDirective} from './lib/directives/validator-message.directive';
-export {HelperTextDirective} from './lib/directives/helper-text.directive';
 
 // Module definition
 export {DynamicFormModule} from './lib/dynamic-form.module';

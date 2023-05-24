@@ -49,12 +49,8 @@
   }
 
   @include reactive-form-validation-state-selector($state) {
-    //~ .#{$state}-feedback,
-    //~ .#{$state}-tooltip,
-    ~ ngy-validation-feedback .ngy-#{$state}-feedback,
-    ~ ngy-validation-feedback .ngy-#{$state}-tooltip,
-    ~.ngy-#{$state}-feedback,
-    ~.ngy-#{$state}-tooltip,
+    .ngy-#{$state}-feedback,
+    .ngy-#{$state}-tooltip,
     {
       display: block;
     }

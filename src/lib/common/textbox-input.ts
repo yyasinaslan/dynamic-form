@@ -15,7 +15,7 @@ export class TextBoxInput<T> extends BaseInput<T> {
   /**
    * Input html tag type attribute
    */
-  type: string = 'text'; // for input.type, text | email | number | password
+  inputType: string = 'text'; // for input.type, text | email | number | password
 
   /**
    * Enable floating style input (Bootstrap)
@@ -32,6 +32,6 @@ export class TextBoxInput<T> extends BaseInput<T> {
 
     if (options.floating) this.floating = options.floating;
     if (options.placeholder) this.placeholder = options.placeholder;
-    if (options.type) this.type = options.type;
+    if (options.type) this.inputType = options.type;
   }
 }

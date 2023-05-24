@@ -1,10 +1,37 @@
 <form #form="ngForm" (ngSubmit)="eventTest($event)">
+  <h1>Utilities</h1>
+  <!-- region Helpertext -->
+  <div class="row">
+    <h4>Helper Text</h4>
+    <p>You can show text below inputs declarative way with `ngy-helper-text` component.</p>
+    <p>Helper text component also can be used outside of inputs. It is just a wrapper component for bootstrap
+      classes.</p>
+    <pre><code class="language-html border">{{codeExamples.helperTextComponent}}</code></pre>
+
+    <div class="h6">Example usage:</div>
+    <pre><code class="language-html border">{{codeExamples.helperText}}</code></pre>
+  </div>
+  <!-- endregion -->
+
+  <!-- region Invalid message -->
+  <div class="row">
+    <h4>Invalid Message</h4>
+    <p>`InvalidMessageComponent` is a ready to use component for showing validation errors.</p>
+    <p>Put `ngy-invalid-message` component inside of inputs like example below. It will get FormControl reference and
+      handle messages automatically if form control has any errors.</p>
+
+    <div class="h6">Example usage:</div>
+    <pre><code class="language-html border">{{codeExamples.invalidMessage}}</code></pre>
+  </div>
+  <!-- endregion -->
+
+  <h1>Controls</h1>
 
   <!-- region Textbox -->
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="sticky-example">
-        <h1>Textbox</h1>
+        <h4>Textbox</h4>
         <ngy-textbox label="Label of textbox"
                      key="textBox"
                      (ngyChange)="eventTest($event)"
@@ -17,19 +44,17 @@
                      name="textBox"
                      [required]="true" [minlength]="5" [maxlength]="10"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
 
-          <ng-template ngyValidatorMessage="required">Required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">Min length must be 5</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">Max length must be 10</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Textbox is required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 5</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 10</ngy-invalid-message>
         </ngy-textbox>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h6 mb-0 pb-0">Example usage:</div>
-      <pre>
-        <code class="language-html border">{{codeExamples.textbox}}</code>
-      </pre>
+      <div class="h6">Example usage:</div>
+      <pre><code class="language-html border">{{codeExamples.textbox}}</code></pre>
     </div>
   </div>
   <!-- endregion -->
@@ -38,7 +63,7 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="sticky-example">
-        <h1>Textarea</h1>
+        <h4>Textarea</h4>
         <ngy-textarea label="Textarea"
                       key="textArea"
                       ngModel
@@ -50,19 +75,16 @@
                       (ngyContextMenu)="eventTest($event)"
                       [required]="true" [minlength]="5" [maxlength]="10"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">min length must be 5</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">max length must be 10</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 5</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 10</ngy-invalid-message>
         </ngy-textarea>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h6 mb-0 pb-0">Example usage:</div>
-      <pre>
-        <code class="language-html border">{{codeExamples.textarea}}</code>
-      </pre>
+      <div class="h6">Example usage:</div>
+      <pre><code class="language-html border">{{codeExamples.textarea}}</code></pre>
     </div>
   </div>
   <!-- endregion -->
@@ -71,7 +93,7 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="sticky-example">
-        <h1>Select</h1>
+        <h4>Select</h4>
         <ngy-select label="Select"
                     key="select"
                     [multiple]="true"
@@ -91,19 +113,16 @@
           <ngy-option value="item4" label="Item 4"/>
           <ngy-option value="item5" label="Item 5"/>
 
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">min length must be 2</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">max length must be 3</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 2</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 3</ngy-invalid-message>
         </ngy-select>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h6 mb-0 pb-0">Example usage:</div>
-      <pre>
-        <code class="language-html border">{{codeExamples.select}}</code>
-      </pre>
+      <div class="h6">Example usage:</div>
+      <pre><code class="language-html border">{{codeExamples.select}}</code></pre>
     </div>
   </div>
   <!-- endregion -->
@@ -112,7 +131,7 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="sticky-example">
-        <h1>Switch Input</h1>
+        <h4>Switch Input</h4>
         <ngy-checkbox type="switch" label="Switch example"
                       key="switch"
                       (ngyChange)="eventTest($event)"
@@ -125,17 +144,14 @@
                       name="switch"
                       [required]="true"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">Required</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
         </ngy-checkbox>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h6 mb-0 pb-0">Example usage:</div>
-      <pre>
-        <code class="language-html border">{{codeExamples.switch}}</code>
-      </pre>
+      <div class="h6">Example usage:</div>
+      <pre><code class="language-html border">{{codeExamples.switch}}</code></pre>
     </div>
   </div>
   <!-- endregion -->
@@ -144,7 +160,7 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="sticky-example">
-        <h1>Checkbox Input</h1>
+        <h4>Checkbox Input</h4>
         <ngy-checkbox label="Checkbox example"
                       key="checkbox"
                       (ngyChange)="eventTest($event)"
@@ -159,17 +175,14 @@
                       name="checkbox"
                       [required]="true"
         >
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">Required</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
         </ngy-checkbox>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h6 mb-0 pb-0">Example usage:</div>
-      <pre>
-        <code class="language-html border">{{codeExamples.checkbox}}</code>
-      </pre>
+      <div class="h6">Example usage:</div>
+      <pre><code class="language-html border">{{codeExamples.checkbox}}</code></pre>
     </div>
   </div>
   <!-- endregion -->
@@ -178,7 +191,7 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="sticky-example">
-        <h1>Checkbox Group</h1>
+        <h4>Checkbox Group</h4>
         <ngy-multi-checkbox inputType="checkbox" label="Checkbox group"
                             key="checkboxGroup"
                             (ngyChange)="eventTest($event)"
@@ -197,19 +210,16 @@
           <ngy-option value="item4" label="Item 4"/>
           <ngy-option value="item5" label="Item 5"/>
 
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
-          <ng-template ngyValidatorMessage="minlength">min length must be 2</ng-template>
-          <ng-template ngyValidatorMessage="maxlength">max length must be 3</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
+          <ngy-invalid-message errorName="minlength">Min length must be 2</ngy-invalid-message>
+          <ngy-invalid-message errorName="maxlength">Max length must be 3</ngy-invalid-message>
         </ngy-multi-checkbox>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h6 mb-0 pb-0">Example usage:</div>
-      <pre>
-        <code class="language-html border">{{codeExamples.checkboxGroup}}</code>
-      </pre>
+      <div class="h6">Example usage:</div>
+      <pre><code class="language-html border">{{codeExamples.checkboxGroup}}</code></pre>
     </div>
   </div>
   <!-- endregion -->
@@ -218,7 +228,7 @@
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="sticky-example">
-        <h1>Radio Group</h1>
+        <h4>Radio Group</h4>
         <ngy-multi-checkbox inputType="radio"
                             orientation="horizontal"
                             label="Radio Group"
@@ -239,17 +249,14 @@
           <ngy-option value="item4" label="Item 4"/>
           <ngy-option value="item5" label="Item 5"/>
 
-          <ng-template ngyHelperText>This is helper text</ng-template>
-
-          <ng-template ngyValidatorMessage="required">required</ng-template>
+          <ngy-helper-text>This is helper text</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
         </ngy-multi-checkbox>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="h6 mb-0 pb-0">Example usage:</div>
-      <pre>
-        <code class="language-html border">{{codeExamples.radioGroup}}</code>
-      </pre>
+      <div class="h6">Example usage:</div>
+      <pre><code class="language-html border">{{codeExamples.radioGroup}}</code></pre>
     </div>
   </div>
   <!-- endregion -->

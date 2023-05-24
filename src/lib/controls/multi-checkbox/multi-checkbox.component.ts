@@ -1,6 +1,5 @@
 import {
   Component,
-  ContentChild,
   ContentChildren,
   EventEmitter,
   Input,
@@ -18,8 +17,6 @@ import {CommonModule} from "@angular/common";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {DropdownOption} from "../../interfaces/dropdown-option.interface";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
-import {HelperTextDirective} from "../../directives/helper-text.directive";
-import {ValidatorMessageDirective} from "../../directives/validator-message.directive";
 import {OptionComponent} from "../../components/option/option.component";
 
 @Component({
@@ -36,23 +33,23 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
   //<editor-fold desc="Inputs">
   @Input() key!: string;
 
-  @Input() id: string = "";
+  @Input() id?: string = "";
 
-  @Input() label: string | Observable<string> = "";
+  @Input() label?: string | Observable<string> = "";
   @Input() value?: any;
 
-  @Input() inputType: 'checkbox' | 'radio' = 'checkbox';
+  @Input() inputType?: 'checkbox' | 'radio' = 'checkbox';
 
   // Clear button
-  @Input() showClearButton: boolean = false;
-  @Input() clearButtonText: string = 'Clear';
+  @Input() showClearButton?: boolean = false;
+  @Input() clearButtonText?: string = 'Clear';
 
-  @Input() readonly: boolean = false;
-  @Input() disabled: boolean = false;
+  @Input() readonly?: boolean = false;
+  @Input() disabled?: boolean = false;
 
-  @Input() orientation: 'horizontal' | 'vertical' = 'vertical';
+  @Input() orientation?: 'horizontal' | 'vertical' = 'vertical';
 
-  @Input() options: DropdownOption[] | Observable<DropdownOption[]> = [];
+  @Input() options?: DropdownOption[] | Observable<DropdownOption[]> = [];
 
   @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
     return a === b;
@@ -67,8 +64,6 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
   //</editor-fold>
 
-  @ContentChild(HelperTextDirective) helperTextTemplate?: HelperTextDirective;
-  @ContentChildren(ValidatorMessageDirective) validatorsMessage!: QueryList<ValidatorMessageDirective>;
   @ContentChildren(OptionComponent) optionTags?: QueryList<OptionComponent>;
 
   @Input() localizations = {
