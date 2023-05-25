@@ -216,7 +216,8 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
       target: this.dropdownToggle!.nativeElement,
       value: this.val,
       type: 'change',
-      originalEvent: null
+      originalEvent: null,
+      control: this.control
     })
   }
 
@@ -246,7 +247,8 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
       target: this.dropdownToggle!.nativeElement,
       value: this.val,
       type: 'change',
-      originalEvent: null
+      originalEvent: null,
+      control: this.control
     })
   }
 

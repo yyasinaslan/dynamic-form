@@ -25,12 +25,6 @@
                  (ngyClick)="input.click ? input.click($event) : null"
                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"/>
 
-    <!-- FILEINPUT -->
-    <ngy-file-input *ngSwitchCase="'file'"
-                    [formControlName]="input.key"
-                    [formName]="formName"
-                    [input]="input"></ngy-file-input>
-
     <!-- DROPDOWN TEMPLATE -->
     <ng-template #dropDownTemplate let-input let-pathData="pathData">
       <ngy-select *ngSwitchCase="'dropdown'" [compareWith]="input.compareWith"

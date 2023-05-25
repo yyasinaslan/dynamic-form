@@ -167,6 +167,14 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
     }
 
     this.onChange(this.val);
+
+    this.ngyChange?.emit({
+      target: null,
+      value: this.val,
+      type: 'change',
+      originalEvent: null,
+      control: this.control
+    })
   }
 
   markAsTouched() {
@@ -196,6 +204,14 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
   radioChanged(value: any) {
     this.val = value;
     this.onChange(this.val);
+
+    this.ngyChange?.emit({
+      target: null,
+      value: this.val,
+      type: 'change',
+      originalEvent: null,
+      control: this.control
+    })
   }
 
   ngOnDestroy(): void {

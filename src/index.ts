@@ -20,7 +20,6 @@ export {TextAreaInput} from './lib/common/textarea-input';
 export {TextBoxInput} from './lib/common/textbox-input';
 
 // Form control components
-export {FileInputComponent} from './lib/controls/file-input/file-input.component';
 export {SelectComponent} from './lib/controls/select/select.component';
 export {CheckboxComponent} from './lib/controls/checkbox/checkbox.component';
 export {TextareaComponent} from './lib/controls/textarea/textarea.component';

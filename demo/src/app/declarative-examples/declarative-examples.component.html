@@ -1,29 +1,4 @@
 <form #form="ngForm" (ngSubmit)="eventTest($event)">
-  <h1>Utilities</h1>
-  <!-- region Helpertext -->
-  <div class="row">
-    <h4>Helper Text</h4>
-    <p>You can show text below inputs declarative way with `ngy-helper-text` component.</p>
-    <p>Helper text component also can be used outside of inputs. It is just a wrapper component for bootstrap
-      classes.</p>
-    <pre><code class="language-html border">{{codeExamples.helperTextComponent}}</code></pre>
-
-    <div class="h6">Example usage:</div>
-    <pre><code class="language-html border">{{codeExamples.helperText}}</code></pre>
-  </div>
-  <!-- endregion -->
-
-  <!-- region Invalid message -->
-  <div class="row">
-    <h4>Invalid Message</h4>
-    <p>`InvalidMessageComponent` is a ready to use component for showing validation errors.</p>
-    <p>Put `ngy-invalid-message` component inside of inputs like example below. It will get FormControl reference and
-      handle messages automatically if form control has any errors.</p>
-
-    <div class="h6">Example usage:</div>
-    <pre><code class="language-html border">{{codeExamples.invalidMessage}}</code></pre>
-  </div>
-  <!-- endregion -->
 
   <h1>Controls</h1>
 
@@ -34,6 +9,8 @@
         <h4>Textbox</h4>
         <ngy-textbox label="Label of textbox"
                      key="textBox"
+                     mask="xxx-111-aaa-AA"
+                     placeholder="xxx-111-aaa-AA"
                      (ngyChange)="eventTest($event)"
                      (ngyFocus)="eventTest($event)"
                      (ngyBlur)="eventTest($event)"
@@ -261,20 +238,46 @@
   </div>
   <!-- endregion -->
 
-
   <button type="submit" class="mt-4 btn btn-primary">Submit</button>
 </form>
-<div class="mt-5">
-  <h5>Form value</h5>
-  <div class="font-monospace border rounded p-2 text-bg-dark">
-    <pre>{{form.value | json}}</pre>
-  </div>
-</div>
 
-<div class="mt-5">
-  <h5>Form events</h5>
-  <div class="font-monospace border rounded p-2 text-bg-dark"
-       style="height: 200px;max-height: 200px;overflow: auto;font-size: 0.7rem">
+
+<h1 class="mt-5">Utilities</h1>
+<!-- region Helper text -->
+<div class="row">
+  <h4>Helper Text</h4>
+  <p>You can show text below inputs declarative way with `ngy-helper-text` component.</p>
+  <p>Helper text component also can be used outside of inputs. It is just a wrapper component for bootstrap
+    classes.</p>
+  <pre><code class="language-html border">{{codeExamples.helperTextComponent}}</code></pre>
+
+  <div class="h6">Example usage:</div>
+  <pre><code class="language-html border">{{codeExamples.helperText}}</code></pre>
+</div>
+<!-- endregion -->
+
+<!-- region Invalid message -->
+<div class="row">
+  <h4>Invalid Message</h4>
+  <p>`InvalidMessageComponent` is a ready to use component for showing validation errors.</p>
+  <p>Put `ngy-invalid-message` component inside of inputs like example below. It will get FormControl reference and
+    handle messages automatically if form control has any errors.</p>
+
+  <div class="h6">Example usage:</div>
+  <pre><code class="language-html border">{{codeExamples.invalidMessage}}</code></pre>
+</div>
+<!-- endregion -->
+
+
+<div class="console">
+  <div>
+    <div class="font-monospace shadow border p-2 text-bg-secondary h-100 overflow-auto">
+      <pre>{{form.value | json}}</pre>
+    </div>
+  </div>
+
+  <div class="font-monospace shadow border p-2 text-bg-secondary h-100 overflow-auto"
+       style="font-size: 0.7rem">
     <div *ngFor="let e of eventLog"><span class="text-info">&gt;&gt;&gt;</span> Event: <b
       class="text-info">{{e.type}}</b>, Target: <b class="text-warning">{{e.target}}</b>,
       Value:

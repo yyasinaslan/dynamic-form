@@ -78,7 +78,8 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit {
       target: event.target,
       originalEvent: event,
       value: this.val,
-      type: 'change'
+      type: 'change',
+      control: this.control
     })
   }
 
@@ -90,7 +91,8 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit {
       target: event.target,
       originalEvent: event,
       value: this.val,
-      type: 'change'
+      type: 'change',
+      control: this.control
     })
   }
 }

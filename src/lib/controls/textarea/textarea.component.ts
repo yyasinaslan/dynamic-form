@@ -76,7 +76,8 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
       target: $event.target,
       originalEvent: $event,
       value: this._val,
-      type: 'change'
+      type: 'change',
+      control: this.control
     });
   }
 }

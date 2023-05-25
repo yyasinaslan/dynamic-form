@@ -4,7 +4,8 @@
     (focus)="ngyFocus.emit($event)"
     (click)="ngyClick.emit($event)"
     (contextmenu)="ngyContextMenu.emit($event)"
-    (input)="valueChange($event)"
+    (beforeinput)="valueChange($event)"
+    (input)="inputEvent($event)"
     [disabled]="disabled"
     [id]="id + '_' + key"
     [name]="key"
@@ -12,7 +13,6 @@
     [placeholder]="placeholder | observableString"
     [readOnly]="readonly"
     [type]="inputType"
-    [value]="_val"
     class="form-control"/>
 </ng-template>
 

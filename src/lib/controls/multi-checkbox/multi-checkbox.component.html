@@ -28,7 +28,10 @@
 <ng-template #radioGroupTemplate>
   <div *ngFor="let option of _options" class="form-check">
     <input
-      (blur)="onTouched()"
+      (blur)="onTouched(); ngyBlur.emit($event)"
+      (focus)="ngyFocus.emit($event)"
+      (contextmenu)="ngyContextMenu.emit($event)"
+      (click)="ngyClick.emit($event)"
       (change)="radioChanged(option.value)"
       [checked]="compareWith(val, option.value)"
       [disabled]="disabled"

@@ -27,6 +27,19 @@ export class TextBoxInput<T> extends BaseInput<T> {
    */
   placeholder?: string | Observable<string>;
 
+  /**
+   * Simple input mask
+   * example: AAAA-1111-AAA
+   * Input mask will only change letters and numbers
+   * To keep letter case use `x` symbol as letter otherwise it will change its case even if you type lower case
+   * lowercase example: aaaa-1111-aaa
+   * uppercase example: AAAA-1111-AAA
+   * case insensitive example: xxxx-1111-xxx
+   *
+   * Mask input will work as insert mode
+   */
+  mask?: string;
+
   constructor(options: BaseInputInterface<T> & PlaceholderInterface & FloatingInterface & { type?: string }) {
     super(options);
 

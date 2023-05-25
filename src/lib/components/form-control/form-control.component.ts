@@ -3,7 +3,6 @@ import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {MultiCheckboxComponent} from "../../controls/multi-checkbox/multi-checkbox.component";
 import {CheckboxComponent} from "../../controls/checkbox/checkbox.component";
-import {FileInputComponent} from "../../controls/file-input/file-input.component";
 import {HelperTextComponent} from "../helper-text/helper-text.component";
 import {SelectComponent} from "../../controls/select/select.component";
 import {TextboxComponent} from "../../controls/textbox/textbox.component";
@@ -19,7 +18,6 @@ import {InvalidMessageComponent} from "../invalid-message/invalid-message.compon
     CommonModule,
     ReactiveFormsModule,
     CheckboxComponent,
-    FileInputComponent,
     HelperTextComponent,
     MultiCheckboxComponent,
     SelectComponent,

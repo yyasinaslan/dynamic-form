@@ -10,6 +10,8 @@ import {CheckboxGroupInputInterface} from "../interfaces/checkbox-group-input.in
 export class CheckboxGroupInput<T> extends BaseInput<T> {
   override controlType: ControlType = "checkboxgroup";
 
+  inputType?: 'checkbox' | 'radio'; // Default: checkbox
+
   /**
    * Dropdown, checkboxgroup and radiogroup options
    * Must be an array of {label:string, value:any}

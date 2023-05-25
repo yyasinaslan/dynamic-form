@@ -3,3 +3,19 @@
   //top: 60px;
   //z-index: 10;
 }
+
+.console {
+  position: sticky;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+
+  > div {
+    flex-basis: 50%;
+  }
+}
