@@ -33,6 +33,30 @@ export const codeExamples = {
         </ngy-textbox>`,
   //</editor-fold>
 
+  //<editor-fold desc="maskedTextBox">
+  maskedTextBox: `<ngy-textbox label="Label of Masked Textbox"
+                     key="maskedText"
+                     mask="11/11/1111"
+                     [maskValidation]="true"
+                     placeholder="DD/MM/YYYY"
+                     locale="tr"
+                     (ngyChange)="eventTest($event)"
+                     (ngyFocus)="eventTest($event)"
+                     (ngyBlur)="eventTest($event)"
+                     (ngyClick)="eventTest($event)"
+                     (ngyContextMenu)="eventTest($event)"
+
+                     ngModel
+                     name="maskedText"
+                     [required]="true"
+        >
+
+          <ngy-helper-text>Please type your birthday</ngy-helper-text>
+          <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
+          <ngy-invalid-message errorName="mask">Please type date correctly</ngy-invalid-message>
+        </ngy-textbox>`,
+  //</editor-fold>
+
   //<editor-fold desc="Textarea">
   textarea: `<ngy-textarea label="Textarea"
                       key="textArea"

@@ -1,9 +1,35 @@
-import {Component, EventEmitter, Input, OnInit, Optional, Output} from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  ViewChild
+} from "@angular/core";
 import {ControlValueAccessor, NgControl} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
+
+enum MaskSlotType {
+  alphanumeric = 0,
+  uppercase = 1,
+  lowercase = 2,
+  numeric = 3,
+  symbol = 4,
+}
+
+interface MaskSlot {
+  value: string | null,
+  editable: boolean,
+  type: MaskSlotType;
+  pattern?: RegExp;
+  formatter?: (value: string | null) => string | null
+}
 
 @Component({
   selector: "ngy-textbox",
@@ -15,7 +41,7 @@ import {ChangeEventInterface} from "../../interfaces/change-event.interface";
   ],
   styleUrls: ["./textbox.component.scss"]
 })
-export class TextboxComponent implements OnInit, ControlValueAccessor {
+export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
   @Input() key!: string;
 
@@ -31,6 +57,8 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
   @Input() floating?: boolean = false;
   @Input() placeholder?: string;
   @Input() mask?: string;
+  @Input() maskValidation?: boolean = true;
+  @Input() locale?: string | string[] = 'en';
 
   @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
   @Output() ngyFocus = new EventEmitter<FocusEvent>();
@@ -38,11 +66,20 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
   @Output() ngyClick = new EventEmitter<MouseEvent>();
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
 
+  @ViewChild('inputRef') inputRef!: ElementRef<HTMLInputElement>;
+
   _val: any = null;
+  maskSlots: MaskSlot[] = [];
+  private unmaskedValue: string = '';
 
   constructor(@Optional() public control?: NgControl) {
     if (control)
       control.valueAccessor = this;
+  }
+
+  ngAfterViewInit(): void {
+    if (this.value)
+      this.setInputValue();
   }
 
   onChange: (value: any) => void = () => {
@@ -55,6 +92,12 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
     if (this.value) {
       this._val = this.value;
     }
+
+    if (this.mask) {
+      this.maskSlots = this.createMaskSlots() ?? [];
+      this.formatAsMask(this.value ?? '');
+    }
+
   }
 
   public registerOnChange(fn: (value: any | null) => void) {
@@ -73,37 +116,48 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
     this._val = obj;
   }
 
-  valueChange(event: Event) {
+  beforeInput(event: Event) {
     const target = event.target as HTMLInputElement;
     if (!target) return false;
     try {
-      const [maskedValue, unmaskedValue] = this.runMask(event as InputEvent, this._val);
-
-      this._val = maskedValue;
-
-      this.onChange(unmaskedValue ?? this._val);
-
-      this.ngyChange?.emit({
-        target: event.target,
-        originalEvent: event,
-        value: unmaskedValue ?? this._val,
-        type: 'change',
-        control: this.control
-      });
+      return this.runMask(event as InputEvent, this._val);
     } catch (e) {
-      console.warn(e)
+      // console.warn(e)
       return false;
     }
-
-    return true;
   }
 
   private replaceAt(str: string, index: number, replace: string) {
+    if (index + 1 > str.length)
+      return str + replace;
     return str.substring(0, index) + replace + str.substring(index + 1, str.length);
   }
 
-  private unmasked(mask: string, maskedValue: string) {
-    return maskedValue;
+  /**
+   * Un masking the masked value according to the mask
+   * @param mask
+   * @param maskedValue
+   * @private
+   * @return string
+   */
+  private unMask(mask: string, maskedValue: string): string {
+
+    const slots: boolean[] = [];
+
+    for (let c of mask) {
+      slots.push(!!c.match(/[A-Za-z0-9]/));
+    }
+
+    let unMasked = '';
+    for (let i = 0; i < maskedValue.length; i++) {
+      if (slots[i]) {
+        unMasked += maskedValue[i];
+      }
+    }
+
+    this.unmaskedValue = unMasked;
+
+    return unMasked;
   }
 
   /**
@@ -113,96 +167,193 @@ export class TextboxComponent implements OnInit, ControlValueAccessor {
    */
   runMask(event: InputEvent, oldValue: string) {
     const target = event.target as HTMLInputElement;
-    if (!this.mask) return [target.value, target.value];
-    (window as any).temp1 = target;
+    if (!this.mask) return true;
 
-    let val = oldValue;
     const moveCursor = (index: number = target.selectionStart ?? 0) => {
       target.selectionStart = index;
       target.selectionEnd = index;
-      console.log('Cursor moved to', index)
     }
-    const insertedIndex = target.selectionStart ?? 0
-    const maskChar = this.mask[insertedIndex];
+
+    // let start = target.selectionStart ?? 0;
+    // let end = target.selectionEnd ?? 0;
+
+    let insertedIndex = target.selectionStart ?? 0
+    let slot = this.maskSlots[insertedIndex];
 
     if (event.inputType == 'deleteContentBackward' || event.inputType == 'deleteContentForward') {
-      val = this.replaceAt(target.value, insertedIndex, ' ')
-      target.value = val;
+      if (event.inputType == 'deleteContentBackward') {
+        insertedIndex--;
+      }
+
+      slot = this.maskSlots[insertedIndex];
+
+      if (!slot) return false;
+      while (!slot.editable) {
+        if (event.inputType == 'deleteContentForward')
+          insertedIndex++;
+        else
+          insertedIndex--;
+        slot = this.maskSlots[insertedIndex];
+      }
+      if (!slot) return false;
+      slot.value = null;
+
+      if (event.inputType == 'deleteContentForward') {
+        insertedIndex++;
+      }
+
+      this.setInputValue();
       moveCursor(insertedIndex);
-      return [val, this.unmasked(this.mask, val)];
+      return false;
     }
 
-    if (event.inputType != 'insertText') return [target.value, target.value];
+    if (event.inputType != 'insertText') return false;
 
-    const insertedChar = event.data as string;
+    let insertedChar: string | null = event.data!;
 
-    if (!maskChar) throw new Error('Cannot find masking character')
+    if (!slot) throw new Error('Cannot find masking character')
 
-    if (maskChar.match(/[A-Za-z]/)) {
-      if (!insertedChar.match(/[A-Za-z]/)) {
-        event.preventDefault();
-        throw new Error('Pattern does not match')
-      }
-
-      if (maskChar == 'x' || maskChar == 'X') {
-        val = this.replaceAt(target.value, insertedIndex, insertedChar.charAt(0))
-      } else if (maskChar.match(/[A-Z]/)) {
-        val = this.replaceAt(target.value, insertedIndex, insertedChar.charAt(0).toUpperCase())
-      } else if (maskChar.match(/[a-z]/)) {
-        val = this.replaceAt(target.value, insertedIndex, insertedChar.charAt(0).toLowerCase())
-      }
-
-      //
-      // if (this.mask[insertedIndex + 1] && !this.mask[insertedIndex + 1].match(/[a-zA-Z0-9]/)) {
-      //   val = this.replaceAt(val, insertedIndex + 1, this.mask[insertedIndex + 1])
-      // }
-
-      target.value = val;
-
-      return [val, this.unmasked(this.mask, val)];
+    while (slot && !slot.editable) {
+      insertedIndex++;
+      slot = this.maskSlots[insertedIndex];
     }
 
-    if (maskChar.match(/[0-9]/)) {
-      if (!insertedChar.match(/[0-9]/)) {
-        val = this.replaceAt(target.value, insertedIndex, oldValue.charAt(insertedIndex) ?? ' ')
-        target.value = val;
-        moveCursor(insertedIndex - 1);
-        return [val, this.unmasked(this.mask, val)];
-      }
-
-      val = this.replaceAt(target.value, insertedIndex, insertedChar)
-      target.value = val;
-      return [val, this.unmasked(this.mask, val)];
-    } else {
-      if (insertedChar.match(/[A-Za-z0-9]/)) {
-        val = this.replaceAt(target.value, insertedIndex, maskChar.charAt(0))
-        target.value = val;
-        moveCursor(insertedIndex - 1);
-        return [val, this.unmasked(this.mask, val)];
-      }
-      // maskType = 'symbol';
-
+    if (slot.pattern && !insertedChar.match(slot.pattern)) {
+      return false;
     }
 
-    // console.log(event)
-    // if (event.inputType == 'insertText') {
-    //   console.log('inserted text at', (target.selectionStart ?? 1) - 1, event.data)
-    // }
-    // if (event.inputType == 'deleteContentBackward') {
-    //   console.log('deleted text at', target.selectionStart)
-    // }
-    let masked = '';
+    if (slot.formatter) {
+      insertedChar = slot.formatter(insertedChar);
+    }
 
-    // todo unmasking operation goes here
+    slot.value = insertedChar;
+    this.setInputValue();
+    moveCursor(insertedIndex + 1);
 
-    return [val, val];
+    // If next mask character is a symbol we can add it automatically
+    const nextSlot = this.maskSlots[insertedIndex + 1];
+    if (nextSlot && !nextSlot.editable) {
+      moveCursor(insertedIndex + 2);
+    }
+
+
+    this.emitValue(target.value, event);
+    event.preventDefault();
+
+    return false;
   }
 
   inputEvent(event: any) {
-    console.log(event)
     if (!event.inputType) {
       //todo: convert input value to masked value
     }
+
+    const target = event.target as HTMLInputElement;
+
+    this.emitValue(target.value, event);
+
     return false;
+  }
+
+  private emitValue(val: string, event: Event | null) {
+    this._val = val;
+
+    this.onChange(this._val);
+
+    this.ngyChange?.emit({
+      target: event?.target,
+      originalEvent: event,
+      value: this._val,
+      type: 'change',
+      control: this.control
+    });
+  }
+
+  private formatters = {
+    uppercase: (value: string | null): string | null => {
+      if (!value) return null;
+      return value.toLocaleUpperCase(this.locale);
+    },
+    lowercase: (value: string | null): string | null => {
+      if (!value) return null;
+      return value.toLocaleLowerCase(this.locale);
+    },
+  }
+
+  private createMaskSlots() {
+    if (!this.mask) return;
+
+    let maskSlots: (typeof this.maskSlots) = [];
+
+    for (let i = 0; i < this.mask.length; i++) {
+      const maskSlot: Partial<MaskSlot> = {};
+      const maskChar = this.mask[i];
+
+      if (maskChar == 'x' || maskChar == 'X') { // any alphanumeric
+        maskSlot.pattern = /\p{Letter}|[0-9]/u;
+        maskSlot.type = MaskSlotType.alphanumeric;
+      } else if (maskChar.match(/[A-Z]/)) { // uppercase letters
+        maskSlot.pattern = /\p{Letter}/u;
+        maskSlot.type = MaskSlotType.uppercase;
+        maskSlot.formatter = this.formatters.uppercase;
+      } else if (maskChar.match(/[a-z]/)) { // lowercase letters
+        maskSlot.pattern = /\p{Letter}/u;
+        maskSlot.type = MaskSlotType.lowercase;
+        maskSlot.formatter = this.formatters.lowercase;
+      } else if (maskChar.match(/[0-9]/)) {  // numerical
+        maskSlot.pattern = /\d/u;
+        maskSlot.type = MaskSlotType.numeric;
+      } else {  // Other symbols. Can be any symbol
+        maskSlot.type = MaskSlotType.symbol;
+      }
+
+      maskSlot.value = maskSlot.type == MaskSlotType.symbol ? maskChar : null;
+      maskSlot.editable = maskSlot.type != MaskSlotType.symbol;
+      maskSlots.push(maskSlot as MaskSlot);
+    }
+
+    return maskSlots;
+  }
+
+  private formatAsMask(value: string) {
+    let valIndex = 0;
+    for (let slot of this.maskSlots) {
+      if (!slot.editable) continue;
+
+      if (!value[valIndex]) {
+        slot.value = null;
+        valIndex++;
+        continue;
+      }
+
+      while (value[valIndex] && valIndex < value.length && !value[valIndex].match(/\p{Letter}|[0-9]/u)) {
+        valIndex++;
+      }
+
+      slot.value = value[valIndex] ?? null
+      valIndex++;
+    }
+  }
+
+
+  renderMask(maskSlots: typeof this.maskSlots) {
+    if (!this.mask) return this._val;
+
+    return maskSlots.reduce((result, slot) => {
+      if (!slot.editable) return result + slot.value;
+      if (slot.value === null) return result + '_';
+      return result + slot.value;
+    }, '');
+  }
+
+  setInputValue() {
+    if (!this.inputRef) return;
+    if (!this.maskSlots) {
+      this.inputRef.nativeElement.value = this._val;
+      return;
+    }
+
+    this.inputRef.nativeElement.value = this.renderMask(this.maskSlots);
+
   }
 }

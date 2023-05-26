@@ -40,6 +40,11 @@ export class TextBoxInput<T> extends BaseInput<T> {
    */
   mask?: string;
 
+  /**
+   * Local code for proper mask conversions
+   */
+  locale?: string | string[];
+
   constructor(options: BaseInputInterface<T> & PlaceholderInterface & FloatingInterface & { type?: string }) {
     super(options);
 

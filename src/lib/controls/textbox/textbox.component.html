@@ -1,10 +1,11 @@
 <ng-template #inputTemplate>
   <input
+    #inputRef
     (blur)="onTouched(); ngyBlur.emit($event)"
     (focus)="ngyFocus.emit($event)"
     (click)="ngyClick.emit($event)"
     (contextmenu)="ngyContextMenu.emit($event)"
-    (beforeinput)="valueChange($event)"
+    (beforeinput)="beforeInput($event)"
     (input)="inputEvent($event)"
     [disabled]="disabled"
     [id]="id + '_' + key"
