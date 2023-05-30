@@ -6,10 +6,10 @@
     <div *ngFor="let option of _options; let index = index" class="form-check">
       <input
         (blur)="onTouched(); ngyBlur.emit($event)"
-        (focus)="ngyFocus.emit($event)"
-        (contextmenu)="ngyContextMenu.emit($event)"
-        (click)="ngyClick.emit($event)"
         (change)="checkboxChanged($event, option.value)"
+        (click)="ngyClick.emit($event)"
+        (contextmenu)="ngyContextMenu.emit($event)"
+        (focus)="ngyFocus.emit($event)"
         [checked]="valIncludes(val,option.value)"
         [disabled]="disabled"
         [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
@@ -29,10 +29,10 @@
   <div *ngFor="let option of _options" class="form-check">
     <input
       (blur)="onTouched(); ngyBlur.emit($event)"
-      (focus)="ngyFocus.emit($event)"
-      (contextmenu)="ngyContextMenu.emit($event)"
-      (click)="ngyClick.emit($event)"
       (change)="radioChanged(option.value)"
+      (click)="ngyClick.emit($event)"
+      (contextmenu)="ngyContextMenu.emit($event)"
+      (focus)="ngyFocus.emit($event)"
       [checked]="compareWith(val, option.value)"
       [disabled]="disabled"
       [name]="key"

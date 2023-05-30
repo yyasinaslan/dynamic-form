@@ -50,22 +50,15 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
   @Input() orientation?: 'horizontal' | 'vertical' = 'vertical';
 
   @Input() options?: DropdownOption[] | Observable<DropdownOption[]> = [];
-
-  @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
-    return a === b;
-  };
-  //</editor-fold>
-
   //<editor-fold desc="Outputs">
   @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
+  //</editor-fold>
   @Output() ngyFocus = new EventEmitter<FocusEvent>();
   @Output() ngyBlur = new EventEmitter<FocusEvent>();
   @Output() ngyClick = new EventEmitter<MouseEvent>();
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
-  //</editor-fold>
-
   @ContentChildren(OptionComponent) optionTags?: QueryList<OptionComponent>;
-
+  //</editor-fold>
   @Input() localizations = {
     "select_all": "Select All",
     "deselect_all": "Deselect All"
@@ -79,6 +72,10 @@ export class MultiCheckboxComponent implements OnDestroy, OnChanges, OnInit, Con
     if (control)
       control.valueAccessor = this;
   }
+
+  @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
+    return a === b;
+  };
 
   ngAfterContentInit(): void {
     if (this.optionTags) {

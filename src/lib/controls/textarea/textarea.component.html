@@ -1,9 +1,9 @@
 <ng-template #inputTemplate>
    <textarea
      (blur)="onTouched(); ngyBlur.emit($event)"
-     (focus)="ngyFocus.emit($event)"
      (click)="ngyClick.emit($event)"
      (contextmenu)="ngyContextMenu.emit($event)"
+     (focus)="ngyFocus.emit($event)"
      (input)="valueChange($event)"
      [disabled]="disabled"
      [id]="id + '_' + key"

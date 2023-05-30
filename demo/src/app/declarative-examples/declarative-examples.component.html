@@ -7,17 +7,17 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Textbox</h4>
-        <ngy-textbox label="Label of textbox"
-                     key="textBox"
+        <ngy-textbox (ngyBlur)="eventTest($event)"
                      (ngyChange)="eventTest($event)"
-                     (ngyFocus)="eventTest($event)"
-                     (ngyBlur)="eventTest($event)"
                      (ngyClick)="eventTest($event)"
                      (ngyContextMenu)="eventTest($event)"
+                     (ngyFocus)="eventTest($event)"
+                     [maxlength]="10"
+                     [minlength]="5"
 
-                     ngModel
-                     name="textBox"
-                     [required]="true" [minlength]="5" [maxlength]="10"
+                     [required]="true"
+                     key="textBox"
+                     label="Label of textbox" name="textBox" ngModel
         >
 
           <ngy-helper-text>This is helper text</ngy-helper-text>
@@ -39,21 +39,21 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Masked Textbox (WIP)</h4>
-        <ngy-textbox label="Label of Masked Textbox"
-                     key="maskedText"
-                     mask="11/11/1111"
-                     [maskValidation]="true"
-                     placeholder="DD/MM/YYYY"
-                     locale="tr"
+        <ngy-textbox (ngyBlur)="eventTest($event)"
                      (ngyChange)="eventTest($event)"
-                     (ngyFocus)="eventTest($event)"
-                     (ngyBlur)="eventTest($event)"
                      (ngyClick)="eventTest($event)"
                      (ngyContextMenu)="eventTest($event)"
-
-                     ngModel
-                     name="maskedText"
+                     (ngyFocus)="eventTest($event)"
+                     [maskValidation]="true"
                      [required]="true"
+                     key="maskedText"
+                     label="Label of Masked Textbox"
+                     locale="tr"
+                     mask="11/11/1111"
+
+                     name="maskedText"
+                     ngModel
+                     placeholder="DD/MM/YYYY"
         >
 
           <ngy-helper-text>Please type your birthday</ngy-helper-text>
@@ -74,16 +74,16 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Textarea</h4>
-        <ngy-textarea label="Textarea"
-                      key="textArea"
-                      ngModel
-                      name="textArea"
+        <ngy-textarea (ngyBlur)="eventTest($event)"
                       (ngyChange)="eventTest($event)"
-                      (ngyFocus)="eventTest($event)"
-                      (ngyBlur)="eventTest($event)"
                       (ngyClick)="eventTest($event)"
                       (ngyContextMenu)="eventTest($event)"
-                      [required]="true" [minlength]="5" [maxlength]="10"
+                      (ngyFocus)="eventTest($event)"
+                      [maxlength]="10"
+                      [minlength]="5"
+                      [required]="true"
+                      key="textArea"
+                      label="Textarea" name="textArea" ngModel
         >
           <ngy-helper-text>This is helper text</ngy-helper-text>
           <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
@@ -104,24 +104,24 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Select</h4>
-        <ngy-select label="Select"
-                    key="select"
-                    [multiple]="true"
+        <ngy-select (ngyBlur)="eventTest($event)"
                     (ngyChange)="eventTest($event)"
-                    (ngyFocus)="eventTest($event)"
-                    (ngyBlur)="eventTest($event)"
                     (ngyClick)="eventTest($event)"
                     (ngyContextMenu)="eventTest($event)"
+                    (ngyFocus)="eventTest($event)"
+                    [maxlength]="3"
+                    [minlength]="2"
+                    [multiple]="true"
 
-                    ngModel
-                    name="select"
-                    [required]="true" [minlength]="2" [maxlength]="3"
+                    [required]="true"
+                    key="select"
+                    label="Select" name="select" ngModel
         >
           <ngy-option [value]="'item1'" label="Item 1"/>
           <ngy-option [value]="'item2'" label="Item 2"/>
-          <ngy-option value="item3" label="Item 3"/>
-          <ngy-option value="item4" label="Item 4"/>
-          <ngy-option value="item5" label="Item 5"/>
+          <ngy-option label="Item 3" value="item3"/>
+          <ngy-option label="Item 4" value="item4"/>
+          <ngy-option label="Item 5" value="item5"/>
 
           <ngy-helper-text>This is helper text</ngy-helper-text>
           <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
@@ -142,17 +142,17 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Switch Input</h4>
-        <ngy-checkbox type="switch" label="Switch example"
-                      key="switch"
-                      (ngyChange)="eventTest($event)"
-                      (ngyFocus)="eventTest($event)"
-                      (ngyBlur)="eventTest($event)"
+        <ngy-checkbox (ngyBlur)="eventTest($event)" (ngyChange)="eventTest($event)"
                       (ngyClick)="eventTest($event)"
                       (ngyContextMenu)="eventTest($event)"
-
-                      ngModel
-                      name="switch"
+                      (ngyFocus)="eventTest($event)"
                       [required]="true"
+                      key="switch"
+                      label="Switch example"
+
+                      name="switch"
+                      ngModel
+                      type="switch"
         >
           <ngy-helper-text>This is helper text</ngy-helper-text>
           <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
@@ -171,19 +171,19 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Checkbox Input</h4>
-        <ngy-checkbox label="Checkbox example"
-                      key="checkbox"
+        <ngy-checkbox (ngyBlur)="eventTest($event)"
                       (ngyChange)="eventTest($event)"
-                      (ngyFocus)="eventTest($event)"
-                      (ngyBlur)="eventTest($event)"
                       (ngyClick)="eventTest($event)"
                       (ngyContextMenu)="eventTest($event)"
-
+                      (ngyFocus)="eventTest($event)"
+                      [required]="true"
                       [value]="true"
 
-                      ngModel
+                      key="checkbox"
+
+                      label="Checkbox example"
                       name="checkbox"
-                      [required]="true"
+                      ngModel
         >
           <ngy-helper-text>This is helper text</ngy-helper-text>
           <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
@@ -202,23 +202,23 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Checkbox Group</h4>
-        <ngy-multi-checkbox inputType="checkbox" label="Checkbox group"
-                            key="checkboxGroup"
-                            (ngyChange)="eventTest($event)"
-                            (ngyFocus)="eventTest($event)"
-                            (ngyBlur)="eventTest($event)"
+        <ngy-multi-checkbox (ngyBlur)="eventTest($event)" (ngyChange)="eventTest($event)"
                             (ngyClick)="eventTest($event)"
                             (ngyContextMenu)="eventTest($event)"
+                            (ngyFocus)="eventTest($event)"
+                            [maxlength]="3"
+                            [minlength]="2"
+                            [required]="true"
 
-                            ngModel
-                            name="checkboxGroup"
-                            [required]="true" [minlength]="2" [maxlength]="3"
+                            inputType="checkbox"
+                            key="checkboxGroup"
+                            label="Checkbox group" name="checkboxGroup" ngModel
         >
           <ngy-option [value]="'item1'" label="Item 1"/>
           <ngy-option [value]="'item2'" label="Item 2"/>
-          <ngy-option value="item3" label="Item 3"/>
-          <ngy-option value="item4" label="Item 4"/>
-          <ngy-option value="item5" label="Item 5"/>
+          <ngy-option label="Item 3" value="item3"/>
+          <ngy-option label="Item 4" value="item4"/>
+          <ngy-option label="Item 5" value="item5"/>
 
           <ngy-helper-text>This is helper text</ngy-helper-text>
           <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
@@ -239,25 +239,25 @@
     <div class="col-md-6">
       <div class="sticky-example">
         <h4>Radio Group</h4>
-        <ngy-multi-checkbox inputType="radio"
-                            orientation="horizontal"
-                            label="Radio Group"
-                            key="radioGroup"
+        <ngy-multi-checkbox (ngyBlur)="eventTest($event)"
                             (ngyChange)="eventTest($event)"
-                            (ngyFocus)="eventTest($event)"
-                            (ngyBlur)="eventTest($event)"
                             (ngyClick)="eventTest($event)"
                             (ngyContextMenu)="eventTest($event)"
-
-                            ngModel
-                            name="radioGroup"
+                            (ngyFocus)="eventTest($event)"
                             [required]="true"
+                            inputType="radio"
+                            key="radioGroup"
+                            label="Radio Group"
+
+                            name="radioGroup"
+                            ngModel
+                            orientation="horizontal"
         >
           <ngy-option [value]="'item1'" label="Item 1"/>
           <ngy-option [value]="'item2'" label="Item 2"/>
-          <ngy-option value="item3" label="Item 3"/>
-          <ngy-option value="item4" label="Item 4"/>
-          <ngy-option value="item5" label="Item 5"/>
+          <ngy-option label="Item 3" value="item3"/>
+          <ngy-option label="Item 4" value="item4"/>
+          <ngy-option label="Item 5" value="item5"/>
 
           <ngy-helper-text>This is helper text</ngy-helper-text>
           <ngy-invalid-message errorName="required">Required</ngy-invalid-message>
@@ -271,7 +271,7 @@
   </div>
   <!-- endregion -->
 
-  <button type="submit" class="mt-4 btn btn-primary">Submit</button>
+  <button class="mt-4 btn btn-primary" type="submit">Submit</button>
 </form>
 
 

@@ -5,7 +5,7 @@
 @mixin reactive-form-validation-state-selector($state) {
   @if ($state == "valid" or $state == "invalid") {
     // We want to show validation errors only when form submitted
-    .ng-submitted #{if(&, "&", "")}.ng-#{$state} {
+    .ng-submitted  {
       //.ng-submitted .ng-#{$state} {
       @content;
     }

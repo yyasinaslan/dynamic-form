@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { InvalidMessageComponent } from './invalid-message.component';
+import {InvalidMessageComponent} from './invalid-message.component';
 
 describe('InvalidMessageComponent', () => {
   let component: InvalidMessageComponent;
@@ -8,9 +8,9 @@ describe('InvalidMessageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ InvalidMessageComponent ]
+      imports: [InvalidMessageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(InvalidMessageComponent);
     component = fixture.componentInstance;

@@ -1,11 +1,11 @@
 <ng-template #inputTemplate>
   <input
     #inputRef
+    (beforeinput)="beforeInput($event)"
     (blur)="onTouched(); ngyBlur.emit($event)"
-    (focus)="ngyFocus.emit($event)"
     (click)="ngyClick.emit($event)"
     (contextmenu)="ngyContextMenu.emit($event)"
-    (beforeinput)="beforeInput($event)"
+    (focus)="ngyFocus.emit($event)"
     (input)="inputEvent($event)"
     [disabled]="disabled"
     [id]="id + '_' + key"
@@ -14,9 +14,9 @@
     [placeholder]="placeholder | observableString"
     [readOnly]="readonly"
     [type]="inputType"
+    [value]="this._val"
     class="form-control"/>
 </ng-template>
-
 
 <ng-template #floatingTemplate>
   <div class="form-floating">

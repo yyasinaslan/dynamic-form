@@ -26,6 +26,9 @@
     "paths": {
       "dynamic-form": [
         "src/index"
+      ],
+      "environment": [
+        "environment"
       ]
     }
   },

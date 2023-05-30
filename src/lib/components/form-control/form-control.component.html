@@ -6,148 +6,144 @@
     <!-- todo: Form group -->
 
     <!-- TEXTBOX -->
-    <ngy-textbox *ngSwitchCase="'textbox'"
-                 [key]="input.key"
+    <ngy-textbox (ngyBlur)="input.blur ? input.blur($event) : null"
+                 (ngyChange)="input.change ? input.change($event) : null"
+                 (ngyClick)="input.click ? input.click($event) : null"
+
+                 (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                 (ngyFocus)="input.focus ? input.focus($event) : null"
+                 *ngSwitchCase="'textbox'"
+                 [floating]="input.floating"
+                 [formControlName]="input.key"
                  [id]="input.id"
 
-                 [label]="input.label"
-                 [value]="input.value"
                  [inputType]="input.inputType"
-                 [readonly]="input.readonly"
-                 [floating]="input.floating"
+
+                 [key]="input.key"
+                 [label]="input.label"
                  [placeholder]="input.placeholder"
-
-                 [formControlName]="input.key"
-
-                 (ngyChange)="input.change ? input.change($event) : null"
-                 (ngyFocus)="input.focus ? input.focus($event) : null"
-                 (ngyBlur)="input.blur ? input.blur($event) : null"
-                 (ngyClick)="input.click ? input.click($event) : null"
-                 (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"/>
+                 [readonly]="input.readonly"
+                 [value]="input.value"/>
 
     <!-- DROPDOWN TEMPLATE -->
-    <ng-template #dropDownTemplate let-input let-pathData="pathData">
-      <ngy-select *ngSwitchCase="'dropdown'" [compareWith]="input.compareWith"
-                  [key]="input.key"
-                  [id]="input.id"
-                  [label]="input.label"
-                  [value]="input.value"
-                  [readonly]="input.readonly"
-                  [floating]="input.floating"
-                  [placeholder]="input.placeholder"
+    <ngy-select (ngyBlur)="input.blur ? input.blur($event) : null" (ngyChange)="input.change ? input.change($event) : null"
+                (ngyClick)="input.click ? input.click($event) : null"
+                (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                (ngyFocus)="input.focus ? input.focus($event) : null"
+                *ngSwitchCase="'dropdown'"
+                [compareWith]="input.compareWith"
+                [floating]="input.floating"
+                [formControlName]="input.key"
 
-                  [multiple]="input.multiple"
-                  [options]="input.options"
+                [id]="input.id"
+                [key]="input.key"
 
-                  [formControlName]="input.key"
+                [label]="input.label"
 
-                  (ngyChange)="input.change ? input.change($event) : null"
-                  (ngyFocus)="input.focus ? input.focus($event) : null"
-                  (ngyBlur)="input.blur ? input.blur($event) : null"
-                  (ngyClick)="input.click ? input.click($event) : null"
-                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
-      ></ngy-select>
-    </ng-template>
+                [multiple]="input.multiple"
+                [options]="input.options"
+                [placeholder]="input.placeholder"
+                [readonly]="input.readonly"
+                [value]="input.value"
+    ></ngy-select>
 
     <!-- TEXTAREA TEMPLATE -->
-    <ng-template #textAreaTemplate let-input let-pathData="pathData">
-      <ngy-textarea *ngSwitchCase="'textarea'"
-                    [key]="input.key"
-                    [id]="input.id"
-                    [label]="input.label"
-                    [value]="input.value"
-                    [type]="input.type"
-                    [readonly]="input.readonly"
-                    [floating]="input.floating"
-                    [placeholder]="input.placeholder"
+    <ngy-textarea (ngyBlur)="input.blur ? input.blur($event) : null"
+                  (ngyChange)="input.change ? input.change($event) : null"
+                  (ngyClick)="input.click ? input.click($event) : null"
+                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                  (ngyFocus)="input.focus ? input.focus($event) : null"
+                  *ngSwitchCase="'textarea'"
+                  [floating]="input.floating"
+                  [formControlName]="input.key"
+                  [id]="input.id"
 
-                    [formControlName]="input.key"
+                  [key]="input.key"
 
-                    (ngyChange)="input.change ? input.change($event) : null"
-                    (ngyFocus)="input.focus ? input.focus($event) : null"
-                    (ngyBlur)="input.blur ? input.blur($event) : null"
-                    (ngyClick)="input.click ? input.click($event) : null"
-                    (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"></ngy-textarea>
-    </ng-template>
+                  [label]="input.label"
+                  [placeholder]="input.placeholder"
+                  [readonly]="input.readonly"
+                  [type]="input.type"
+                  [value]="input.value"></ngy-textarea>
 
     <!-- SWITCH TEMPLATE -->
-    <ngy-checkbox *ngSwitchCase="'switch'" type="switch" [key]="input.key"
-                  [id]="input.id"
-                  [label]="input.label"
-                  [value]="input.value"
-                  [readonly]="input.readonly"
-
+    <ngy-checkbox (ngyBlur)="input.blur ? input.blur($event) : null" (ngyChange)="input.change ? input.change($event) : null" (ngyClick)="input.click ? input.click($event) : null"
+                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                  (ngyFocus)="input.focus ? input.focus($event) : null"
+                  *ngSwitchCase="'switch'"
                   [formControlName]="input.key"
 
-                  (ngyChange)="input.change ? input.change($event) : null"
-                  (ngyFocus)="input.focus ? input.focus($event) : null"
-                  (ngyBlur)="input.blur ? input.blur($event) : null"
-                  (ngyClick)="input.click ? input.click($event) : null"
-                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"/>
+                  [id]="input.id"
+
+                  [key]="input.key"
+                  [label]="input.label"
+                  [readonly]="input.readonly"
+                  [value]="input.value"
+                  type="switch"/>
 
     <!-- CHECKBOX TEMPLATE -->
-    <ngy-checkbox *ngSwitchCase="'checkbox'"
-                  [key]="input.key"
-                  [id]="input.id"
-                  [label]="input.label"
-                  [value]="input.value"
-                  [readonly]="input.readonly"
+    <ngy-checkbox (ngyBlur)="input.blur ? input.blur($event) : null"
+                  (ngyChange)="input.change ? input.change($event) : null"
+                  (ngyClick)="input.click ? input.click($event) : null"
+                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                  (ngyFocus)="input.focus ? input.focus($event) : null"
+                  *ngSwitchCase="'checkbox'"
 
                   [formControlName]="input.key"
 
-                  (ngyChange)="input.change ? input.change($event) : null"
-                  (ngyFocus)="input.focus ? input.focus($event) : null"
-                  (ngyBlur)="input.blur ? input.blur($event) : null"
-                  (ngyClick)="input.click ? input.click($event) : null"
-                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"/>
+                  [id]="input.id"
+                  [key]="input.key"
+                  [label]="input.label"
+                  [readonly]="input.readonly"
+                  [value]="input.value"/>
 
 
     <!-- CHECKBOXGROUP TEMPLATE -->
-    <ngy-multi-checkbox *ngSwitchCase="'checkboxgroup'"
-                        inputType="checkbox"
+    <ngy-multi-checkbox (ngyBlur)="input.blur ? input.blur($event) : null"
+                        (ngyChange)="input.change ? input.change($event) : null"
+                        (ngyClick)="input.click ? input.click($event) : null"
+                        (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                        (ngyFocus)="input.focus ? input.focus($event) : null"
+                        *ngSwitchCase="'checkboxgroup'"
                         [compareWith]="input.compareWith"
-                        [key]="input.key"
-                        [id]="input.id"
-                        [label]="input.label"
-                        [value]="input.value"
-                        [readonly]="input.readonly"
-
-                        [options]="input.options"
-
                         [formControlName]="input.key"
 
-                        (ngyChange)="input.change ? input.change($event) : null"
-                        (ngyFocus)="input.focus ? input.focus($event) : null"
-                        (ngyBlur)="input.blur ? input.blur($event) : null"
-                        (ngyClick)="input.click ? input.click($event) : null"
-                        (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"/>
+                        [id]="input.id"
+
+                        [key]="input.key"
+
+                        [label]="input.label"
+                        [options]="input.options"
+                        [readonly]="input.readonly"
+                        [value]="input.value"
+                        inputType="checkbox"/>
 
     <!-- RADIOGROUP TEMPLATE -->
-    <ngy-multi-checkbox *ngSwitchCase="'radiogroup'"
-                        inputType="radio"
+    <ngy-multi-checkbox (ngyBlur)="input.blur ? input.blur($event) : null"
+                        (ngyChange)="input.change ? input.change($event) : null"
+                        (ngyClick)="input.click ? input.click($event) : null"
+                        (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                        (ngyFocus)="input.focus ? input.focus($event) : null"
+                        *ngSwitchCase="'radiogroup'"
                         [compareWith]="input.compareWith"
-                        [key]="input.key"
-                        [id]="input.id"
-                        [label]="input.label"
-                        [value]="input.value"
-                        [readonly]="input.readonly"
-
-                        [options]="input.options"
-
                         [formControlName]="input.key"
 
-                        (ngyChange)="input.change ? input.change($event) : null"
-                        (ngyFocus)="input.focus ? input.focus($event) : null"
-                        (ngyBlur)="input.blur ? input.blur($event) : null"
-                        (ngyClick)="input.click ? input.click($event) : null"
-                        (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"/>
+                        [id]="input.id"
+
+                        [key]="input.key"
+
+                        [label]="input.label"
+                        [options]="input.options"
+                        [readonly]="input.readonly"
+                        [value]="input.value"
+                        inputType="radio"/>
 
     <ngy-helper-text *ngIf="input.helperText">{{input.helperText}}</ngy-helper-text>
-<!--    <ng-container *ngIf="input.validatorsMessage">-->
-<!--      <ngy-invalid-message *ngFor="let message of input.validatorsMessage"-->
-<!--                               [control]="fGroup.get(path)"-->
-<!--                               [validatorsMessage]="input.validatorsMessage"></ngy-invalid-message>-->
-<!--    </ng-container>-->
+
+    <ng-container *ngIf="input.validatorsMessage">
+      <ngy-invalid-message *ngFor="let validation of input.validatorsMessage" [errorName]="validation.key"
+                           [key]="input.key">{{validation.message | observableString}}</ngy-invalid-message>
+    </ng-container>
 
   </ng-container>
 

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ImperativeExamplesComponent } from './imperative-examples.component';
+import {ImperativeExamplesComponent} from './imperative-examples.component';
 
 describe('ImperativeExamplesComponent', () => {
   let component: ImperativeExamplesComponent;
@@ -8,9 +8,9 @@ describe('ImperativeExamplesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ ImperativeExamplesComponent ]
+      imports: [ImperativeExamplesComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ImperativeExamplesComponent);
     component = fixture.componentInstance;

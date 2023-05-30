@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ClassicExamplesComponent } from './classic-examples.component';
+import {ClassicExamplesComponent} from './classic-examples.component';
 
 describe('ClassicExamplesComponent', () => {
   let component: ClassicExamplesComponent;
@@ -8,9 +8,9 @@ describe('ClassicExamplesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ ClassicExamplesComponent ]
+      imports: [ClassicExamplesComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ClassicExamplesComponent);
     component = fixture.componentInstance;

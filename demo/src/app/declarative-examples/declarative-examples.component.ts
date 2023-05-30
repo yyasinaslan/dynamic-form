@@ -26,6 +26,8 @@ declare const hljs: any;
 })
 export class DeclarativeExamplesComponent implements AfterViewInit {
   eventLog: any[] = [];
+  //<editor-fold desc="Fixtures">
+  codeExamples = codeExamples;
 
   //<editor-fold desc="Event test">
   eventTest(event: any) {
@@ -39,13 +41,10 @@ export class DeclarativeExamplesComponent implements AfterViewInit {
     })
   }
 
+  //</editor-fold>
+
   ngAfterViewInit(): void {
     hljs.highlightAll();
   }
-
-  //</editor-fold>
-
-  //<editor-fold desc="Fixtures">
-  codeExamples = codeExamples;
   //</editor-fold>
 }

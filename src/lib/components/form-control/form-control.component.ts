@@ -8,6 +8,7 @@ import {SelectComponent} from "../../controls/select/select.component";
 import {TextboxComponent} from "../../controls/textbox/textbox.component";
 import {TextareaComponent} from "../../controls/textarea/textarea.component";
 import {InvalidMessageComponent} from "../invalid-message/invalid-message.component";
+import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 
 @Component({
   selector: "ngy-form-control",
@@ -24,6 +25,7 @@ import {InvalidMessageComponent} from "../invalid-message/invalid-message.compon
     TextboxComponent,
     TextareaComponent,
     InvalidMessageComponent,
+    ObservableStringPipe,
   ]
 })
 export class FormControlComponent {

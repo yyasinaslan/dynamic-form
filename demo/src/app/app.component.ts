@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {ClassicExamplesComponent} from "./classic-examples/classic-examples.component";
 import {ImperativeExamplesComponent} from "./imperative-examples/imperative-examples.component";
 import {DeclarativeExamplesComponent} from "./declarative-examples/declarative-examples.component";
+import {environment} from "environment";
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit {
   title = 'demo'
 
   exampleType = localStorage.getItem('example') ?? 'classic';
+  appVersion = environment.version;
 
   ngOnInit(): void {
   }

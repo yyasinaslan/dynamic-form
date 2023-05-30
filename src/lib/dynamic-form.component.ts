@@ -77,6 +77,14 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
   }
 
   ngOnInit(): void {
+    if (!this.inputs || this.inputs.length == 0) return;
+
+    // Creating form group from inputs type
+    this.form = createFormGroup(this.inputs);
+
+    if (this.valueToPatch) {
+      this.patchValue(this.valueToPatch);
+    }
   }
 
   ngOnDestroy() {
@@ -89,15 +97,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy, AfterViewInit, A
   }
 
   ngAfterContentInit(): void {
-    if (!this.inputs || this.inputs.length == 0) return;
-
-    // Creating form group from inputs type
-    this.form = createFormGroup(this.inputs);
-
-    if (this.valueToPatch) {
-      this.patchValue(this.valueToPatch);
-    }
-
     this.loadDynamicControls();
 
     // console.log(this.dynamicControls);

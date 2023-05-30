@@ -1,4 +1,4 @@
-import {FormControl, NgControl} from "@angular/forms";
+import {NgControl} from "@angular/forms";
 
 export interface ChangeEventInterface<T = any> {
   target: any,

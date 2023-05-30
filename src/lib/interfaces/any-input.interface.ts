@@ -7,8 +7,6 @@ import {SwitchInput} from "../common/switch-input";
 import {CheckboxInput} from "../common/checkbox-input";
 import {CheckboxGroupInput} from "../common/checkbox-group-input";
 import {RadioGroupInput} from "../common/radio-group-input";
-import {GroupInput} from "../common/group-input";
-import {ArrayInput} from "../common/array-input";
 
 
 /**
@@ -23,6 +21,6 @@ export type AnyInput = BaseInput<any>
   | CheckboxInput<any>
   | CheckboxGroupInput<any>
   | RadioGroupInput<any>
-  // & GroupInput<any>
-  // & ArrayInput<any>;
+// & GroupInput<any>
+// & ArrayInput<any>;
 

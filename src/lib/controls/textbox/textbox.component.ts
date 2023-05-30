@@ -71,6 +71,16 @@ export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAcce
   _val: any = null;
   maskSlots: MaskSlot[] = [];
   private unmaskedValue: string = '';
+  private formatters = {
+    uppercase: (value: string | null): string | null => {
+      if (!value) return null;
+      return value.toLocaleUpperCase(this.locale);
+    },
+    lowercase: (value: string | null): string | null => {
+      if (!value) return null;
+      return value.toLocaleLowerCase(this.locale);
+    },
+  }
 
   constructor(@Optional() public control?: NgControl) {
     if (control)
@@ -125,39 +135,6 @@ export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAcce
       // console.warn(e)
       return false;
     }
-  }
-
-  private replaceAt(str: string, index: number, replace: string) {
-    if (index + 1 > str.length)
-      return str + replace;
-    return str.substring(0, index) + replace + str.substring(index + 1, str.length);
-  }
-
-  /**
-   * Un masking the masked value according to the mask
-   * @param mask
-   * @param maskedValue
-   * @private
-   * @return string
-   */
-  private unMask(mask: string, maskedValue: string): string {
-
-    const slots: boolean[] = [];
-
-    for (let c of mask) {
-      slots.push(!!c.match(/[A-Za-z0-9]/));
-    }
-
-    let unMasked = '';
-    for (let i = 0; i < maskedValue.length; i++) {
-      if (slots[i]) {
-        unMasked += maskedValue[i];
-      }
-    }
-
-    this.unmaskedValue = unMasked;
-
-    return unMasked;
   }
 
   /**
@@ -255,6 +232,60 @@ export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAcce
     return false;
   }
 
+  renderMask(maskSlots: typeof this.maskSlots) {
+    if (!this.mask) return this._val;
+
+    return maskSlots.reduce((result, slot) => {
+      if (!slot.editable) return result + slot.value;
+      if (slot.value === null) return result + '_';
+      return result + slot.value;
+    }, '');
+  }
+
+  setInputValue() {
+    if (!this.inputRef) return;
+    if (!this.maskSlots) {
+      this.inputRef.nativeElement.value = this._val;
+      return;
+    }
+
+    this.inputRef.nativeElement.value = this.renderMask(this.maskSlots);
+
+  }
+
+  private replaceAt(str: string, index: number, replace: string) {
+    if (index + 1 > str.length)
+      return str + replace;
+    return str.substring(0, index) + replace + str.substring(index + 1, str.length);
+  }
+
+  /**
+   * Un masking the masked value according to the mask
+   * @param mask
+   * @param maskedValue
+   * @private
+   * @return string
+   */
+  private unMask(mask: string, maskedValue: string): string {
+
+    const slots: boolean[] = [];
+
+    for (let c of mask) {
+      slots.push(!!c.match(/[A-Za-z0-9]/));
+    }
+
+    let unMasked = '';
+    for (let i = 0; i < maskedValue.length; i++) {
+      if (slots[i]) {
+        unMasked += maskedValue[i];
+      }
+    }
+
+    this.unmaskedValue = unMasked;
+
+    return unMasked;
+  }
+
   private emitValue(val: string, event: Event | null) {
     this._val = val;
 
@@ -267,17 +298,6 @@ export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAcce
       type: 'change',
       control: this.control
     });
-  }
-
-  private formatters = {
-    uppercase: (value: string | null): string | null => {
-      if (!value) return null;
-      return value.toLocaleUpperCase(this.locale);
-    },
-    lowercase: (value: string | null): string | null => {
-      if (!value) return null;
-      return value.toLocaleLowerCase(this.locale);
-    },
   }
 
   private createMaskSlots() {
@@ -333,27 +353,5 @@ export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAcce
       slot.value = value[valIndex] ?? null
       valIndex++;
     }
-  }
-
-
-  renderMask(maskSlots: typeof this.maskSlots) {
-    if (!this.mask) return this._val;
-
-    return maskSlots.reduce((result, slot) => {
-      if (!slot.editable) return result + slot.value;
-      if (slot.value === null) return result + '_';
-      return result + slot.value;
-    }, '');
-  }
-
-  setInputValue() {
-    if (!this.inputRef) return;
-    if (!this.maskSlots) {
-      this.inputRef.nativeElement.value = this._val;
-      return;
-    }
-
-    this.inputRef.nativeElement.value = this.renderMask(this.maskSlots);
-
   }
 }

@@ -22,8 +22,25 @@ import {CommonModule} from "@angular/common";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {DropdownOption} from "../../interfaces/dropdown-option.interface";
 import {OptionComponent} from "../../components/option/option.component";
-import {createPopper, Instance} from "@popperjs/core";
+import {createPopper, Instance, Modifier} from "@popperjs/core";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
+
+
+const sameWidth: Partial<Modifier<any, any>> = {
+  name: "sameWidth",
+  enabled: true,
+  phase: "beforeWrite",
+  requires: ["computeStyles"],
+  fn: ({state}) => {
+    state.styles["popper"].width = `${state.rects.reference.width}px`;
+  },
+  effect: ({state}) => {
+    state.elements.popper.style.width = `${
+      // @ts-ignore
+      state.elements.reference.offsetWidth
+    }px`;
+  }
+};
 
 @Component({
   selector: "ngy-select",
@@ -58,22 +75,33 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   @Input() maxHeight?: string = '75vh';
 
   @Input() options?: DropdownOption[] | Observable<DropdownOption[]> = [];
-
-  @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
-    return a === b;
-  };
-  //</editor-fold>
-
   //<editor-fold desc="Outputs">
   @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
+  //</editor-fold>
   @Output() ngyFocus = new EventEmitter<FocusEvent>();
   @Output() ngyBlur = new EventEmitter<FocusEvent>();
   @Output() ngyClick = new EventEmitter<MouseEvent>();
   @Output() ngyContextMenu = new EventEmitter<MouseEvent>();
-  //</editor-fold>
-
   @ContentChildren(OptionComponent) optionTags?: QueryList<OptionComponent>;
+  //</editor-fold>
+  @ViewChild('dropdownToggle') dropdownToggle?: ElementRef<HTMLDivElement>;
+  @ViewChild('dropdownMenu') dropdownMenu?: ElementRef<HTMLDivElement>;
+  _options: DropdownOption[] = [];
+  showDropdown: boolean = false;
+  val: string[] | string = []; //seçili olan değer (checked)
+  labels$: string | Observable<string> = new BehaviorSubject<string>('');
   private popperRef?: Instance;
+  private optionSub?: Subscription;
+  private optionTagsSub?: Subscription;
+
+  constructor(private elRef: ElementRef, @Optional() public control?: NgControl) {
+    if (control)
+      control.valueAccessor = this;
+  }
+
+  @Input() compareWith: (a: any, b: any) => boolean = (a: any, b: any) => {
+    return a === b;
+  };
 
   @HostListener('document:click', ['$event'])
   documentClick(event: MouseEvent) {
@@ -81,23 +109,6 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
     if (!nativeEl.contains(event.target as HTMLElement)) {
       this.toggleDropdown(event, false);
     }
-  }
-
-  @ViewChild('dropdownToggle') dropdownToggle?: ElementRef<HTMLDivElement>;
-  @ViewChild('dropdownMenu') dropdownMenu?: ElementRef<HTMLDivElement>;
-
-  _options: DropdownOption[] = [];
-  showDropdown: boolean = false;
-  val: string[] | string = []; //seçili olan değer (checked)
-  labels$: string | Observable<string> = new BehaviorSubject<string>('');
-  optionLabelsSub?: Subscription;
-
-  private optionSub?: Subscription;
-  private optionTagsSub?: Subscription;
-
-  constructor(private elRef: ElementRef, @Optional() public control?: NgControl) {
-    if (control)
-      control.valueAccessor = this;
   }
 
   //<editor-fold desc="Angular hooks">
@@ -141,7 +152,8 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
     if (!this.dropdownToggle || !this.dropdownMenu) return;
 
     this.popperRef = createPopper(this.dropdownToggle.nativeElement, this.dropdownMenu.nativeElement, {
-      strategy: 'absolute'
+      strategy: 'fixed',
+      modifiers: [sameWidth]
     })
   }
 
@@ -206,10 +218,10 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
     return labels.join(", ");
   }
 
-  clickedControl(value: any, label: any) {
+  clickedControl(event: MouseEvent, value: any, label: any) {
     this.val = value;
     this.onChange(this.val);
-    this.showDropdown = false;
+    this.toggleDropdown(event, false)
     this.calcLabels();
 
     this.ngyChange?.emit({

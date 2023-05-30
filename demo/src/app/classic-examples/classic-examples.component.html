@@ -1,8 +1,25 @@
-<ngy-dynamic-form #formComponent (post)="formPosted($event)" [formDisabled]="formDisabled" [inputs]="inputs"
-                  [valueToPatch]="{textboxexample: 'Hello'}" formName="userLoginForm"></ngy-dynamic-form>
+<h1>Defining Inputs</h1>
+<p>You can define inputs and configurations anywhere. Example code below show input configurations for a form.</p>
+<button (click)="hideTs = !hideTs" class="btn btn-outline-primary" type="button">Toggle example code</button>
+<div [hidden]="hideTs"><pre>
+  <code class="language-ts">{{classicExamples.ts}}</code>
+</pre>
+</div>
+<hr>
+<h1>Usage in angular template</h1>
+<p>You can define inputs and configurations anywhere. Example code below show input configurations for a form.</p>
+<pre>
+  <code class="language-html">{{classicExamples.html}}</code>
+</pre>
 
-<div class="mt-5">
-  <div>Submit from outside</div>
+<hr>
+<h1>Result</h1>
+<ngy-dynamic-form #formComponent (post)="formPosted($event)" [formDisabled]="formDisabled"
+                  [inputs]="classicExamplesInputs"
+                  [valueToPatch]="{textbox: 'Patched value'}" formName="classicExamples"></ngy-dynamic-form>
+
+<div class="my-5">
+  <h4>Submit from outside</h4>
   <button (click)="formComponent.submitForm()" class="btn btn-primary">Submit form</button>
   <button (click)="formDisabled = !formDisabled" class="btn btn-primary ms-3">Form state
     = {{formDisabled ? 'disabled' : 'enabled'}}</button>
@@ -10,7 +27,5 @@
 
 <div class="my-5 p-4 bg-light border shadow-sm rounded-3">
   <h5>Form value</h5>
-  <pre>
-<!--      {{formComponent.form.value | json}}-->
-    </pre>
+  <pre>{{formComponent.form.value | json}}</pre>
 </div>

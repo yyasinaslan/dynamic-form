@@ -1,10 +1,10 @@
-<div class="form-check" [class.form-switch]="type === 'switch'">
+<div [class.form-switch]="type === 'switch'" class="form-check">
   <input
     #check
     (blur)="onTouched(); ngyBlur.emit($event)"
-    (focus)="ngyFocus.emit($event)"
     (click)="ngyClick.emit($event)"
     (contextmenu)="ngyContextMenu.emit($event)"
+    (focus)="ngyFocus.emit($event)"
     (input)="valChanged($event)"
     [checked]="val"
     [disabled]="disabled"
