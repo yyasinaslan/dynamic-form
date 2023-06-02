@@ -2,17 +2,17 @@
   <div
     class="mb-4 py-2 border-bottom d-flex flex-column flex-md-row justify-content-start align-items-center gap-3 bg-body position-sticky top-0"
     style="z-index: 999">
-    <div class="lead">Dynamic Form</div>
+    <div class="lead">@yyasinaslan/dynamic-form</div>
 
     <div class="flex-fill d-flex justify-content-center gap-2">
       <button (click)="setExampleType('classic')" [class.active]="exampleType == 'classic'"
-              class="btn btn-outline-primary border-0">Classic Examples
+              class="btn btn-outline-primary border-0">Dynamic Examples
       </button>
       <button (click)="setExampleType('imperative')" [class.active]="exampleType == 'imperative'"
-              class="btn btn-outline-primary border-0">Imperative Examples
+              class="btn btn-outline-primary border-0">Template Driven Examples
       </button>
       <button (click)="setExampleType('declarative')" [class.active]="exampleType == 'declarative'"
-              class="btn btn-outline-primary border-0">Declarative Examples
+              class="btn btn-outline-primary border-0">Standalone Controls
       </button>
     </div>
 

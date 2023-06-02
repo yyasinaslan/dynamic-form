@@ -21,10 +21,10 @@ declare const hljs: any;
   imports: [CommonModule, FormsModule, TextboxComponent,
     TextareaComponent, SelectComponent, OptionComponent,
     CheckboxComponent, MultiCheckboxComponent, HelperTextComponent, InvalidMessageComponent],
-  templateUrl: './declarative-examples.component.html',
-  styleUrls: ['./declarative-examples.component.scss']
+  templateUrl: './template-driven-examples.component.html',
+  styleUrls: ['./template-driven-examples.component.scss']
 })
-export class DeclarativeExamplesComponent implements AfterViewInit {
+export class TemplateDrivenExamplesComponent implements AfterViewInit {
   eventLog: any[] = [];
   //<editor-fold desc="Fixtures">
   codeExamples = codeExamples;
@@ -42,7 +42,6 @@ export class DeclarativeExamplesComponent implements AfterViewInit {
   }
 
   //</editor-fold>
-
   ngAfterViewInit(): void {
     hljs.highlightAll();
   }
