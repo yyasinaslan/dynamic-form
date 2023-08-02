@@ -1,0 +1,19 @@
+
+.select-list-item {
+  &.active {
+    background-color: rgba(var(--bs-primary-rgb, #09f), 0.4);
+  }
+
+  &:hover {
+    background-color: rgba(var(--bs-primary-rgb, #09f), 0.5);
+  }
+}
+
+.dropdown-container {
+  position: relative;
+
+  .dropdown-menu {
+    max-height: var(--ngy-dropdown-max-height, 75vh);
+    overflow: auto;
+  }
+}

@@ -1,0 +1,95 @@
+<pre>Value:{{val.toString()}} {{typeOfVal}}</pre>
+
+
+<ng-container *ngIf="!floating" [ngTemplateOutlet]="labelTemplate"/>
+<div [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }" class="dropdown-container">
+  <ng-container [ngTemplateOutlet]="!floating ? inputTemplate: floatingTemplate"/>
+  <ng-container [ngTemplateOutlet]="caretTemplate"/>
+
+  <div #dropdownMenu [id]="id + '_' + key"
+       [ngStyle]="{'--ngy-dropdown-max-height': maxHeight}"
+       class="dropdown-menu shadow"
+       role="menu">
+    <div class="d-flex flex-column align-items-stretch">
+      <ng-container *ngIf="multiple">
+        <label
+          *ngFor="let option of filteredOptions; let i = index"
+          class="select-list-item hstack align-items-center gap-2 flex-fill py-2 ps-3 pe-2"
+          [class.active]="selectedItemIndex == i">
+          <input
+            (change)="changeCheckControl($event, option)"
+            [checked]="valIncludes($any(val),option.value)"
+            [disabled]="disabled"
+            [value]="option.value"
+            class="form-check-input m-0"
+            type="checkbox"/>
+          <span>{{ option.label | observableString }}</span>
+        </label>
+      </ng-container>
+
+      <ng-container *ngIf="!multiple">
+        <button *ngFor="let option of filteredOptions; let i = index"
+                (click)="clickedControl($event,option.value, option.label)"
+                class="dropdown-item"
+                [class.active]="selectedItemIndex == i"
+                type="button">
+          {{ option.label | observableString }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-content select="ngy-helper-text"></ng-content>
+<ng-content select="ngy-invalid-message"></ng-content>
+
+<ng-template #floatingTemplate>
+  <div class="form-floating position-relative">
+    <ng-container [ngTemplateOutlet]="inputTemplate"/>
+    <ng-container [ngTemplateOutlet]="labelTemplate"/>
+  </div>
+</ng-template>
+
+<ng-template #inputTemplate>
+  <input #dropdownToggle
+         (blur)="onTouched(); ngyBlur.emit($event)"
+         (click)="ngyClick.emit($event)"
+         (contextmenu)="ngyContextMenu.emit($event)"
+         (keydown.enter)="inputEnter($event)"
+         (keydown.arrowDown)="arrowDown($event)"
+         (keydown.arrowUp)="arrowUp($event)"
+         (focusin)="inputFocused($event)"
+         (focusout)="inputBlurred($event)"
+         (input)="searchInput($event)"
+         type="text" class="form-control" [ngStyle]="{'padding-inline-end': ''}"
+         [placeholder]="placeholder ?? ' '"
+         [value]="labels$ | observableString"
+         [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }">
+</ng-template>
+
+<ng-template #labelTemplate>
+  <label (click)="toggleDropdown($event)" class="form-label">{{ label | observableString }}</label>
+</ng-template>
+
+<ng-template #caretTemplate>
+  <div class="position-absolute top-50 translate-middle-y d-flex" style="inset-inline-end: 0.5rem">
+    <button *ngIf="showClearButton" (click)="emptySelection()" type="button"
+            class="btn btn-outline-primary border-0 btn-sm d-flex align-items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path
+          d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+      </svg>
+    </button>
+    <button (click)="toggleDropdown($event)" type="button"
+            class="btn btn-outline-primary border-0 btn-sm d-flex align-items-center">
+      <svg [ngStyle]="{rotate: showDropdown ? '180deg': '0deg' }" style="transition: rotate 100ms ease"
+           xmlns="http://www.w3.org/2000/svg" width="16"
+           height="16" fill="currentColor"
+           viewBox="0 0 16 16">
+        <path
+          d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+      </svg>
+    </button>
+  </div>
+</ng-template>
+

@@ -11,8 +11,8 @@
     "generate"
   ],
   "peerDependencies": {
-    "@angular/common": "^15.1.0",
-    "@angular/core": "^15.1.0",
+    "@angular/common": ">=15.1.0",
+    "@angular/core": ">=15.1.0",
     "@popperjs/core": "^2.11.7",
     "rxjs": "^7.5.0"
   },

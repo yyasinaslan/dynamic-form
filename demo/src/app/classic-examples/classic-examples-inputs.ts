@@ -1,6 +1,7 @@
 import {
   CheckboxGroupInput,
   CheckboxInput,
+  ComboboxInput,
   DropdownInput,
   DropdownOption,
   HiddenInput,
@@ -16,12 +17,85 @@ export const eventTest = (event: any) => {
 }
 
 export const testOptions: DropdownOption[] = [
-  {label: 'Option 1', value: 1},
-  {label: 'Option 2', value: 2},
-  {label: 'Option 3', value: 3},
+  {label: 'USA', value: 1},
+  {label: 'Turkey', value: 2},
+  {label: 'Egypt', value: 3},
+  {label: 'England', value: 4},
+  {label: 'France', value: 5},
+  {label: 'Germany', value: 6},
+  {
+    label: 'Ireland', value: 7
+  },
 ]
 
 export const classicExamplesInputs = [
+  new ComboboxInput({
+    key: "combobox",
+    label: "Combobox",
+    size: "4",
+    value: 2,
+    validators: [Validators.required],
+    validatorsMessage: [{key: "required", message: "Please enter your Time"}],
+    multiple: false,
+    options: testOptions,
+
+    floating: false,
+
+    search: (event => console.log('Search event', event)),
+    searchType: 'client',
+
+    change: eventTest,
+    focus: eventTest,
+    blur: eventTest,
+    click: eventTest,
+    contextMenu: eventTest,
+  }),
+  new ComboboxInput({
+    key: "combobox_floating",
+    label: "Combobox Floating",
+    size: "4",
+    value: 2,
+    validators: [Validators.required],
+    validatorsMessage: [{key: "required", message: "Please enter your Time"}],
+    multiple: false,
+    showClearButton: true,
+    options: testOptions,
+
+    floating: true,
+
+    search: (event => console.log('Search event', event)),
+    searchType: 'client',
+
+    change: eventTest,
+    focus: eventTest,
+    blur: eventTest,
+    click: eventTest,
+    contextMenu: eventTest,
+  }),
+  new ComboboxInput({
+    key: "combobox_multi",
+    label: "Combobox Multi",
+    size: "4",
+    value: [1, 2],
+    validators: [Validators.required],
+    validatorsMessage: [{key: "required", message: "Please enter your Time"}],
+    multiple: true,
+    options: testOptions,
+
+    showClearButton: true,
+
+    floating: false,
+
+    search: (event => console.log('Search event', event)),
+    searchType: 'client',
+
+    change: eventTest,
+    focus: eventTest,
+    blur: eventTest,
+    click: eventTest,
+    contextMenu: eventTest,
+  }),
+
   new HiddenInput({
     key: 'hiddenInput',
     value: 'Hello',

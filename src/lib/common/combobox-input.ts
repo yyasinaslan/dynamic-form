@@ -2,14 +2,14 @@ import {Observable} from "rxjs";
 import {ControlType} from "../interfaces/control-type";
 import {BaseInput} from "./base-input";
 import {DropdownOption} from "../interfaces/dropdown-option.interface";
-import {DropdownInputInterface} from "../interfaces/dropdown-input.interface";
+import {ComboboxInputInterface, ComboboxSearchType} from "../interfaces/combobox-input.interface";
 
 
 /**
  * Select box
  */
-export class DropdownInput<T> extends BaseInput<T> {
-  override controlType: ControlType = "dropdown";
+export class ComboboxInput<T> extends BaseInput<T> {
+  override controlType: ControlType = "combobox";
 
   /**
    * Dropdown, checkboxgroup and radiogroup options
@@ -32,8 +32,11 @@ export class DropdownInput<T> extends BaseInput<T> {
    */
   placeholder?: string | Observable<string>;
 
-  showClearButton: boolean = true;
+  showClearButton: boolean = false;
   clearButtonText = 'Clear';
+
+  search?: (event: string) => void;
+  searchType?: ComboboxSearchType = 'client';
 
   /**
    * Custom comparing function for options and values.
@@ -43,7 +46,7 @@ export class DropdownInput<T> extends BaseInput<T> {
    */
   compareWith?: (a: T, b: T) => boolean = ((a: any, b: any) => a === b);
 
-  constructor(config: DropdownInputInterface<T>) {
+  constructor(config: ComboboxInputInterface<T>) {
     super(config);
 
     this.options = config.options ?? this.options;
@@ -53,5 +56,10 @@ export class DropdownInput<T> extends BaseInput<T> {
     this.showClearButton = config.showClearButton ?? this.showClearButton;
     this.clearButtonText = config.clearButtonText ?? this.clearButtonText;
     this.compareWith = config.compareWith ?? this.compareWith;
+
+    this.searchType = config.searchType;
+    this.search = config.search;
+
+
   }
 }

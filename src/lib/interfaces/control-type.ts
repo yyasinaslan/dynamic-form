@@ -6,6 +6,7 @@ export type ControlType =
   | "textbox"
   | "file"
   | "dropdown"
+  | "combobox"
   | "textarea"
   | "switch"
   | "checkbox"

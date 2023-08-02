@@ -6,13 +6,13 @@
     <!-- todo: Form group -->
 
     <!-- TEXTBOX -->
-    <ngy-textbox (ngyBlur)="input.blur ? input.blur($event) : null"
+    <ngy-textbox *ngSwitchCase="'textbox'"
+                 (ngyBlur)="input.blur ? input.blur($event) : null"
                  (ngyChange)="input.change ? input.change($event) : null"
                  (ngyClick)="input.click ? input.click($event) : null"
 
                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
                  (ngyFocus)="input.focus ? input.focus($event) : null"
-                 *ngSwitchCase="'textbox'"
                  [floating]="input.floating"
                  [formControlName]="input.key"
                  [id]="input.id"
@@ -26,7 +26,8 @@
                  [value]="input.value"/>
 
     <!-- DROPDOWN TEMPLATE -->
-    <ngy-select (ngyBlur)="input.blur ? input.blur($event) : null" (ngyChange)="input.change ? input.change($event) : null"
+    <ngy-select (ngyBlur)="input.blur ? input.blur($event) : null"
+                (ngyChange)="input.change ? input.change($event) : null"
                 (ngyClick)="input.click ? input.click($event) : null"
                 (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
                 (ngyFocus)="input.focus ? input.focus($event) : null"
@@ -39,6 +40,7 @@
                 [key]="input.key"
 
                 [label]="input.label"
+                [showClearButton]="input.showClearButton"
 
                 [multiple]="input.multiple"
                 [options]="input.options"
@@ -46,6 +48,35 @@
                 [readonly]="input.readonly"
                 [value]="input.value"
     ></ngy-select>
+
+    <!-- COMBOBOX TEMPLATE -->
+    <ngy-combobox *ngSwitchCase="'combobox'"
+                  (ngyBlur)="input.blur ? input.blur($event) : null"
+                  (ngyChange)="input.change ? input.change($event) : null"
+                  (ngyClick)="input.click ? input.click($event) : null"
+                  (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
+                  (ngyFocus)="input.focus ? input.focus($event) : null"
+                  (ngySearch)="input.search ? input.search($event) : null"
+
+                  [compareWith]="input.compareWith"
+                  [floating]="input.floating"
+                  [formControlName]="input.key"
+
+                  [searchType]="input.searchType"
+
+                  [showClearButton]="input.showClearButton"
+
+                  [id]="input.id"
+                  [key]="input.key"
+
+                  [label]="input.label"
+
+                  [multiple]="input.multiple"
+                  [options]="input.options"
+                  [placeholder]="input.placeholder"
+                  [readonly]="input.readonly"
+                  [value]="input.value"
+    ></ngy-combobox>
 
     <!-- TEXTAREA TEMPLATE -->
     <ngy-textarea (ngyBlur)="input.blur ? input.blur($event) : null"
@@ -67,7 +98,9 @@
                   [value]="input.value"></ngy-textarea>
 
     <!-- SWITCH TEMPLATE -->
-    <ngy-checkbox (ngyBlur)="input.blur ? input.blur($event) : null" (ngyChange)="input.change ? input.change($event) : null" (ngyClick)="input.click ? input.click($event) : null"
+    <ngy-checkbox (ngyBlur)="input.blur ? input.blur($event) : null"
+                  (ngyChange)="input.change ? input.change($event) : null"
+                  (ngyClick)="input.click ? input.click($event) : null"
                   (ngyContextMenu)="input.contextMenu ? input.contextMenu($event) : null"
                   (ngyFocus)="input.focus ? input.focus($event) : null"
                   *ngSwitchCase="'switch'"
