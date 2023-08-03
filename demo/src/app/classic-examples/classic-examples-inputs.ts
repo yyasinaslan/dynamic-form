@@ -11,9 +11,10 @@ import {
   TextBoxInput
 } from "dynamic-form";
 import {Validators} from "@angular/forms";
+import {Subject} from "rxjs";
 
 export const eventTest = (event: any) => {
-  console.log(`Event: ${event.type}, value: ${event.value}`)
+  // console.log(`Event: ${event.type}, value: ${event.value}`)
 }
 
 export const testOptions: DropdownOption[] = [
@@ -23,10 +24,10 @@ export const testOptions: DropdownOption[] = [
   {label: 'England', value: 4},
   {label: 'France', value: 5},
   {label: 'Germany', value: 6},
-  {
-    label: 'Ireland', value: 7
-  },
+  {label: 'Ireland', value: 7},
 ]
+
+const asyncOptions = new Subject<DropdownOption[]>();
 
 export const classicExamplesInputs = [
   new ComboboxInput({
@@ -43,6 +44,41 @@ export const classicExamplesInputs = [
 
     search: (event => console.log('Search event', event)),
     searchType: 'client',
+
+    change: eventTest,
+    focus: eventTest,
+    blur: eventTest,
+    click: eventTest,
+    contextMenu: eventTest,
+  }),
+  new ComboboxInput({
+    key: "combobox_api",
+    label: "Combobox Async Api Search",
+    size: "4",
+    value: 2,
+    validators: [Validators.required],
+    validatorsMessage: [{key: "required", message: "Please enter your Time"}],
+    multiple: false,
+    options: asyncOptions,
+
+    floating: false,
+
+    search: (searchTerm => {
+      fetch('https://restcountries.com/v3.1/all?fields=name,capital,currencies').then(async response => {
+        const countries = await response.json() as Array<{ name: { common: string } }>;
+        if (!searchTerm) {
+          asyncOptions.next(countries.map((c, i) => ({label: c.name.common, value: c.name.common})))
+          return
+        }
+
+        asyncOptions.next(countries.filter(c => c.name.common.toLowerCase().includes(searchTerm.toLowerCase())).map((c, i) => ({
+          label: c.name.common,
+          value: c.name.common
+        })))
+
+      })
+    }),
+    searchType: 'server',
 
     change: eventTest,
     focus: eventTest,

@@ -8,6 +8,7 @@ import {TextareaComponent} from "./controls/textarea/textarea.component";
 import {FormControlComponent} from "./components/form-control/form-control.component";
 import {HelperTextComponent} from "./components/helper-text/helper-text.component";
 import {InvalidMessageComponent} from "./components/invalid-message/invalid-message.component";
+import {ComboboxComponent} from "./controls/combobox/combobox.component";
 
 const COMPONENTS = [
   // Main component
@@ -21,6 +22,7 @@ const COMPONENTS = [
   // Controls
   CheckboxComponent,
   TextboxComponent,
+  ComboboxComponent,
   MultiCheckboxComponent,
   SelectComponent,
   TextareaComponent

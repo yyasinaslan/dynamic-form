@@ -12,8 +12,8 @@
 .dropdown-container {
   position: relative;
 
-  .dropdown-menu {
-    max-height: var(--ngy-dropdown-max-height, 75vh);
+  .ngy-combobox-item-list {
+    max-height: var(--ngy-dropdown-max-height, 400px);
     overflow: auto;
   }
 }

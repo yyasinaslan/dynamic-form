@@ -75,7 +75,7 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
 
   @Input() searchType: ComboboxSearchType = 'client';
 
-  @Input() maxHeight?: string = '75vh';
+  @Input() maxHeight?: string = '400px';
 
   @Input() options?: DropdownOption[] | Observable<DropdownOption[]> = [];
   //<editor-fold desc="Outputs">
@@ -90,6 +90,7 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
 
   @ViewChild('dropdownToggle') dropdownToggle?: ElementRef<HTMLDivElement>;
   @ViewChild('dropdownMenu') dropdownMenu?: ElementRef<HTMLDivElement>;
+  @ViewChild('searchInputRef') inputSearchRef?: ElementRef<HTMLInputElement>;
   _options: DropdownOption[] = [];
   filteredOptions: DropdownOption[] = [];
   showDropdown: boolean = false;
@@ -115,12 +116,28 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
     return a === b;
   };
 
+  // @HostBinding('tabindex') get tabindex() {
+  //   return "auto";
+  // }
+
   @HostListener('document:click', ['$event'])
   documentClick(event: MouseEvent) {
     const nativeEl = this.elRef.nativeElement as HTMLElement;
     if (!nativeEl.contains(event.target as HTMLElement)) {
       this.toggleDropdown(event, false);
     }
+  }
+
+  @HostListener('document:focusin', ['$event'])
+  documentFocus(event: MouseEvent) {
+    if (!this.elRef?.nativeElement.contains(event.target as HTMLElement)) {
+      this.toggleDropdown(event, false)
+    }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  documentEscape(event: MouseEvent) {
+    this.toggleDropdown(event, false);
   }
 
   // todo: remove this
@@ -277,8 +294,6 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
       originalEvent: null,
       control: this.control
     })
-
-    this.search$.next('');
   }
 
   public registerOnChange(fn: (value: any | null) => void): void {
@@ -311,7 +326,31 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
       else
         this.dropdownMenu.nativeElement.classList.remove('show');
 
-      if (this.popperRef) this.popperRef.update();
+      if (this.popperRef) this.popperRef.update().then((state) => {
+        if (this.showDropdown) {
+          if (this.inputSearchRef) {
+            this.inputSearchRef.nativeElement.value = '';
+            this.inputSearchRef.nativeElement.focus();
+          }
+          if (this.dropdownToggle) {
+            this.dropdownToggle.nativeElement.setAttribute('tabindex', '-1');
+          }
+
+          // Find current selection index and set selected item index
+          const index = this.filteredOptions.findIndex(opt => this.valIncludes(this.val, opt.value));
+          if (index >= 0) {
+            this.selectedItemIndex = index;
+            this.scrollToItem();
+          } else {
+            this.selectedItemIndex = -1;
+          }
+        } else {
+          // this.search$.next('');
+          if (this.dropdownToggle) {
+            this.dropdownToggle.nativeElement.removeAttribute('tabindex');
+          }
+        }
+      });
     }
   }
 
@@ -320,8 +359,8 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
    * @param arr
    * @param value
    */
-  valIncludes(arr: Array<any>, value: any) {
-    if (!Array.isArray(arr)) return false;
+  valIncludes(arr: Array<any> | any, value: any) {
+    if (!Array.isArray(arr)) return arr == value;
     return arr.findIndex(v => this.compareWith(v, value)) > -1;
   }
 
@@ -339,10 +378,12 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
       this.optionsSub = this.options.subscribe((options) => {
         if (options) {
           this._options = options;
+          this.filteredOptions = options;
           this.calcLabels();
 
-          // Reapply search term
-          this.search$.next(this.search$.getValue());
+          // Re apply search term if it is client sided
+          if (this.searchType == 'client')
+            this.search$.next(this.search$.getValue());
         }
       });
 
@@ -355,8 +396,12 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
   }
 
   subSearch() {
-    this.searchSub = this.search$.pipe(debounceTime(10)).subscribe(searchTerm => {
+    this.searchSub = this.search$.pipe(debounceTime(200)).subscribe(searchTerm => {
 
+      if (this.searchType == 'server') {
+        this.ngySearch.emit(searchTerm)
+        return;
+      }
 
       if (!searchTerm || searchTerm == '') {
         this.filteredOptions = this._options;
@@ -367,12 +412,6 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
       if (this.multiple) {
         const splitted = searchTerm.split(',').map(s => s.trim());
         searchTerm = splitted[splitted.length - 1]
-      }
-
-
-      if (this.searchType == 'server') {
-        this.ngySearch.emit(searchTerm)
-        return;
       }
 
       this.filteredOptions = this._options.filter(opt => {
@@ -391,20 +430,24 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
       if (this.filteredOptions.length > 0 || this.selectedItemIndex < 0 || this.selectedItemIndex > this.filteredOptions.length - 1) {
         this.selectedItemIndex = 0;
       }
-
     });
+
+    // // Initial search for server type search
+    // this.search$.next('');
   }
 
   inputFocused($event: FocusEvent) {
     this.toggleDropdown($event, true);
+    //
+    // setTimeout(() => {
+    //   const input = this.inputSearchRef?.nativeElement;
+    //
+    //   if (input) {
+    //     input.value = '';
+    //     input.focus();
+    //   }
+    // }, 500)
 
-    const input = $event.target as HTMLInputElement;
-
-    if (this.multiple) {
-      setTimeout(() => input.setSelectionRange(input.value.length, input.value.length))
-    } else {
-      input.setSelectionRange(0, input.value.length);
-    }
   }
 
   selectItem(index: number, event?: any) {
@@ -420,38 +463,42 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
     this.changeCheckControl(event as MouseEvent, option, !this.valIncludes(this.val as Array<any>, option.value));
   }
 
-  inputBlurred($event: FocusEvent) {
+  inputBlurred($event: any) {
     this.selectedItemIndex = -1;
   }
 
   inputEnter(event: any) {
-    console.log(event)
     event.preventDefault();
-    event.stopPropagation();
+    const input = event.target as HTMLInputElement;
     if (this.selectedItemIndex < 0 || this.selectedItemIndex > this.filteredOptions.length - 1) return;
     this.selectItem(this.selectedItemIndex, event);
     if (!this.multiple)
       this.toggleDropdown(event, false)
+
+    input.value = ''
   }
 
   arrowDown(event: any) {
     event.preventDefault();
     if (this.selectedItemIndex >= this.filteredOptions.length - 1) {
       this.selectedItemIndex = 0;
-      return;
+    } else {
+      this.selectedItemIndex++;
     }
 
-    this.selectedItemIndex++;
+    this.scrollToItem();
+
   }
 
   arrowUp(event: any) {
     event.preventDefault();
     if (this.selectedItemIndex <= 0) {
       this.selectedItemIndex = this.filteredOptions.length - 1;
-      return;
+    } else {
+      this.selectedItemIndex--;
     }
 
-    this.selectedItemIndex--;
+    this.scrollToItem();
   }
 
   emptySelection() {
@@ -477,6 +524,50 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
     const input = event.target as HTMLInputElement;
     const value = input.value;
     this.search$.next(value);
-    this.toggleDropdown(event, true)
+  }
+
+  inputEscape(event: any) {
+    this.toggleDropdown(event, false);
+  }
+
+  toggleClick(event: MouseEvent) {
+    if (this.showDropdown) {
+      this.toggleDropdown(event, false)
+    } else {
+      this.toggleDropdown(event, true)
+    }
+  }
+
+  inputTab(event: any) {
+    if (this.elRef) {
+      const clearButton = (this.elRef.nativeElement as HTMLElement).querySelector('.ngy-combobox-clear-button');
+      if (clearButton) {
+        (clearButton as HTMLButtonElement).focus();
+        event.preventDefault();
+      }
+    }
+  }
+
+  focusSearch() {
+    this.inputSearchRef?.nativeElement.focus();
+  }
+
+  scrollToItem() {
+    const menu = this.dropdownMenu?.nativeElement;
+    if (menu) {
+      const itemScroller = menu.querySelector('.ngy-combobox-item-list') as HTMLDivElement;
+      if (!itemScroller) return;
+
+      const child = itemScroller.children[this.selectedItemIndex] as HTMLElement;
+      if (!child) return;
+
+      const startOfChild = child.offsetTop;
+      const endOfChild = child.offsetTop + child.clientHeight;
+      if (startOfChild < itemScroller.scrollTop)
+        itemScroller.scrollTo({top: child.offsetTop});
+
+      if (endOfChild > itemScroller.scrollTop + itemScroller.clientHeight)
+        itemScroller.scrollTo({top: child.offsetTop - itemScroller.clientHeight + child.clientHeight});
+    }
   }
 }
