@@ -39,7 +39,8 @@
        class="dropdown-menu shadow"
        role="menu">
     <ng-container [ngTemplateOutlet]="inputTemplate"/>
-    <div class="ngy-combobox-item-list position-relative d-flex flex-column align-items-stretch" [ngStyle]="{'--ngy-dropdown-max-height': maxHeight}">
+    <div class="ngy-combobox-item-list position-relative d-flex flex-column align-items-stretch"
+         [ngStyle]="{'--ngy-dropdown-max-height': maxHeight}">
       <ng-container *ngIf="multiple">
         <label
           *ngFor="let option of filteredOptions; let i = index"
@@ -83,6 +84,7 @@
            (keydown.escape)="inputEscape($event)"
            (keydown.tab)="inputTab($event)"
            (input)="searchInput($event)"
+           [value]="search$ | async"
            tabindex="-1"
            type="text" class="form-control"
            placeholder="Search here...">

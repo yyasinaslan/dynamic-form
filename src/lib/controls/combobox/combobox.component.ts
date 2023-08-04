@@ -103,7 +103,7 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
 
   selectedItemIndex = -1;
 
-  private search$ = new BehaviorSubject<string>("");
+  public search$ = new BehaviorSubject<string>("");
   private searchSub?: Subscription;
 
 
@@ -138,11 +138,6 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
   @HostListener('document:keydown.escape', ['$event'])
   documentEscape(event: MouseEvent) {
     this.toggleDropdown(event, false);
-  }
-
-  // todo: remove this
-  get typeOfVal() {
-    return Array.isArray(this.val) ? 'Array' : typeof this.val;
   }
 
   //<editor-fold desc="Angular hooks">
@@ -262,7 +257,9 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
       originalEvent: null,
       control: this.control
     })
-    this.search$.next('');
+
+    if (this.searchType == 'client')
+      this.search$.next('');
   }
 
   changeCheckControl(event: any, option: DropdownOption, forceState?: boolean) {
@@ -329,7 +326,6 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
       if (this.popperRef) this.popperRef.update().then((state) => {
         if (this.showDropdown) {
           if (this.inputSearchRef) {
-            this.inputSearchRef.nativeElement.value = '';
             this.inputSearchRef.nativeElement.focus();
           }
           if (this.dropdownToggle) {
@@ -345,7 +341,11 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
             this.selectedItemIndex = -1;
           }
         } else {
-          // this.search$.next('');
+
+          if (this.searchType == 'client') {
+            this.search$.next('');
+          }
+
           if (this.dropdownToggle) {
             this.dropdownToggle.nativeElement.removeAttribute('tabindex');
           }
@@ -469,13 +469,10 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
 
   inputEnter(event: any) {
     event.preventDefault();
-    const input = event.target as HTMLInputElement;
     if (this.selectedItemIndex < 0 || this.selectedItemIndex > this.filteredOptions.length - 1) return;
     this.selectItem(this.selectedItemIndex, event);
     if (!this.multiple)
       this.toggleDropdown(event, false)
-
-    input.value = ''
   }
 
   arrowDown(event: any) {
