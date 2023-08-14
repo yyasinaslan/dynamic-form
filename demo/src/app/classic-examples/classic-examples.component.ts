@@ -1,9 +1,11 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormGroup} from "@angular/forms";
 import {DynamicFormComponent, FormControlComponent} from "dynamic-form";
 import {classicExamples} from "./classic-examples";
 import {classicExamplesInputs} from "./classic-examples-inputs";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ModalExampleComponent} from "../modal-example/modal-example.component";
 
 declare const hljs: any;
 
@@ -23,6 +25,8 @@ export class ClassicExamplesComponent implements OnInit, AfterViewInit {
   formDisabled: boolean = false;
   hideTs: boolean = true;
 
+  modalService = inject(NgbModal);
+
   constructor() {
   }
 
@@ -36,6 +40,12 @@ export class ClassicExamplesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     hljs.highlightAll();
+  }
+
+  showModal() {
+    this.modalService.open(ModalExampleComponent, {
+      size: 'xl'
+    })
   }
 
 

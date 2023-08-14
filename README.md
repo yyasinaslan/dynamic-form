@@ -6,6 +6,8 @@ This component library helps you to generate form template with configuration ob
 
 [Demo Site](https://dynamic-form-one.vercel.app/) | [Npm Package](https://www.npmjs.com/package/@yyasinaslan/dynamic-form) | [Github](https://github.com/yyasinaslan/dynamic-form)
 
+[Compatibility](docs/Compatibilty.md)
+
 Advanced usage and detailed documentation will be added soon...
 
 ## Installation

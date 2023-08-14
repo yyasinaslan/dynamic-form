@@ -25,6 +25,7 @@ import {OptionComponent} from "../../components/option/option.component";
 import {createPopper, Instance, Modifier} from "@popperjs/core";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
 import {ComboboxSearchType} from "../../interfaces/combobox-input.interface";
+import {focusTargets} from "../../helpers/focus-targets";
 
 
 const sameWidth: Partial<Modifier<any, any>> = {
@@ -123,14 +124,18 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
   @HostListener('document:click', ['$event'])
   documentClick(event: MouseEvent) {
     const nativeEl = this.elRef.nativeElement as HTMLElement;
-    if (!nativeEl.contains(event.target as HTMLElement)) {
+    if (!nativeEl.contains(event.target as HTMLElement) && this.showDropdown) {
       this.toggleDropdown(event, false);
     }
   }
 
   @HostListener('document:focusin', ['$event'])
   documentFocus(event: MouseEvent) {
-    if (!this.elRef?.nativeElement.contains(event.target as HTMLElement)) {
+    const nativeEl = this.elRef.nativeElement as HTMLElement;
+    const target = event.target as HTMLElement;
+    if (focusTargets.includes(target.tagName.toLowerCase()) && !nativeEl.contains(target) && this.showDropdown) {
+      if (this.key == 'modal_combobox')
+        console.log(event.target, nativeEl.contains(event.target as HTMLElement))
       this.toggleDropdown(event, false)
     }
   }
@@ -267,8 +272,8 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
 
     if (!Array.isArray(this.val)) this.val = [this.val];
 
-    const checked = forceState ? forceState : event.target.checked;
     const checkValue = option.value;
+    const checked = forceState ? forceState : !this.valIncludes(this.val, checkValue);
 
     if (this.valIncludes(this.val, checkValue) && !checked) {
       const selected = this.val.filter(v => v != checkValue)

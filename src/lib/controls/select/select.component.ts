@@ -24,6 +24,7 @@ import {DropdownOption} from "../../interfaces/dropdown-option.interface";
 import {OptionComponent} from "../../components/option/option.component";
 import {createPopper, Instance, Modifier} from "@popperjs/core";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
+import {focusTargets} from "../../helpers/focus-targets";
 
 
 const sameWidth: Partial<Modifier<any, any>> = {
@@ -107,6 +108,15 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   documentClick(event: MouseEvent) {
     const nativeEl = this.elRef.nativeElement as HTMLElement;
     if (!nativeEl.contains(event.target as HTMLElement)) {
+      this.toggleDropdown(event, false);
+    }
+  }
+
+  @HostListener('document:focusin', ['$event'])
+  documentFocus(event: MouseEvent) {
+    const nativeEl = this.elRef.nativeElement as HTMLElement;
+    const target = event.target as HTMLElement;
+    if (focusTargets.includes(target.tagName.toLowerCase()) && !nativeEl.contains(target)) {
       this.toggleDropdown(event, false);
     }
   }

@@ -4,6 +4,7 @@ import {BaseInputInterface} from "../interfaces/base-input.interface";
 import {ControlType} from "../interfaces/control-type";
 import {randomString} from "../helpers/random-string";
 import {ChangeEventInterface} from "../interfaces/change-event.interface";
+import {Action} from "../interfaces/action";
 
 export class BaseInput<T> implements BaseInputInterface<T> {
   /**
@@ -83,6 +84,11 @@ export class BaseInput<T> implements BaseInputInterface<T> {
    */
   helperText?: string | Observable<string>;
 
+  /**
+   * Action buttons
+   */
+  actions: Array<Action> = [];
+
   // Event handlers
   change?: (event: ChangeEventInterface) => void
   focus?: (event: FocusEvent) => void
@@ -113,6 +119,8 @@ export class BaseInput<T> implements BaseInputInterface<T> {
     this.click = config.click ?? undefined;
     this.contextMenu = config.contextMenu ?? undefined;
 
+    this.actions = config.actions ?? [];
+
   }
 
   /**
@@ -125,4 +133,5 @@ export class BaseInput<T> implements BaseInputInterface<T> {
     }
     return control;
   }
+
 }

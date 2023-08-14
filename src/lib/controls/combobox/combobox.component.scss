@@ -1,12 +1,14 @@
 
 .select-list-item {
+  cursor: pointer;
+
   &.active {
-    background-color: rgba(var(--bs-primary-rgb, #09f), 0.4);
+    background-color: rgba(var(--bs-primary-rgb, #09f), 0.7);
   }
 
-  &:hover {
-    background-color: rgba(var(--bs-primary-rgb, #09f), 0.5);
-  }
+  //&:hover {
+  //  background-color: rgba(var(--bs-primary-rgb, #09f), 0.5);
+  //}
 }
 
 .dropdown-container {

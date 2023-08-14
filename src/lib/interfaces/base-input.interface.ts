@@ -2,6 +2,7 @@ import {Observable} from "rxjs";
 import {ValidatorFn} from "@angular/forms";
 import {ControlType} from "./control-type";
 import {ChangeEventInterface} from "./change-event.interface";
+import {Action} from "./action";
 
 export interface BaseInputInterface<T> {
   // Configurations
@@ -26,4 +27,6 @@ export interface BaseInputInterface<T> {
   blur?: (event: FocusEvent) => void
   click?: (event: MouseEvent) => void
   contextMenu?: (event: MouseEvent) => void
+
+  actions?: Array<Action> // (Only applies to  box type inputs like TextBox, Dropdown, Combobox except TextArea)
 }
