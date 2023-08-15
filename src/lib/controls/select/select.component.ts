@@ -25,6 +25,7 @@ import {OptionComponent} from "../../components/option/option.component";
 import {createPopper, Instance, Modifier} from "@popperjs/core";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
 import {focusTargets} from "../../helpers/focus-targets";
+import {Action} from "../../interfaces/action";
 
 
 const sameWidth: Partial<Modifier<any, any>> = {
@@ -48,10 +49,10 @@ const sameWidth: Partial<Modifier<any, any>> = {
   standalone: true,
   templateUrl: "./select.component.html",
   styleUrls: ["./select.component.scss"],
-  imports: [
-    ObservableStringPipe,
-    CommonModule,
-  ]
+    imports: [
+        ObservableStringPipe,
+        CommonModule
+    ]
 })
 export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit, AfterContentInit, ControlValueAccessor {
   //<editor-fold desc="Inputs">
@@ -72,6 +73,8 @@ export class SelectComponent implements OnInit, OnDestroy, OnChanges, AfterViewI
   @Input() disabled?: boolean = false;
   @Input() floating?: boolean = false;
   @Input() placeholder?: string;
+
+  @Input() actions?: Action[] = [];
 
   @Input() maxHeight?: string = '75vh';
 

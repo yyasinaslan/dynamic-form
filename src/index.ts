@@ -39,6 +39,7 @@ export {PlaceholderInterface} from "./lib/interfaces/placeholder.interface";
 export {FloatingInterface} from "./lib/interfaces/floating.interface";
 export {ControlType} from "./lib/interfaces/control-type";
 export {DynamicControlInterface} from "./lib/interfaces/dynamic-control.interface";
+export {Action} from "./lib/interfaces/action";
 
 // Module definition
 export {DynamicFormModule} from './lib/dynamic-form.module';

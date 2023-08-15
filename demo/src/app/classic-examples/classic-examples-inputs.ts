@@ -1,4 +1,5 @@
 import {
+  Action,
   CheckboxGroupInput,
   CheckboxInput,
   ComboboxInput,
@@ -29,16 +30,72 @@ export const testOptions: DropdownOption[] = [
 
 const asyncOptions = new Subject<DropdownOption[]>();
 
+const exampleActions: Action[] = [
+
+  {
+    label: `Add User`,
+    beforeTemplate: `<i class="bi bi-person"></i>`,
+    afterTemplate: `<i class="bi bi-plus-lg"></i>`,
+    position: 'end',
+    buttonClass: 'btn-outline-secondary border text-nowrap',
+    click: () => {
+      console.log('Prepend')
+    }
+  },
+  {
+    label: 'Search Users',
+    beforeTemplate: `<i class="bi bi-search"></i>`,
+    position: 'end',
+    buttonClass: 'btn-outline-secondary border', click: (event) => {
+      console.log('Action append')
+    }
+  }
+]
+
 export const classicExamplesInputs = [
+  new TextBoxInput({
+    key: 'textbox_actions',
+    value: '',
+    label: 'TextBox with action buttons',
+    size: '12',
+    actions: exampleActions
+  }),
+  new TextBoxInput({
+    key: 'textbox_actions_floating',
+    value: '',
+    label: 'Floating TextBox with action buttons',
+    size: '12',
+    floating: true,
+    actions: exampleActions
+  }),
+  new DropdownInput({
+    key: 'dropdown_actions',
+    value: '',
+    label: 'dropdown with action buttons',
+    size: '12',
+    options: testOptions,
+    actions: exampleActions
+  }),
+  new DropdownInput({
+    key: 'dropdown_actions_floating',
+    value: '',
+    label: 'Floating dropdown with action buttons',
+    size: '12',
+    floating: true,
+    options: testOptions,
+    actions: exampleActions
+  }),
   new ComboboxInput({
     key: "combobox",
     label: "Combobox",
-    size: "4",
+    size: "12",
     value: 2,
     validators: [Validators.required],
     validatorsMessage: [{key: "required", message: "Please enter your Time"}],
     multiple: false,
     options: testOptions,
+
+    actions: exampleActions,
 
     floating: false,
 
@@ -54,12 +111,14 @@ export const classicExamplesInputs = [
   new ComboboxInput({
     key: "combobox_api",
     label: "Combobox Async Api Search",
-    size: "4",
+    size: "12",
     value: 2,
     validators: [Validators.required],
     validatorsMessage: [{key: "required", message: "Please enter your Time"}],
     multiple: false,
     options: asyncOptions,
+
+    actions: exampleActions,
 
     floating: false,
 
@@ -89,13 +148,15 @@ export const classicExamplesInputs = [
   new ComboboxInput({
     key: "combobox_floating",
     label: "Combobox Floating",
-    size: "4",
+    size: "12",
     value: 2,
     validators: [Validators.required],
     validatorsMessage: [{key: "required", message: "Please enter your Time"}],
     multiple: false,
     showClearButton: true,
     options: testOptions,
+
+    actions: exampleActions,
 
     floating: true,
 
@@ -111,7 +172,7 @@ export const classicExamplesInputs = [
   new ComboboxInput({
     key: "combobox_multi",
     label: "Combobox Multi",
-    size: "4",
+    size: "12",
     value: [1, 2],
     validators: [Validators.required],
     validatorsMessage: [{key: "required", message: "Please enter your Time"}],
@@ -119,6 +180,8 @@ export const classicExamplesInputs = [
     options: testOptions,
 
     showClearButton: true,
+
+    actions: exampleActions,
 
     floating: false,
 

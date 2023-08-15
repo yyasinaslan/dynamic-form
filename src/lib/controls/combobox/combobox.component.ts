@@ -26,6 +26,7 @@ import {createPopper, Instance, Modifier} from "@popperjs/core";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
 import {ComboboxSearchType} from "../../interfaces/combobox-input.interface";
 import {focusTargets} from "../../helpers/focus-targets";
+import {Action} from "../../interfaces/action";
 
 
 const sameWidth: Partial<Modifier<any, any>> = {
@@ -73,6 +74,7 @@ export class ComboboxComponent implements OnInit, OnDestroy, OnChanges, AfterVie
   @Input() disabled?: boolean = false;
   @Input() floating?: boolean = false;
   @Input() placeholder?: string;
+  @Input() actions?: Action[];
 
   @Input() searchType: ComboboxSearchType = 'client';
 

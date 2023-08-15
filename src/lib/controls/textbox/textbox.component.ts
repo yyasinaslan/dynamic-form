@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
 import {Observable} from "rxjs";
 import {ObservableStringPipe} from "../../pipes/observable-string.pipe";
 import {ChangeEventInterface} from "../../interfaces/change-event.interface";
+import {Action} from "../../interfaces/action";
 
 enum MaskSlotType {
   alphanumeric = 0,
@@ -42,7 +43,6 @@ interface MaskSlot {
   styleUrls: ["./textbox.component.scss"]
 })
 export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAccessor {
-
   @Input() key!: string;
 
   @Input() id?: string = "";
@@ -59,6 +59,7 @@ export class TextboxComponent implements OnInit, AfterViewInit, ControlValueAcce
   @Input() mask?: string;
   @Input() maskValidation?: boolean = true;
   @Input() locale?: string | string[] = 'en';
+  @Input() actions?: Action[] = [];
 
   @Output() ngyChange = new EventEmitter<ChangeEventInterface>();
   @Output() ngyFocus = new EventEmitter<FocusEvent>();

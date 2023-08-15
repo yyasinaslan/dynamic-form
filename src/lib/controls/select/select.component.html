@@ -1,18 +1,14 @@
-<label (click)="toggleDropdown($event)" class="form-label">{{ label | observableString }}</label>
+<ng-container *ngIf="!floating" [ngTemplateOutlet]="labelTemplate"/>
 <div [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }" class="dropdown-container">
-  <button
-    #dropdownToggle
-    (blur)="onTouched(); ngyBlur.emit($event)"
-    (click)="toggleDropdown($event);ngyClick.emit($event)"
-    (contextmenu)="ngyContextMenu.emit($event)"
-    (focus)="ngyFocus.emit($event)"
-    [disabled]="disabled"
-    [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
-    class="form-select d-flex justify-content-between align-items-center "
-    type="button">
-    <span class="text-truncate">{{ labels$ | observableString }}</span>
-    <div>&nbsp;</div>
-  </button>
+  <div class="input-group">
+    <ng-container *ngIf="actions && actions.length > 0" [ngTemplateOutlet]="actionsTemplate"
+                  [ngTemplateOutletContext]="{$implicit: 'start'}"/>
+    <ng-container *ngIf="!floating;else floatingTemplate">
+      <ng-container [ngTemplateOutlet]="toggleTemplate"/>
+    </ng-container>
+    <ng-container *ngIf="actions && actions.length > 0" [ngTemplateOutlet]="actionsTemplate"
+                  [ngTemplateOutletContext]="{$implicit: 'end'}"/>
+  </div>
   <div #dropdownMenu [id]="id + '_' + key"
        [ngStyle]="{'--ngy-dropdown-max-height': maxHeight}"
        class="dropdown-menu shadow"
@@ -46,6 +42,45 @@
   </div>
 </div>
 
+<ng-template #labelTemplate>
+  <label (click)="toggleDropdown($event)" class="form-label">{{ label | observableString }}</label>
+</ng-template>
+
+<ng-template #toggleTemplate>
+  <button
+    #dropdownToggle
+    (blur)="onTouched(); ngyBlur.emit($event)"
+    (click)="toggleDropdown($event);ngyClick.emit($event)"
+    (contextmenu)="ngyContextMenu.emit($event)"
+    (focus)="ngyFocus.emit($event)"
+    [disabled]="disabled"
+    [ngClass]="{ 'ng-invalid': control?.invalid, 'ng-valid': control?.valid }"
+    class="form-select d-flex justify-content-between align-items-center "
+    type="button">
+    <span class="text-truncate">{{ labels$ | observableString }}</span>
+    <div>&nbsp;</div>
+  </button>
+</ng-template>
+
+
+<ng-template #floatingTemplate>
+  <div class="flex-fill form-floating">
+    <ng-container [ngTemplateOutlet]="toggleTemplate"/>
+    <ng-container [ngTemplateOutlet]="labelTemplate"/>
+  </div>
+</ng-template>
+
 <ng-content select="ngy-helper-text"></ng-content>
 <ng-content select="ngy-invalid-message"></ng-content>
 
+<ng-template #actionsTemplate let-position>
+  <ng-container *ngFor="let action of actions">
+    <button *ngIf="action.position == position" type="button" class="btn"
+            [ngClass]="action.buttonClass ?? 'btn-secondary'"
+            (click)=" action.click($event)">
+      <div *ngIf="action.beforeTemplate" [outerHTML]="action.beforeTemplate"></div>
+      {{action.label | observableString}}
+      <div *ngIf="action.afterTemplate" [outerHTML]="action.afterTemplate"></div>
+    </button>
+  </ng-container>
+</ng-template>

@@ -157,3 +157,15 @@
 @each $state, $data in $form-validation-states {
   @include reactive-form-validation-state($state, $data...);
 }
+
+
+.ngy-form-group {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+
+  .btn {
+    text-wrap: none;
+  }
+}

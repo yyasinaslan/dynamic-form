@@ -19,17 +19,51 @@
 </ng-template>
 
 <ng-template #floatingTemplate>
-  <div class="form-floating">
-    <ng-container [ngTemplateOutlet]="inputTemplate"/>
-    <label [for]="id + '_' + key">{{ label | observableString }}</label>
+  <div class="input-group">
+    <ng-container *ngIf="actions && actions.length > 0" [ngTemplateOutlet]="actionsTemplate"
+                  [ngTemplateOutletContext]="{$implicit: 'start'}"/>
+    <div class="form-floating flex-fill">
+      <ng-container [ngTemplateOutlet]="inputTemplate"/>
+      <ng-container [ngTemplateOutlet]="labelTemplate"/>
+    </div>
+    <ng-container *ngIf="actions && actions.length > 0" [ngTemplateOutlet]="actionsTemplate"
+                  [ngTemplateOutletContext]="{$implicit: 'end'}"/>
   </div>
+
 </ng-template>
 
 
-<ng-container *ngIf="!floating; else floatingTemplate">
+<ng-template #nonFloatingTemplate>
+  <ng-container [ngTemplateOutlet]="labelTemplate"/>
+  <div class="input-group">
+    <ng-container *ngIf="actions && actions.length > 0" [ngTemplateOutlet]="actionsTemplate"
+                  [ngTemplateOutletContext]="{$implicit: 'start'}"/>
+    <ng-container [ngTemplateOutlet]="inputTemplate"/>
+    <ng-container *ngIf="actions && actions.length > 0" [ngTemplateOutlet]="actionsTemplate"
+                  [ngTemplateOutletContext]="{$implicit: 'end'}"/>
+  </div>
+</ng-template>
+
+<ng-template #labelTemplate>
   <label [for]="id + '_' + key" class="form-label">{{ label | observableString }}</label>
-  <ng-container [ngTemplateOutlet]="inputTemplate"/>
-</ng-container>
+</ng-template>
+
+
+<ng-container
+  [ngTemplateOutlet]="floating ? floatingTemplate : nonFloatingTemplate"></ng-container>
 
 <ng-content select="ngy-helper-text"></ng-content>
 <ng-content select="ngy-invalid-message"></ng-content>
+
+
+<ng-template #actionsTemplate let-position>
+  <ng-container *ngFor="let action of actions">
+    <button *ngIf="action.position == position" type="button" class="btn"
+            [ngClass]="action.buttonClass ?? 'btn-secondary'"
+            (click)=" action.click($event)">
+      <div *ngIf="action.beforeTemplate" [outerHTML]="action.beforeTemplate"></div>
+      {{action.label | observableString}}
+      <div *ngIf="action.afterTemplate" [outerHTML]="action.afterTemplate"></div>
+    </button>
+  </ng-container>
+</ng-template>
