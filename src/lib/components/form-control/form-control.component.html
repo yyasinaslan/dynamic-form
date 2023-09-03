@@ -24,8 +24,7 @@
                  [key]="input.key"
                  [label]="input.label"
                  [placeholder]="input.placeholder"
-                 [readonly]="input.readonly"
-                 [value]="input.value"/>
+                 [readonly]="input.readonly"/>
 
     <!-- DROPDOWN TEMPLATE -->
     <ngy-select (ngyBlur)="input.blur ? input.blur($event) : null"
@@ -49,9 +48,7 @@
                 [multiple]="input.multiple"
                 [options]="input.options"
                 [placeholder]="input.placeholder"
-                [readonly]="input.readonly"
-                [value]="input.value"
-    ></ngy-select>
+                [readonly]="input.readonly"/>
 
     <!-- COMBOBOX TEMPLATE -->
     <ngy-combobox *ngSwitchCase="'combobox'"
@@ -80,9 +77,7 @@
                   [multiple]="input.multiple"
                   [options]="input.options"
                   [placeholder]="input.placeholder"
-                  [readonly]="input.readonly"
-                  [value]="input.value"
-    ></ngy-combobox>
+                  [readonly]="input.readonly"/>
 
     <!-- TEXTAREA TEMPLATE -->
     <ngy-textarea (ngyBlur)="input.blur ? input.blur($event) : null"
@@ -100,8 +95,7 @@
                   [label]="input.label"
                   [placeholder]="input.placeholder"
                   [readonly]="input.readonly"
-                  [type]="input.type"
-                  [value]="input.value"></ngy-textarea>
+                  [type]="input.type"/>
 
     <!-- SWITCH TEMPLATE -->
     <ngy-checkbox (ngyBlur)="input.blur ? input.blur($event) : null"
@@ -117,7 +111,6 @@
                   [key]="input.key"
                   [label]="input.label"
                   [readonly]="input.readonly"
-                  [value]="input.value"
                   type="switch"/>
 
     <!-- CHECKBOX TEMPLATE -->
@@ -133,8 +126,7 @@
                   [id]="input.id"
                   [key]="input.key"
                   [label]="input.label"
-                  [readonly]="input.readonly"
-                  [value]="input.value"/>
+                  [readonly]="input.readonly"/>
 
 
     <!-- CHECKBOXGROUP TEMPLATE -->
@@ -154,7 +146,6 @@
                         [label]="input.label"
                         [options]="input.options"
                         [readonly]="input.readonly"
-                        [value]="input.value"
                         inputType="checkbox"/>
 
     <!-- RADIOGROUP TEMPLATE -->
@@ -174,7 +165,6 @@
                         [label]="input.label"
                         [options]="input.options"
                         [readonly]="input.readonly"
-                        [value]="input.value"
                         inputType="radio"/>
 
     <ngy-helper-text *ngIf="input.helperText">{{input.helperText}}</ngy-helper-text>

@@ -1,6 +1,6 @@
 {
   "name": "@yyasinaslan/dynamic-form",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "yyasinaslan https://github.com/yyasinaslan",
   "homepage": "https://github.com/yyasinaslan/dynamic-form",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",
     "@popperjs/core": "^2.11.7",
     "bootstrap": ">=5.2.0",
-    "highlightjs": "^9.16.2",
+    "highlight.js": "^11.8.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.1"
